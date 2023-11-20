@@ -3,42 +3,54 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public sealed class Bullet : MonoBehaviour
+    [RequireComponent(typeof(Rigidbody2D))]
+    [RequireComponent(typeof(SpriteRenderer))]
+    public sealed class Bullet : MonoBehaviour, IPoolable
     {
         public event Action<Bullet, Collision2D> OnCollisionEntered;
+        
+        [SerializeField] private Rigidbody2D _rigidbody;
+        [SerializeField] private SpriteRenderer _spriteRenderer;
+        [SerializeField] private Transform _transform;
+        [SerializeField] private GameObject _gameObject;
 
-        [NonSerialized] public bool isPlayer;
-        [NonSerialized] public int damage;
+        public Transform Transform => _transform;
+        public GameObject GameObject => _gameObject;
 
-        [SerializeField]
-        private new Rigidbody2D rigidbody2D;
-
-        [SerializeField]
-        private SpriteRenderer spriteRenderer;
-
-        private void OnCollisionEnter2D(Collision2D collision)
+        public CohesionType CohesionType { get; set; }
+        public int Damage { get; set; }
+        
+        public Vector2 Velocity
         {
-            this.OnCollisionEntered?.Invoke(this, collision);
+            set => _rigidbody.velocity = value;
         }
 
-        public void SetVelocity(Vector2 velocity)
+        public int PhysicsLayer
         {
-            this.rigidbody2D.velocity = velocity;
+            set => gameObject.layer = value;
         }
 
-        public void SetPhysicsLayer(int physicsLayer)
+        public Vector3 Position
         {
-            this.gameObject.layer = physicsLayer;
+            set => _transform.position = value;
+            get => _transform.position;
         }
 
-        public void SetPosition(Vector3 position)
+        public Color Color
         {
-            this.transform.position = position;
+            set => _spriteRenderer.color = value;
         }
+        
+        private void OnValidate() => AccessFields();
 
-        public void SetColor(Color color)
+        private void OnCollisionEnter2D(Collision2D collision) => OnCollisionEntered?.Invoke(this, collision);
+
+        private void AccessFields()
         {
-            this.spriteRenderer.color = color;
+            _transform = transform;
+            _gameObject = gameObject;
+            _spriteRenderer = GetComponent<SpriteRenderer>();
+            _rigidbody = GetComponent<Rigidbody2D>();
         }
     }
 }

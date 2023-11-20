@@ -18,12 +18,10 @@ namespace ShootEmUp
         
         public bool InBounds(Vector3 position)
         {
-            var positionX = position.x;
-            var positionY = position.y;
-            return positionX > this.leftBorder.position.x
-                   && positionX < this.rightBorder.position.x
-                   && positionY > this.downBorder.position.y
-                   && positionY < this.topBorder.position.y;
+            return position.x > leftBorder.position.x
+                   && position.x < rightBorder.position.x
+                   && position.y > downBorder.position.y
+                   && position.y < topBorder.position.y;
         }
     }
 }

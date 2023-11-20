@@ -1,42 +1,48 @@
+using System;
 using UnityEngine;
 
 namespace ShootEmUp
 {
     public sealed class EnemyMoveAgent : MonoBehaviour
     {
-        public bool IsReached
+        [SerializeField] private MoveComponent _moveComponent;
+
+        private Transform _transform;
+        
+        private Vector2 _destination;
+
+        public Vector2 Destination
         {
-            get { return this.isReached; }
+            set
+            {
+                IsReached = false;
+                _destination = value;
+            }
         }
 
-        [SerializeField] private MoveComponent moveComponent;
+        public bool IsReached { get; private set; }
 
-        private Vector2 destination;
+        private void OnValidate() => _moveComponent = GetComponent<MoveComponent>();
 
-        private bool isReached;
-
-        public void SetDestination(Vector2 endPoint)
-        {
-            this.destination = endPoint;
-            this.isReached = false;
-        }
+        private void Awake() => _transform = transform;
 
         private void FixedUpdate()
         {
-            if (this.isReached)
-            {
+            if (IsReached) 
                 return;
-            }
             
-            var vector = this.destination - (Vector2) this.transform.position;
-            if (vector.magnitude <= 0.25f)
+            Vector2 vectorToDestination = _destination - (Vector2) _transform.position;
+            float vectorLength = vectorToDestination.magnitude;
+            
+            if (vectorLength <= 0.25f)
             {
-                this.isReached = true;
+                IsReached = true;
                 return;
             }
 
-            var direction = vector.normalized * Time.fixedDeltaTime;
-            this.moveComponent.MoveByRigidbodyVelocity(direction);
+            Vector2 normalizedVector = vectorToDestination / vectorLength;
+            Vector2 displacement = normalizedVector * Time.fixedDeltaTime;
+            _moveComponent.Move(displacement);
         }
     }
 }

@@ -4,12 +4,8 @@ namespace ShootEmUp
 {
     public sealed class TeamComponent : MonoBehaviour
     {
-        public bool IsPlayer
-        {
-            get { return this.isPlayer; }
-        }
-        
-        [SerializeField]
-        private bool isPlayer;
+        public CohesionType CohesionType => _cohesionType;
+
+        [SerializeField] private CohesionType _cohesionType;
     }
 }
