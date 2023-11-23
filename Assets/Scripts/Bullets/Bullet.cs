@@ -5,7 +5,9 @@ namespace ShootEmUp
 {
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(SpriteRenderer))]
-    public sealed class Bullet : MonoBehaviour, IPoolable
+    [RequireComponent(typeof(SwitchStateComponent))]
+    public sealed class Bullet : MonoBehaviour, IPoolable, IGameStartListener,
+        IGameFinishListener, IGameResumeListener, IGamePauseListener
     {
         public event Action<Bullet, Collision2D> OnCollisionEntered;
         
@@ -14,9 +16,13 @@ namespace ShootEmUp
         [SerializeField] private Transform _transform;
         [SerializeField] private GameObject _gameObject;
 
+        public SwitchStateComponent SwitchComponent;
+
         public Transform Transform => _transform;
         public GameObject GameObject => _gameObject;
 
+        public bool IsOnlyUnityMethods { get; } = true;
+        
         public CohesionType CohesionType { get; set; }
         public int Damage { get; set; }
         
@@ -52,5 +58,13 @@ namespace ShootEmUp
             _spriteRenderer = GetComponent<SpriteRenderer>();
             _rigidbody = GetComponent<Rigidbody2D>();
         }
+
+        public void OnStart() => SwitchComponent.TurnOn(this);
+
+        public void OnFinish() => SwitchComponent.TurnOff(this);
+
+        public void OnResume() => SwitchComponent.TurnOn(this);
+
+        public void OnPause() => SwitchComponent.TurnOff(this);
     }
 }

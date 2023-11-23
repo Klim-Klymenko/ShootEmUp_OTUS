@@ -33,6 +33,7 @@
           <e p="Components" t="Include">
             <e p="HitPointsComponent.cs" t="Include" />
             <e p="MoveComponent.cs" t="Include" />
+            <e p="SwitchStateComponent.cs" t="Include" />
             <e p="TeamComponent.cs" t="Include" />
             <e p="WeaponComponent.cs" t="Include" />
           </e>
@@ -54,8 +55,19 @@
             <e p="EnemyReferenceComponent.cs" t="Include" />
             <e p="EnemyShootingController.cs" t="Include" />
           </e>
-          <e p="GameManager" t="Include">
+          <e p="Game Cycle" t="Include">
             <e p="GameManager.cs" t="Include" />
+            <e p="GameManagerInstaller.cs" t="Include" />
+            <e p="Interfaces" t="Include">
+              <e p="IGameFinishListener.cs" t="Include" />
+              <e p="IGameFixedUpdateListener.cs" t="Include" />
+              <e p="IGameListener.cs" t="Include" />
+              <e p="IGamePauseListener.cs" t="Include" />
+              <e p="IGameResumeListener.cs" t="Include" />
+              <e p="IGameStartListener.cs" t="Include" />
+              <e p="IGameUpdateListener.cs" t="Include" />
+              <e p="ISwitchable.cs" t="Include" />
+            </e>
           </e>
           <e p="Input" t="Include">
             <e p="InputController.cs" t="Include" />

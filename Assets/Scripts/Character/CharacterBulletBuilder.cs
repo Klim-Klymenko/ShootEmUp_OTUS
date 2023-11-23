@@ -1,9 +1,8 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace ShootEmUp
 {
-    public class CharacterBulletBuilder : MonoBehaviour
+    public sealed class CharacterBulletBuilder : MonoBehaviour
     {
         [SerializeField] private Color _bulletColour;
         [SerializeField] private int _bulletDamage;

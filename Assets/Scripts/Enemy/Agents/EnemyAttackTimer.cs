@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public class EnemyAttackTimer : MonoBehaviour
+    public sealed class EnemyAttackTimer : MonoBehaviour
     {
         public event Action OnTimeToShoot;
         

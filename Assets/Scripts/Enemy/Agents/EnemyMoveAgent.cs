@@ -3,10 +3,13 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public sealed class EnemyMoveAgent : MonoBehaviour
+    [RequireComponent(typeof(SwitchStateComponent))]
+    public sealed class EnemyMoveAgent : MonoBehaviour, IGameFixedUpdateListener,
+        IGameStartListener, IGameFinishListener, IGameResumeListener, IGamePauseListener
     {
         [SerializeField] private MoveComponent _moveComponent;
-
+        [SerializeField] private SwitchStateComponent _switchComponent;
+        
         private Transform _transform;
         
         private Vector2 _destination;
@@ -22,11 +25,17 @@ namespace ShootEmUp
 
         public bool IsReached { get; private set; }
 
-        private void OnValidate() => _moveComponent = GetComponent<MoveComponent>();
+        public bool IsOnlyUnityMethods { get; } = false;
+
+        private void OnValidate()
+        {
+            _moveComponent = GetComponent<MoveComponent>();
+            _switchComponent = GetComponent<SwitchStateComponent>();
+        } 
 
         private void Awake() => _transform = transform;
 
-        private void FixedUpdate()
+        void IGameFixedUpdateListener.OnFixedUpdate()
         {
             if (IsReached) 
                 return;
@@ -44,5 +53,13 @@ namespace ShootEmUp
             Vector2 displacement = normalizedVector * Time.fixedDeltaTime;
             _moveComponent.Move(displacement);
         }
+
+        public void OnStart() => _switchComponent.TurnOn(this);
+
+        public void OnFinish() => _switchComponent.TurnOff(this);
+
+        public void OnResume() =>_switchComponent.TurnOn(this);
+
+        public void OnPause() => _switchComponent.TurnOff(this);
     }
 }

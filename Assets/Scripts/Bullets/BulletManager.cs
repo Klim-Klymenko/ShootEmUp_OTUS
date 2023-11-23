@@ -1,19 +1,30 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace ShootEmUp
 {
-    public sealed class BulletManager : MonoBehaviour
+    [RequireComponent(typeof(SwitchStateComponent))]
+    public sealed class BulletManager : MonoBehaviour, IGameFixedUpdateListener, IGameStartListener,
+        IGameFinishListener, IGameResumeListener, IGamePauseListener
     {
         [SerializeField] private LevelBounds _levelBounds;
 
         [SerializeField] private BulletBuilder _bulletBuilder;
+
+        [SerializeField] private SwitchStateComponent _switchComponent;
         
         private readonly List<Bullet> _bullets = new List<Bullet>();
 
-        private void OnValidate() => _bulletBuilder = GetComponent<BulletBuilder>();
+        public bool IsOnlyUnityMethods { get; } = false;
 
-        private void FixedUpdate()
+        private void OnValidate()
+        {
+            _bulletBuilder = GetComponent<BulletBuilder>();
+            _switchComponent = GetComponent<SwitchStateComponent>();
+        }
+
+        void IGameFixedUpdateListener.OnFixedUpdate()
         {
             for (int i = 0; i < _bullets.Count; i++)
             {
@@ -48,5 +59,14 @@ namespace ShootEmUp
             hitPointsComponent.TakeDamage(bullet.Damage);
             UnspawnBullet(bullet);
         }
+        
+        public void OnStart() => _switchComponent.TurnOn(this);
+
+        public void OnFinish() => _switchComponent.TurnOff(this);
+
+        public void OnResume() => _switchComponent.TurnOn(this);
+
+        public void OnPause() => _switchComponent.TurnOff(this);
+        
     }
 }

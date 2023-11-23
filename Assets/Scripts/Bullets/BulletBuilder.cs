@@ -10,7 +10,8 @@ namespace ShootEmUp
         [SerializeField] private Transform _parentToGet;
         [SerializeField] private  Transform _parentToPut;
         [SerializeField] private BulletManager _manager;
-
+        [SerializeField] private GameManager _gameManager;
+        
         private Pool<Bullet> _bulletPool;
 
         private void OnValidate() => _manager = GetComponent<BulletManager>();
@@ -31,8 +32,19 @@ namespace ShootEmUp
             bullet.CohesionType = args.CohesionType;
             bullet.Velocity = args.Velocity;
 
-            bullet.GetComponent<CollisionBulletObserver>().BulletManager = _manager;
+            SwitchStateComponent switchStateComponent = bullet.GetComponent<SwitchStateComponent>();
+            switchStateComponent.GameManager = _gameManager;
+            
+            CollisionBulletObserver collisionObserver = bullet.GetComponent<CollisionBulletObserver>();
+            collisionObserver.BulletManager = _manager;
+            collisionObserver.OnStart();
+            _gameManager.AddEventListeners(collisionObserver);
 
+            bullet.SwitchComponent = switchStateComponent;
+            bullet.OnStart();
+            _gameManager.AddUpdateListeners(bullet);
+            _gameManager.AddEventListeners(bullet);
+            
             return bullet;
         }
 
