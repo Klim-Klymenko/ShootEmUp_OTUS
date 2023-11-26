@@ -2,6 +2,7 @@
 
 namespace ShootEmUp
 {
+    [RequireComponent(typeof(WeaponComponent))]
     public sealed class CharacterBulletBuilder : MonoBehaviour
     {
         [SerializeField] private Color _bulletColour;

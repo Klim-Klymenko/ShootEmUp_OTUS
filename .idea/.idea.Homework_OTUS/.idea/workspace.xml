@@ -20,40 +20,51 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e68b6294-9997-4a84-ac6e-3eb6d52f8fde" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/Interfaces/IGameFinishListener.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/Interfaces/IGameFinishListener.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/Interfaces/IGameListener.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/Interfaces/IGameListener.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/Interfaces/IGamePauseListener.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/Interfaces/IGamePauseListener.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/Interfaces/IGameResumeListener.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/Interfaces/IGameResumeListener.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/Interfaces/IGameStartListener.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/Interfaces/IGameStartListener.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/Interfaces/ISwitchable.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/Interfaces/ISwitchable.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/GameStarterController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/GameStarterController.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/GameStarterTimer.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/GameStarterTimer.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/GameState.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/GameState.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/Interfaces/IGameInitializeListener.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/Interfaces/IGameInitializeListener.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/Interfaces/IGameRunner.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/Interfaces/IGameRunner.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/Interfaces/IGameStartable.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/Interfaces/IGameStartable.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/PoolsInitializer.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/PoolsInitializer.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/StartButtonManager.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/StartButtonManager.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Homework_OTUS/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Homework_OTUS/.idea/contentModel.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Homework_OTUS/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Homework_OTUS/.idea/indexLayout.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Homework_OTUS/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Homework_OTUS/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Game.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Game.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Bullets/Bullet.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Bullets/Bullet.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Bullets/BulletBuilder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Bullets/BulletBuilder.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Bullets/BulletManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Bullets/BulletManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Bullets/CollisionBulletObserver.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Bullets/CollisionBulletObserver.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Character/CharacterBulletBuilder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Character/CharacterBulletBuilder.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Character/CharacterBulletManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Character/CharacterBulletManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Character/CharacterHitPointsObserver.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Character/CharacterHitPointsObserver.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Common/PhysicsLayer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Common/PhysicsLayer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Components/MoveComponent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Components/MoveComponent.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Components/SwitchStateComponent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Components/SwitchStateComponent.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy/Agents/EnemyAttackController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/Agents/EnemyAttackController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy/Agents/EnemyAttackTimer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/Agents/EnemyAttackTimer.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy/Agents/EnemyMoveAgent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/Agents/EnemyMoveAgent.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy/Enemy Spawn/EnemyBuilder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/Enemy Spawn/EnemyBuilder.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy/Enemy Spawn/EnemyManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/Enemy Spawn/EnemyManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy/Enemy Spawn/EnemySpawnController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/Enemy Spawn/EnemySpawnController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy/Enemy Spawn/EnemySpawnTimer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/Enemy Spawn/EnemySpawnTimer.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy/EnemyDeathObserver.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/EnemyDeathObserver.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy/EnemyReferenceComponent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/EnemyReferenceComponent.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy/EnemyShootingController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/EnemyShootingController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GameManager.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GameManager/GameManager.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GameManager/GameManager.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/GameManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/GameManagerInstaller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/GameManagerInstaller.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Input/InputController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Input/InputController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Level/LevelBackground.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Level/LevelBackground.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Level/LevelBounds.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Level/LevelBounds.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,48 +76,25 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Bullets/CollisionBulletObserver.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Game Cycle/Interfaces/IGameFixedUpdateListener.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Components/SwitchStateComponent.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/105DA115-9EC9-496A-B931-0694C7B11DD2/34/c08b0fb2/MulticastDelegate.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/4DC18CE7-F2D4-4BEC-9B4B-05682D052509/68/6ed77306/Queue`1.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Game Cycle/GameManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Game Cycle/GameManagerInstaller.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Character/CharacterBulletManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Character/CharacterHitPointsObserver.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Bullets/BulletBuilder.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Input/InputController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/105DA115-9EC9-496A-B931-0694C7B11DD2/72/48e3cdd8/List`1.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Game Cycle/Interfaces/IGameUpdateListener.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/klim1/OneDrive/Документы/GitHub/Homework_OTUS/Assets/Scripts/Bullets/Bullet.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Game Cycle/Interfaces/IGameFixedUpdateListener.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Components/SwitchStateComponent.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Character/CharacterBulletManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Bullets/BulletBuilder.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Assets/Scripts/Character/CharacterBulletController.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Enemy/Agents/EnemyAttackObserver.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Bullets/BulletUtils.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Components/MoveComponent.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Enemy/EnemyPositions.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Enemy/EnemyPool.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Enemy/EnemyPositionsGenerator.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Components/HitPointsComponent.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Enemy/EnemyBuilder.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Enemy/EnemySpawnTimer.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Enemy/EnemySpawnController.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Level/LevelBounds.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Character/CharacterBulletManager.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Enemy/Agents/EnemyAttackAgent.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Enemy/EnemyManager.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Common/Pool.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Game Cycle/Interfaces/IGameFixedListener.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Game Cycle/Interfaces/IGameInstaller.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Game Cycle/GameManagerManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Game Cycle/Interfaces/IGameManager.cs" />
         <option value="$PROJECT_DIR$/Library/PackageCache/com.unity.services.analytics@4.0.1/Runtime/AnalyticsServiceInstance.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Character/CharacterBulletBuilder.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Enemy/Enemy Spawn/EnemySpawnTimer.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Enemy/Agents/EnemyAttackTimer.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Level/LevelBackground.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Enemy/Enemy Spawn/EnemyManager.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Enemy/EnemyReferenceComponent.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Game Cycle/Interfaces/IGameFixedUpdateListener.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Game Cycle/Interfaces/IGameListener.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Game Cycle/Interfaces/IGameUpdateListener.cs" />
@@ -116,21 +104,46 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/Game Cycle/Interfaces/IGameResumeListener.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Game Cycle/Interfaces/IGameStartListener.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Game Cycle/Interfaces/ISwitchable.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Game Cycle/GameManager.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Bullets/BulletManager.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Character/CharacterHitPointsObserver.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Enemy/Agents/EnemyAttackController.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Enemy/Agents/EnemyMoveAgent.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Enemy/EnemyDeathObserver.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Enemy/EnemyShootingController.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Bullets/CollisionBulletObserver.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Bullets/Bullet.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Game Cycle/Interfaces/IGameInitializeListener.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Game Cycle/GameState.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Game Cycle/Interfaces/IGameStarter.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Game Cycle/GameStarter.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Game Cycle/StartButtonController.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Game Cycle/StartRunner.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Game Cycle/StartRunnerController.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Game Cycle/A.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Game Cycle/StartButtonManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Components/SwitchStateComponent.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Game Cycle/Interfaces/IGameRunner.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Game Cycle/Interfaces/IGameStartable.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Bullets/BulletBuilder.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Enemy/Enemy Spawn/EnemySpawnController.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Game Cycle/GameManagerInstaller.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Bullets/Bullet.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Bullets/BulletManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Bullets/CollisionBulletObserver.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Character/CharacterBulletBuilder.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Character/CharacterBulletManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Character/CharacterHitPointsObserver.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Common/PhysicsLayer.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Enemy/Agents/EnemyAttackController.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Enemy/Agents/EnemyAttackTimer.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Enemy/Agents/EnemyMoveAgent.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Components/MoveComponent.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Enemy/Enemy Spawn/EnemyBuilder.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Enemy/Enemy Spawn/EnemyManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Enemy/Enemy Spawn/EnemySpawnController.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Enemy/Enemy Spawn/EnemySpawnTimer.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Enemy/EnemyDeathObserver.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Enemy/EnemyReferenceComponent.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Enemy/EnemyShootingController.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Game Cycle/GameManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Game Cycle/ListenersBuildersObserver.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Game Cycle/PoolsInitializer.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Game Cycle/GameManagerInstaller.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Game Cycle/GameStarterTimer.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Game Cycle/GameStarterController.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Input/InputController.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Level/LevelBackground.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Level/LevelBounds.cs" />
       </list>
     </option>
   </component>
@@ -140,10 +153,12 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="DebuggerViewTab_PTCS_FirstProportionKey" value="0.34994584" />
+    <property name="DebuggerViewTab_PTCS_LastProportionKey" value="0.30010834" />
     <property name="Discover.Launch.Via.Unity" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="settings.editor.selected.configurable" value="configurable.group.language" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
@@ -179,6 +194,8 @@
       <workItem from="1700386618670" duration="28034000" />
       <workItem from="1700499988071" duration="6500000" />
       <workItem from="1700761679207" duration="17920000" />
+      <workItem from="1700904709470" duration="19666000" />
+      <workItem from="1700989882790" duration="22999000" />
     </task>
     <servers />
   </component>
@@ -203,29 +220,97 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="414" y="174" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1700353416768">
+    <state x="414" y="174" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1700907055027">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="414" y="174" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1700353416768" />
-    <state x="788" y="193" key="RiderGenerateDialog" timestamp="1700782054089">
+    <state x="414" y="174" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1700907055027" />
+    <state width="1877" height="375" key="GridCell.Tab.0.bottom" timestamp="1700955900214">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="788" y="193" key="RiderGenerateDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1700782054089" />
-    <state x="92" y="92" width="1736" height="856" key="VCS.FileHistoryDialog" timestamp="1700775160659">
+    <state width="1877" height="375" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1700955900214" />
+    <state width="1877" height="375" key="GridCell.Tab.0.center" timestamp="1700955900213">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="92" y="92" width="1736" height="856" key="VCS.FileHistoryDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1700775160659" />
+    <state width="1877" height="375" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1700955900213" />
+    <state width="1877" height="375" key="GridCell.Tab.0.left" timestamp="1700955900213">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="375" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1700955900213" />
+    <state width="1877" height="375" key="GridCell.Tab.0.right" timestamp="1700955900214">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="375" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1700955900214" />
+    <state width="1877" height="375" key="GridCell.Tab.1.bottom" timestamp="1700955900214">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="375" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1700955900214" />
+    <state width="1877" height="375" key="GridCell.Tab.1.center" timestamp="1700955900214">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="375" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1700955900214" />
+    <state width="1877" height="375" key="GridCell.Tab.1.left" timestamp="1700955900214">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="375" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1700955900214" />
+    <state width="1877" height="375" key="GridCell.Tab.1.right" timestamp="1700955900214">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="375" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1700955900214" />
+    <state width="1877" height="375" key="GridCell.Tab.2.bottom" timestamp="1700955900214">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="375" key="GridCell.Tab.2.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1700955900214" />
+    <state width="1877" height="375" key="GridCell.Tab.2.center" timestamp="1700955900214">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="375" key="GridCell.Tab.2.center/0.0.1920.1040@0.0.1920.1040" timestamp="1700955900214" />
+    <state width="1877" height="375" key="GridCell.Tab.2.left" timestamp="1700955900214">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="375" key="GridCell.Tab.2.left/0.0.1920.1040@0.0.1920.1040" timestamp="1700955900214" />
+    <state width="1877" height="375" key="GridCell.Tab.2.right" timestamp="1700955900214">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="375" key="GridCell.Tab.2.right/0.0.1920.1040@0.0.1920.1040" timestamp="1700955900214" />
+    <state width="1877" height="375" key="GridCell.Tab.3.bottom" timestamp="1700955900214">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="375" key="GridCell.Tab.3.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1700955900214" />
+    <state width="1877" height="375" key="GridCell.Tab.3.center" timestamp="1700955900214">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="375" key="GridCell.Tab.3.center/0.0.1920.1040@0.0.1920.1040" timestamp="1700955900214" />
+    <state width="1877" height="375" key="GridCell.Tab.3.left" timestamp="1700955900214">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="375" key="GridCell.Tab.3.left/0.0.1920.1040@0.0.1920.1040" timestamp="1700955900214" />
+    <state width="1877" height="375" key="GridCell.Tab.3.right" timestamp="1700955900214">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="375" key="GridCell.Tab.3.right/0.0.1920.1040@0.0.1920.1040" timestamp="1700955900214" />
+    <state x="788" y="193" key="RiderGenerateDialog" timestamp="1700993315177">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="788" y="193" key="RiderGenerateDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1700993315177" />
+    <state x="461" y="164" key="SettingsEditor" timestamp="1700932234292">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="461" y="164" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1700932234292" />
+    <state x="92" y="92" width="1736" height="856" key="VCS.FileHistoryDialog" timestamp="1701019800049">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="92" y="92" width="1736" height="856" key="VCS.FileHistoryDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1701019800049" />
     <state x="636" y="98" width="1402" height="1028" key="dock-window-1" timestamp="1700317112827">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="636" y="98" width="1402" height="1028" key="dock-window-1/0.0.1920.1040@0.0.1920.1040" timestamp="1700317112827" />
-    <state x="616" y="240" key="run.anything.popup" timestamp="1700414537713">
+    <state x="616" y="240" key="run.anything.popup" timestamp="1700905927773">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1700414537713" />
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1700768370739">
+    <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1700905927773" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1700993311726">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1700768370739" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1700993311726" />
   </component>
 </project>

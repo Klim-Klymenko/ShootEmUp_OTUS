@@ -16,7 +16,14 @@ namespace ShootEmUp
         [SerializeField] private Transform _transform;
         [SerializeField] private GameObject _gameObject;
 
-        public SwitchStateComponent SwitchComponent;
+        private Vector2 _previousVelocity;
+        
+        private SwitchStateComponent _switchComponent;
+
+        public SwitchStateComponent SwitchComponent
+        {
+            set => _switchComponent = value;
+        }
 
         public Transform Transform => _transform;
         public GameObject GameObject => _gameObject;
@@ -29,6 +36,7 @@ namespace ShootEmUp
         public Vector2 Velocity
         {
             set => _rigidbody.velocity = value;
+            private get => _rigidbody.velocity;
         }
 
         public int PhysicsLayer
@@ -59,12 +67,31 @@ namespace ShootEmUp
             _rigidbody = GetComponent<Rigidbody2D>();
         }
 
-        public void OnStart() => SwitchComponent.TurnOn(this);
+        public void OnStart() => _switchComponent.TurnOn(this);
 
-        public void OnFinish() => SwitchComponent.TurnOff(this);
+        void IGameFinishListener.OnFinish()
+        {
+            ResetVelocity();
+            _switchComponent.TurnOff(this);
+        }
+        void IGameResumeListener.OnResume()
+        {
+            _switchComponent.TurnOn(this);
+            ReturnVelocity();
+        }
 
-        public void OnResume() => SwitchComponent.TurnOn(this);
+        void IGamePauseListener.OnPause()
+        {
+            ResetVelocity();
+            _switchComponent.TurnOff(this);
+        }
 
-        public void OnPause() => SwitchComponent.TurnOff(this);
+        private void ResetVelocity()
+        {
+            _previousVelocity = Velocity;
+            Velocity = Vector2.zero;
+        }
+
+        private void ReturnVelocity() => Velocity = _previousVelocity;
     }
 }

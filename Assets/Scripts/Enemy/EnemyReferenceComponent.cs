@@ -2,6 +2,9 @@
 
 namespace ShootEmUp
 {
+    [RequireComponent(typeof(EnemyAttackAgent))]
+    [RequireComponent(typeof(EnemyMoveAgent))]
+    [RequireComponent(typeof(EnemyAttackController))]
     public sealed class EnemyReferenceComponent : MonoBehaviour, IPoolable
     {
         [SerializeField] private Transform _transform;

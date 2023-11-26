@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public sealed class GameManager : MonoBehaviour
+    public sealed class GameManager : MonoBehaviour, IGameStartable
     {
         private readonly List<IGameUpdateListener> _updateListeners = new List<IGameUpdateListener>();
         private readonly List<IGameFixedUpdateListener> _fixedUpdateListeners = new List<IGameFixedUpdateListener>();
@@ -13,50 +13,82 @@ namespace ShootEmUp
         private readonly List<IGameResumeListener> _resumeListeners = new List<IGameResumeListener>();
         private readonly List<IGamePauseListener> _pauseListeners = new List<IGamePauseListener>();
         
-        public void FinishGame()
-        {
-            Debug.Log("Game over!");
-            Time.timeScale = 0;
-        }
+        public GameState CurrentGameState { get; set; }
+        public bool HasGameRun { get; set; }
+        public bool HasGameStarted { get; private set; }
 
         private void Update()
         {
+            if (CurrentGameState != GameState.Started && CurrentGameState != GameState.Resumed)
+                return;
+            
             for (int i = 0; i < _updateListeners.Count; i++)
                 _updateListeners[i].OnUpdate();
         }
 
         private void FixedUpdate()
         {
+            if (CurrentGameState != GameState.Started && CurrentGameState != GameState.Resumed)
+                return;
+            
             for (int i = 0; i < _fixedUpdateListeners.Count; i++)
                 _fixedUpdateListeners[i].OnFixedUpdate();
         }
-
-        [ContextMenu("OnStart")]
-        private void OnStart()
+        
+        void IGameStartable.OnStart()
         {
+            if (CurrentGameState != GameState.Initialized && CurrentGameState != GameState.Resumed)
+                return;
+
             for (int i = 0; i < _startListeners.Count; i++)
                 _startListeners[i].OnStart();
+
+            CurrentGameState = GameState.Started;
+            HasGameStarted = true;
         }
         
-        [ContextMenu("OnFinish")]
-        private void OnFinish()
+        public void OnFinish()
         {
+            if (CurrentGameState == GameState.Finished)
+                return;
+            
             for (int i = 0; i < _finishListeners.Count; i++)
                 _finishListeners[i].OnFinish();
+
+            CurrentGameState = GameState.Finished;
         }
         
-        [ContextMenu("OnResume")]
-        private void OnResume()
+        
+        public void OnResume()
         {
+            if (CurrentGameState != GameState.Paused)
+                return;
+
             for (int i = 0; i < _resumeListeners.Count; i++)
-                _resumeListeners[i].OnResume();
+            {
+                //если мы поставили на паузу во время обратного отсчета до начала игры
+                if (!HasGameStarted)
+                    
+                    if (_resumeListeners[i] is IGameRunner)
+                        _resumeListeners[i].OnResume();
+                    
+                    else continue;
+                
+                else _resumeListeners[i].OnResume();
+            }
+
+            CurrentGameState = GameState.Resumed;
         }
         
-        [ContextMenu("OnPause")]
-        private void OnPause()
+        public void OnPause()
         {
+            if (CurrentGameState == GameState.Paused || CurrentGameState == GameState.Finished || !HasGameRun)
+                return;
+            
             for (int i = 0; i < _pauseListeners.Count; i++)
                 _pauseListeners[i].OnPause();
+
+            CurrentGameState = GameState.Paused;
         }
 
         public void AddUpdateListeners<T>(T listener) where T : IGameListener

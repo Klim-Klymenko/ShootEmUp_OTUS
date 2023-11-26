@@ -1,9 +1,9 @@
-using System;
 using UnityEngine;
 
 namespace ShootEmUp
 {
     [RequireComponent(typeof(SwitchStateComponent))]
+    [RequireComponent(typeof(HitPointsComponent))]
     public sealed class CharacterHitPointsObserver : MonoBehaviour, IGameStartListener,
         IGameFinishListener, IGameResumeListener, IGamePauseListener
     {
@@ -24,15 +24,15 @@ namespace ShootEmUp
 
         private void Disable() =>_hitPointsComponent.OnDeath -= CharacterDeath;
 
-        private void CharacterDeath() => _gameManager.FinishGame();
+        private void CharacterDeath() => _gameManager.OnFinish();
         
-        public void OnStart() => Enable();
+        void IGameStartListener.OnStart() => Enable();
 
-        public void OnFinish() => Disable();
+        void IGameFinishListener.OnFinish() => Disable();
 
-        public void OnResume() => Enable();
+        void IGameResumeListener.OnResume() => Enable();
         
-        public void OnPause() => Disable();
+        void IGamePauseListener.OnPause() => Disable();
         
     }  
 }

@@ -3,6 +3,10 @@
 namespace ShootEmUp
 {
     [RequireComponent(typeof(SwitchStateComponent))]
+    [RequireComponent(typeof(HitPointsComponent))]
+    [RequireComponent(typeof(MoveComponent))]
+    [RequireComponent(typeof(EnemyAttackAgent))]
+    [RequireComponent(typeof(EnemyAttackTimer))]
     public sealed class EnemyAttackController : MonoBehaviour, IGameFixedUpdateListener,
         IGameStartListener, IGameFinishListener, IGameResumeListener, IGamePauseListener
     {
@@ -41,25 +45,25 @@ namespace ShootEmUp
         public void OnStart()
         {
             _switchComponent.TurnOn(this);
-            
+
             Enable();
         }
         
-        public void OnFinish()
+        void IGameFinishListener.OnFinish()
         {
             _switchComponent.TurnOff(this);
             
             Disable();
         }
 
-        public void OnResume()
+        void IGameResumeListener.OnResume()
         {
             _switchComponent.TurnOn(this);
             
             Enable();
         }
         
-        public void OnPause()
+        void IGamePauseListener.OnPause()
         {
             _switchComponent.TurnOff(this);
             

@@ -4,7 +4,12 @@ namespace ShootEmUp
 {
     public sealed class SwitchStateComponent : MonoBehaviour
     {
-        public GameManager GameManager;
+        [SerializeField] private GameManager _gameManager;
+
+        public GameManager GameManager
+        {
+            set => _gameManager = value;
+        }
 
         public void TurnOn<T>(T listener) where T : ISwitchable
         {
@@ -12,10 +17,12 @@ namespace ShootEmUp
                 return;
             
             if (listener.IsOnlyUnityMethods)
-                switchableScript.enabled = true;
-            else
-                if (listener is IGameListener gameListener)
-                    GameManager.AddUpdateListeners(gameListener);
+                EnableUnityScript(switchableScript);
+            else if (listener is IGameListener gameListener)
+            {
+                _gameManager.AddUpdateListeners(gameListener);
+                EnableUnityScript(switchableScript);
+            }
         }
 
         public void TurnOff<T>(T listener) where T : ISwitchable
@@ -24,10 +31,15 @@ namespace ShootEmUp
                 return;
             
             if (listener.IsOnlyUnityMethods)
-                switchableScript.enabled = false;
-            else
-                if (listener is IGameListener gameListener)
-                    GameManager.RemoveUpdateListeners(gameListener);
+                DisableUnityScript(switchableScript);
+            else if (listener is IGameListener gameListener)
+            {
+                _gameManager.RemoveUpdateListeners(gameListener);
+                DisableUnityScript(switchableScript);
+            }
         }
+
+        private void EnableUnityScript(MonoBehaviour script) => script.enabled = true;
+        private void DisableUnityScript(MonoBehaviour script) => script.enabled = false;
     }
 }

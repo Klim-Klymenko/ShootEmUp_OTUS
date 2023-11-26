@@ -1,10 +1,10 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace ShootEmUp
 {
     [RequireComponent(typeof(SwitchStateComponent))]
+    [RequireComponent(typeof(BulletBuilder))]
     public sealed class BulletManager : MonoBehaviour, IGameFixedUpdateListener, IGameStartListener,
         IGameFinishListener, IGameResumeListener, IGamePauseListener
     {
@@ -60,13 +60,13 @@ namespace ShootEmUp
             UnspawnBullet(bullet);
         }
         
-        public void OnStart() => _switchComponent.TurnOn(this);
+        void IGameStartListener.OnStart() => _switchComponent.TurnOn(this);
 
-        public void OnFinish() => _switchComponent.TurnOff(this);
+        void IGameFinishListener.OnFinish() => _switchComponent.TurnOff(this);
 
-        public void OnResume() => _switchComponent.TurnOn(this);
+        void IGameResumeListener.OnResume() => _switchComponent.TurnOn(this);
 
-        public void OnPause() => _switchComponent.TurnOff(this);
+        void IGamePauseListener.OnPause() => _switchComponent.TurnOff(this);
         
     }
 }

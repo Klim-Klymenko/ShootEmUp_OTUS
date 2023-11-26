@@ -11,8 +11,6 @@ namespace ShootEmUp
     
         private float _currentTime;
 
-        private void Reset() => _currentTime = _countdown;
-
         public void TimerCountdown(bool isReached, bool anyHitPoints)
         {
             if (!isReached) 
@@ -30,5 +28,7 @@ namespace ShootEmUp
             
             Reset();
         }
+
+        private void Reset() => _currentTime = _countdown;
     }
 }

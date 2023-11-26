@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
+    [RequireComponent(typeof(BulletManager))]
     public sealed class BulletBuilder : MonoBehaviour
     {
         [SerializeField] private int _reservationAmount = 1000;
@@ -15,8 +16,6 @@ namespace ShootEmUp
         private Pool<Bullet> _bulletPool;
 
         private void OnValidate() => _manager = GetComponent<BulletManager>();
-
-        private void Awake() => InitializePool();
 
         public Bullet SpawnBullet(Args args)
         {
@@ -37,14 +36,13 @@ namespace ShootEmUp
             
             CollisionBulletObserver collisionObserver = bullet.GetComponent<CollisionBulletObserver>();
             collisionObserver.BulletManager = _manager;
-            collisionObserver.OnStart();
             _gameManager.AddEventListeners(collisionObserver);
+            collisionObserver.OnStart();
 
             bullet.SwitchComponent = switchStateComponent;
-            bullet.OnStart();
-            _gameManager.AddUpdateListeners(bullet);
             _gameManager.AddEventListeners(bullet);
-            
+            bullet.OnStart();
+
             return bullet;
         }
 
@@ -56,7 +54,7 @@ namespace ShootEmUp
             _bulletPool.Put(bullet);
         }
 
-        private void InitializePool()
+        public void InitializePool()
         {
             _bulletPool ??= new Pool<Bullet>(_reservationAmount, _prefab, _parentToGet, _parentToPut);
             _bulletPool.Reserve();

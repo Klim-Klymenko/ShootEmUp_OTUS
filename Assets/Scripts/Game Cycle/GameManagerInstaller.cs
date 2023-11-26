@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 namespace ShootEmUp
@@ -6,12 +6,12 @@ namespace ShootEmUp
     [RequireComponent(typeof(GameManager))]
     public sealed class GameManagerInstaller : MonoBehaviour
     {
-        private GameManager _gameManager;
+        [SerializeField] private GameManager _gameManager;
+        
+        private void OnValidate() => _gameManager = GetComponent<GameManager>();
 
         private void Awake()
         {
-            _gameManager = GetComponent<GameManager>();
-
             MonoBehaviour[] allScripts = FindObjectsOfType<MonoBehaviour>(true);
             
             for (int i = 0; i < allScripts.Length; i++)
@@ -20,11 +20,16 @@ namespace ShootEmUp
                 {
                     _gameManager.AddUpdateListeners(gameListener);
                     _gameManager.AddEventListeners(gameListener);
+
+                    if (gameListener is IGameInitializeListener initializeListener)
+                        initializeListener.OnInitialize();
                     
-                    if (allScripts[i] is IGameStartListener startListener)
-                        startListener.OnStart();
+                    if (gameListener is not IGameRunner)
+                        allScripts[i].enabled = false;
                 }
             }
+
+            _gameManager.CurrentGameState = GameState.Initialized;
         }
     }
 }

@@ -2,6 +2,7 @@ using UnityEngine;
 
 namespace ShootEmUp
 { 
+    [RequireComponent(typeof(CharacterBulletBuilder))]
     public sealed class CharacterBulletManager : MonoBehaviour
     {
         [SerializeField] private CharacterBulletBuilder _bulletBuilder;

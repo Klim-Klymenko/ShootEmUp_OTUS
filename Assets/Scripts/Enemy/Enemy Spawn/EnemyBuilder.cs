@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
+    [RequireComponent(typeof(EnemyManager))]
     public sealed class EnemyBuilder : MonoBehaviour
     {
         [SerializeField] private  int _reservationAmount = 7;
@@ -20,7 +21,7 @@ namespace ShootEmUp
 
         public int ReservationAmount => _reservationAmount;
 
-        private void Awake() => InitializePool();
+        private void OnValidate() => _enemyManager = GetComponent<EnemyManager>();
 
         public void SpawnEnemy()
         {
@@ -32,27 +33,25 @@ namespace ShootEmUp
             enemy.Transform.position = _randomPositionGenerator.RandomSpawnPosition();
             enemy.MoveAgent.Destination = _randomPositionGenerator.RandomAttackPosition();
 
-            SwitchStateComponent switchComponent = enemy.GetComponent<SwitchStateComponent>();
-            switchComponent.GameManager = _gameManager;
-            
-            enemy.MoveAgent.OnStart();
-            _gameManager.AddUpdateListeners(enemy.MoveAgent);
-            _gameManager.AddEventListeners(enemy.MoveAgent);
-            
-            enemy.AttackController.OnStart();
-            _gameManager.AddUpdateListeners(enemy.AttackController);
-            _gameManager.AddEventListeners(enemy.AttackController);
-
-            EnemyShootingController shootingController = enemy.GetComponent<EnemyShootingController>();
-            shootingController.OnStart();
-            _gameManager.AddEventListeners(shootingController);
-
-            EnemyDeathObserver deathObserver = enemy.GetComponent<EnemyDeathObserver>();
-            deathObserver.OnStart();
-            _gameManager.AddEventListeners(deathObserver);
-            
             enemy.EnemyManager = _enemyManager;
             enemy.AttackAgent.Target = _target;
+
+            SwitchStateComponent switchComponent = enemy.GetComponent<SwitchStateComponent>();
+            switchComponent.GameManager = _gameManager;
+
+            _gameManager.AddEventListeners(enemy.MoveAgent);
+            enemy.MoveAgent.OnStart();
+
+            _gameManager.AddEventListeners(enemy.AttackController);
+            enemy.AttackController.OnStart();
+
+            EnemyShootingController shootingController = enemy.GetComponent<EnemyShootingController>();
+            _gameManager.AddEventListeners(shootingController);
+            shootingController.OnStart();
+
+            EnemyDeathObserver deathObserver = enemy.GetComponent<EnemyDeathObserver>();
+            _gameManager.AddEventListeners(deathObserver);
+            deathObserver.OnStart();
         }
 
         public void UnspawnEnemy(EnemyReferenceComponent enemy)
@@ -63,7 +62,7 @@ namespace ShootEmUp
             _enemyPool.Put(enemy);
         }
 
-        private void InitializePool()
+        public void InitializePool()
         {
             _enemyPool ??= new Pool<EnemyReferenceComponent>(_reservationAmount, _prefab, _parentToGet, _parentToPut);
             _enemyPool.Reserve();

@@ -58,16 +58,24 @@
           <e p="Game Cycle" t="Include">
             <e p="GameManager.cs" t="Include" />
             <e p="GameManagerInstaller.cs" t="Include" />
+            <e p="GameStarterController.cs" t="Include" />
+            <e p="GameStarterTimer.cs" t="Include" />
+            <e p="GameState.cs" t="Include" />
             <e p="Interfaces" t="Include">
               <e p="IGameFinishListener.cs" t="Include" />
               <e p="IGameFixedUpdateListener.cs" t="Include" />
+              <e p="IGameInitializeListener.cs" t="Include" />
               <e p="IGameListener.cs" t="Include" />
               <e p="IGamePauseListener.cs" t="Include" />
               <e p="IGameResumeListener.cs" t="Include" />
+              <e p="IGameRunner.cs" t="Include" />
+              <e p="IGameStartable.cs" t="Include" />
               <e p="IGameStartListener.cs" t="Include" />
               <e p="IGameUpdateListener.cs" t="Include" />
               <e p="ISwitchable.cs" t="Include" />
             </e>
+            <e p="PoolsInitializer.cs" t="Include" />
+            <e p="StartButtonManager.cs" t="Include" />
           </e>
           <e p="Input" t="Include">
             <e p="InputController.cs" t="Include" />

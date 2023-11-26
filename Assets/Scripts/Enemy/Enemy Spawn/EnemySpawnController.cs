@@ -3,9 +3,13 @@
 namespace ShootEmUp
 {
     [RequireComponent(typeof(SwitchStateComponent))]
+    [RequireComponent(typeof(EnemyManager))]
+    [RequireComponent(typeof(EnemySpawnTimer))]
     public sealed class EnemySpawnController : MonoBehaviour, IGameUpdateListener,
         IGameStartListener, IGameFinishListener, IGameResumeListener, IGamePauseListener
     {
+        [SerializeField] private GameManager _gameManager;
+        
         [SerializeField] private EnemyManager _enemyManager;
         [SerializeField] private EnemySpawnTimer _spawnTimer;
 
@@ -25,32 +29,33 @@ namespace ShootEmUp
 
         private void Disable() => _spawnTimer.OnTimeToSpawn -= SpawnEnemy;
 
-        void IGameUpdateListener.OnUpdate() => _spawnTimer.TimerCountdown(_enemyManager.ReservationsAmount);
+        void IGameUpdateListener.OnUpdate() =>
+            _spawnTimer.TimerCountdown(_enemyManager.ReservationsAmount, _gameManager.CurrentGameState);
 
         private void SpawnEnemy() => _enemyManager.SpawnEnemy();
 
-        public void OnStart()
+        void IGameStartListener.OnStart()
         {
             _switchComponent.TurnOn(this);
-            Debug.Log("Start");
+            
             Enable();
         }
 
-        public void OnFinish()
+        void IGameFinishListener.OnFinish()
         {
             _switchComponent.TurnOff(this);
             
             Disable();
         }
 
-        public void OnResume()
+        void IGameResumeListener.OnResume()
         {
             _switchComponent.TurnOn(this);
             
             Enable();
         }
 
-        public void OnPause()
+        void IGamePauseListener.OnPause()
         {
             _switchComponent.TurnOff(this);
             

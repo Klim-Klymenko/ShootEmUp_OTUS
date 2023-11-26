@@ -2,7 +2,7 @@
 
 namespace ShootEmUp
 {
-    [RequireComponent(typeof(SwitchStateComponent))]
+    [RequireComponent(typeof(EnemyReferenceComponent))]
     public sealed class EnemyShootingController : MonoBehaviour, IGameStartListener,
         IGameFinishListener, IGameResumeListener, IGamePauseListener
     {
@@ -24,10 +24,10 @@ namespace ShootEmUp
 
         public void OnStart() => Enable();
         
-        public void OnFinish() => Disable();
+        void IGameFinishListener.OnFinish() => Disable();
         
-        public void OnResume() => Enable();
+        void IGameResumeListener.OnResume() => Enable();
         
-        public void OnPause() => Disable();
+        void IGamePauseListener.OnPause() => Disable();
     }
 }

@@ -1,14 +1,18 @@
+using System;
 using UnityEngine;
 
 namespace ShootEmUp
 {
+    [RequireComponent(typeof(EnemyBuilder))]
     public sealed class EnemyManager : MonoBehaviour
     {
         [SerializeField] private EnemyBuilder _enemyBuilder;
         [SerializeField] private BulletManager _bulletManager;
         
         public int ReservationsAmount => _enemyBuilder.ReservationAmount;
-        
+
+        private void OnValidate() => _enemyBuilder = GetComponent<EnemyBuilder>();
+
         public void SpawnEnemy() => _enemyBuilder.SpawnEnemy();
 
         public void UnspawnEnemy(EnemyReferenceComponent enemy) => _enemyBuilder.UnspawnEnemy(enemy);
