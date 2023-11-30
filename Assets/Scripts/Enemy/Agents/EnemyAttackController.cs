@@ -17,6 +17,8 @@ namespace ShootEmUp
         [SerializeField] private EnemyAttackAgent _attackAgent;
         [SerializeField] private EnemyAttackTimer _enemyTimer;
 
+        public IBulletSpawner BulletManager;
+        
         [SerializeField] private SwitchStateComponent _switchComponent;
         
         public bool IsOnlyUnityMethods { get; } = false;
@@ -40,7 +42,7 @@ namespace ShootEmUp
         void IGameFixedUpdateListener.OnFixedUpdate() => 
             _enemyTimer.TimerCountdown(_enemyMove.IsReached, _hitPointsComponent.AnyHitPoints);
 
-        private void Fire() => _attackAgent.Fire(_moveComponent.Position);
+        private void Fire() => _attackAgent.Fire(_moveComponent.Position, BulletManager);
         
         public void OnStart()
         {

@@ -3,14 +3,14 @@
 namespace ShootEmUp
 {
     [RequireComponent(typeof(SwitchStateComponent))]
-    [RequireComponent(typeof(EnemyManager))]
+    [RequireComponent(typeof(EnemySpawner))]
     [RequireComponent(typeof(EnemySpawnTimer))]
     public sealed class EnemySpawnController : MonoBehaviour, IGameUpdateListener,
         IGameStartListener, IGameFinishListener, IGameResumeListener, IGamePauseListener
     {
         [SerializeField] private GameManager _gameManager;
         
-        [SerializeField] private EnemyManager _enemyManager;
+        [SerializeField] private EnemySpawner _enemySpawner;
         [SerializeField] private EnemySpawnTimer _spawnTimer;
 
         [SerializeField] private SwitchStateComponent _switchComponent;
@@ -19,7 +19,7 @@ namespace ShootEmUp
         
         private void OnValidate()
         {
-            _enemyManager = GetComponent<EnemyManager>();
+            _enemySpawner = GetComponent<EnemySpawner>();
             _spawnTimer = GetComponent<EnemySpawnTimer>();
 
             _switchComponent = GetComponent<SwitchStateComponent>();
@@ -30,9 +30,9 @@ namespace ShootEmUp
         private void Disable() => _spawnTimer.OnTimeToSpawn -= SpawnEnemy;
 
         void IGameUpdateListener.OnUpdate() =>
-            _spawnTimer.TimerCountdown(_enemyManager.ReservationsAmount, _gameManager.CurrentGameState);
+            _spawnTimer.TimerCountdown(_enemySpawner.ReservationAmount, _gameManager.CurrentGameState);
 
-        private void SpawnEnemy() => _enemyManager.SpawnEnemy();
+        private void SpawnEnemy() => _enemySpawner.SpawnEnemy();
 
         void IGameStartListener.OnStart()
         {

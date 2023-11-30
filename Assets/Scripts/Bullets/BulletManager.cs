@@ -4,13 +4,13 @@ using UnityEngine;
 namespace ShootEmUp
 {
     [RequireComponent(typeof(SwitchStateComponent))]
-    [RequireComponent(typeof(BulletBuilder))]
-    public sealed class BulletManager : MonoBehaviour, IGameFixedUpdateListener, IGameStartListener,
+    [RequireComponent(typeof(BulletSpawner))]
+    public sealed class BulletManager : MonoBehaviour, IBulletSpawner, IGameFixedUpdateListener, IGameStartListener,
         IGameFinishListener, IGameResumeListener, IGamePauseListener
     {
         [SerializeField] private LevelBounds _levelBounds;
 
-        [SerializeField] private BulletBuilder _bulletBuilder;
+        [SerializeField] private BulletSpawner bulletSpawner;
 
         [SerializeField] private SwitchStateComponent _switchComponent;
         
@@ -20,7 +20,7 @@ namespace ShootEmUp
 
         private void OnValidate()
         {
-            _bulletBuilder = GetComponent<BulletBuilder>();
+            bulletSpawner = GetComponent<BulletSpawner>();
             _switchComponent = GetComponent<SwitchStateComponent>();
         }
 
@@ -37,29 +37,14 @@ namespace ShootEmUp
             }
         }
 
-        public void SpawnBullet(Args args) =>_bullets.Add(_bulletBuilder.SpawnBullet(args));
+        public void SpawnBullet(Args args) => _bullets.Add(bulletSpawner.SpawnBullet(args));
         
-        private void UnspawnBullet(Bullet bullet)
+        public void UnspawnBullet(Bullet bullet)
         {
             _bullets.Remove(bullet);
-            _bulletBuilder.UnspawnBullet(bullet);
+            bulletSpawner.UnspawnBullet(bullet);
         }
 
-        public void BulletShot(Bullet bullet, Collision2D collision)
-        {
-            if (!collision.gameObject.TryGetComponent(out TeamComponent teamComponent))
-                return;
-            
-            if (teamComponent.CohesionType == bullet.CohesionType)
-                return;
-            
-            if (!collision.gameObject.TryGetComponent(out HitPointsComponent hitPointsComponent))
-                return;
-            
-            hitPointsComponent.TakeDamage(bullet.Damage);
-            UnspawnBullet(bullet);
-        }
-        
         void IGameStartListener.OnStart() => _switchComponent.TurnOn(this);
 
         void IGameFinishListener.OnFinish() => _switchComponent.TurnOff(this);
@@ -67,6 +52,5 @@ namespace ShootEmUp
         void IGameResumeListener.OnResume() => _switchComponent.TurnOn(this);
 
         void IGamePauseListener.OnPause() => _switchComponent.TurnOff(this);
-        
     }
 }

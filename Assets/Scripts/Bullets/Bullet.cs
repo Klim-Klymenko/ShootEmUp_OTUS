@@ -5,11 +5,10 @@ namespace ShootEmUp
 {
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(SpriteRenderer))]
-    [RequireComponent(typeof(SwitchStateComponent))]
     public sealed class Bullet : MonoBehaviour, IPoolable, IGameStartListener,
         IGameFinishListener, IGameResumeListener, IGamePauseListener
     {
-        public event Action<Bullet, Collision2D> OnCollisionEntered;
+        public event Action OnBulletDestroyed;
         
         [SerializeField] private Rigidbody2D _rigidbody;
         [SerializeField] private SpriteRenderer _spriteRenderer;
@@ -17,13 +16,6 @@ namespace ShootEmUp
         [SerializeField] private GameObject _gameObject;
 
         private Vector2 _previousVelocity;
-        
-        private SwitchStateComponent _switchComponent;
-
-        public SwitchStateComponent SwitchComponent
-        {
-            set => _switchComponent = value;
-        }
 
         public Transform Transform => _transform;
         public GameObject GameObject => _gameObject;
@@ -57,7 +49,7 @@ namespace ShootEmUp
         
         private void OnValidate() => AccessFields();
 
-        private void OnCollisionEnter2D(Collision2D collision) => OnCollisionEntered?.Invoke(this, collision);
+        private void OnCollisionEnter2D(Collision2D collision) => DealDamage(collision);
 
         private void AccessFields()
         {
@@ -66,24 +58,42 @@ namespace ShootEmUp
             _spriteRenderer = GetComponent<SpriteRenderer>();
             _rigidbody = GetComponent<Rigidbody2D>();
         }
+        
+        private void DealDamage(Collision2D collision)
+        {
+            if (!collision.gameObject.TryGetComponent(out TeamComponent teamComponent))
+                return;
+            
+            if (teamComponent.CohesionType == CohesionType)
+                return;
+            
+            if (!collision.gameObject.TryGetComponent(out HitPointsComponent hitPointsComponent))
+                return;
+            
+            hitPointsComponent.TakeDamage(Damage);
+            OnBulletDestroyed?.Invoke();
+        }
 
-        public void OnStart() => _switchComponent.TurnOn(this);
+        public void OnStart() => enabled = true;
 
         void IGameFinishListener.OnFinish()
         {
             ResetVelocity();
-            _switchComponent.TurnOff(this);
+            
+            enabled = false;
         }
         void IGameResumeListener.OnResume()
         {
-            _switchComponent.TurnOn(this);
+            enabled = true;
+            
             ReturnVelocity();
         }
 
         void IGamePauseListener.OnPause()
         {
             ResetVelocity();
-            _switchComponent.TurnOff(this);
+
+            enabled = false;
         }
 
         private void ResetVelocity()

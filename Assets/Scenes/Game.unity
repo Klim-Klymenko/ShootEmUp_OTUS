@@ -718,7 +718,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _levelBounds: {fileID: 2572952653776768186}
-  _bulletBuilder: {fileID: 363245578}
+  bulletSpawner: {fileID: 363245578}
   _switchComponent: {fileID: 363245579}
 --- !u!114 &363245578
 MonoBehaviour:
@@ -736,7 +736,7 @@ MonoBehaviour:
   _prefab: {fileID: 201757604187811891, guid: 5fe72886874b4e445b06cf777ca4920d, type: 3}
   _parentToGet: {fileID: 1683128698}
   _parentToPut: {fileID: 1831741369}
-  _manager: {fileID: 363245577}
+  _bulletManager: {fileID: 363245577}
   _gameManager: {fileID: 1526096691}
 --- !u!114 &363245579
 MonoBehaviour:
@@ -1152,7 +1152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32dae85f8264479bac19d85418d92392, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyBuilder: {fileID: 562298208}
+  enemySpawner: {fileID: 562298208}
   _bulletManager: {fileID: 363245577}
 --- !u!114 &562298206
 MonoBehaviour:
@@ -1179,7 +1179,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gameManager: {fileID: 1526096691}
-  _enemyManager: {fileID: 562298205}
+  _enemySpawner: {fileID: 562298208}
   _spawnTimer: {fileID: 562298206}
   _switchComponent: {fileID: 562298209}
 --- !u!114 &562298208
@@ -1200,8 +1200,8 @@ MonoBehaviour:
   _parentToPut: {fileID: 178513672}
   _target: {fileID: 4414282821800802396}
   _randomPositionGenerator: {fileID: 7166351703523243261}
-  _enemyManager: {fileID: 562298205}
   _gameManager: {fileID: 1526096691}
+  _bulletManager: {fileID: 363245577}
 --- !u!114 &562298209
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1355,6 +1355,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1134805360}
   - component: {fileID: 1134805361}
+  - component: {fileID: 1134805363}
   - component: {fileID: 1134805362}
   m_Layer: 0
   m_Name: InputManager
@@ -1391,7 +1392,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _characterMoveComponent: {fileID: 4414282821800802398}
-  bulletManager: {fileID: 4414282821800802405}
   _switchComponent: {fileID: 1134805362}
 --- !u!114 &1134805362
 MonoBehaviour:
@@ -1406,6 +1406,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gameManager: {fileID: 1526096691}
+--- !u!114 &1134805363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1134805359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cec1a43b7964959b41a09c88e9f6258, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _bulletShooter: {fileID: 4414282821800802405}
+  _switchComponent: {fileID: 1134805362}
 --- !u!1 &1142204412
 GameObject:
   m_ObjectHideFlags: 0
@@ -1625,8 +1639,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b7e9181bef64ce5b03537b9b802fa05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyBuilder: {fileID: 562298208}
-  _bulletBuilder: {fileID: 363245578}
+  enemySpawner: {fileID: 562298208}
+  bulletSpawner: {fileID: 363245578}
 --- !u!114 &1526096696
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2537,7 +2551,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c57ed31af8d94ec3b11df7e2b588d40f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bulletBuilder: {fileID: 4414282821800802412}
+  _bulletColour: {r: 0, g: 0.047058824, b: 1, a: 1}
+  _bulletDamage: 1
+  _bulletSpeed: 3
+  _weaponComponent: {fileID: 4414282821800802408}
+  _bulletManager: {fileID: 363245577}
 --- !u!114 &4414282821800802406
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2565,23 +2583,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce164c84a74a425f8d2e82764aef9e34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &4414282821800802412
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4414282821800802397}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4be59349a0554113929db856c8df1c9a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _bulletColour: {r: 0, g: 0.046190023, b: 1, a: 1}
-  _bulletDamage: 1
-  _bulletSpeed: 3
-  _weaponComponent: {fileID: 4414282821800802408}
-  _bulletManager: {fileID: 363245577}
 --- !u!114 &4414282821800802414 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3926786964091724599, guid: 9699e7e809fd44b2bbf3d30c951ecbd2,
@@ -2606,7 +2607,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed4e500b3874a454ea22fb6e211e6270, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameManager: {fileID: 0}
+  _gameManager: {fileID: 1526096691}
 --- !u!1 &4788406047096451828
 GameObject:
   m_ObjectHideFlags: 0

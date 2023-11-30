@@ -4,13 +4,13 @@ namespace ShootEmUp
 {
     public sealed class PoolsInitializer : MonoBehaviour, IGameInitializeListener
     {
-        [SerializeField] private EnemyBuilder _enemyBuilder;
-        [SerializeField] private BulletBuilder _bulletBuilder;
+        [SerializeField] private EnemySpawner enemySpawner;
+        [SerializeField] private BulletSpawner bulletSpawner;
 
         void IGameInitializeListener.OnInitialize()
         {
-            _enemyBuilder.InitializePool();
-            _bulletBuilder.InitializePool();
+            enemySpawner.InitializePool();
+            bulletSpawner.InitializePool();
         }
     }
 }

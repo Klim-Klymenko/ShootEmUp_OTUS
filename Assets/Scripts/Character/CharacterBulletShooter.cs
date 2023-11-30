@@ -1,9 +1,9 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 namespace ShootEmUp
 {
     [RequireComponent(typeof(WeaponComponent))]
-    public sealed class CharacterBulletBuilder : MonoBehaviour
+    public sealed class CharacterBulletShooter : MonoBehaviour
     {
         [SerializeField] private Color _bulletColour;
         [SerializeField] private int _bulletDamage;
@@ -13,8 +13,8 @@ namespace ShootEmUp
         [SerializeField] private BulletManager _bulletManager;
 
         private void OnValidate() => _weaponComponent = GetComponent<WeaponComponent>();
-
-        public void SpawnBullet()
+        
+        public void ShootBullet()
         {
             _bulletManager.SpawnBullet(new Args 
             {

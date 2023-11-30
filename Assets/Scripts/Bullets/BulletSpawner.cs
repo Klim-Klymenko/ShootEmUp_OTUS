@@ -4,18 +4,18 @@ using UnityEngine;
 namespace ShootEmUp
 {
     [RequireComponent(typeof(BulletManager))]
-    public sealed class BulletBuilder : MonoBehaviour
+    public sealed class BulletSpawner : MonoBehaviour
     {
         [SerializeField] private int _reservationAmount = 1000;
         [SerializeField] private Bullet _prefab;
         [SerializeField] private Transform _parentToGet;
         [SerializeField] private  Transform _parentToPut;
-        [SerializeField] private BulletManager _manager;
+        [SerializeField] private BulletManager _bulletManager;
         [SerializeField] private GameManager _gameManager;
         
         private Pool<Bullet> _bulletPool;
 
-        private void OnValidate() => _manager = GetComponent<BulletManager>();
+        private void OnValidate() => _bulletManager = GetComponent<BulletManager>();
 
         public Bullet SpawnBullet(Args args)
         {
@@ -30,18 +30,13 @@ namespace ShootEmUp
             bullet.Damage = args.Damage;
             bullet.CohesionType = args.CohesionType;
             bullet.Velocity = args.Velocity;
-
-            SwitchStateComponent switchStateComponent = bullet.GetComponent<SwitchStateComponent>();
-            switchStateComponent.GameManager = _gameManager;
             
-            CollisionBulletObserver collisionObserver = bullet.GetComponent<CollisionBulletObserver>();
-            collisionObserver.BulletManager = _manager;
-            _gameManager.AddEventListeners(collisionObserver);
-            collisionObserver.OnStart();
-
-            bullet.SwitchComponent = switchStateComponent;
             _gameManager.AddEventListeners(bullet);
             bullet.OnStart();
+
+            BulletDestructionObserver destructionObserver = bullet.GetComponent<BulletDestructionObserver>();
+            destructionObserver.BulletManager = _bulletManager;
+            destructionObserver.OnStart();
 
             return bullet;
         }
@@ -50,7 +45,7 @@ namespace ShootEmUp
         {
             if (_bulletPool == null)
                 throw new Exception("Pull hasn't been allocated");
-            
+
             _bulletPool.Put(bullet);
         }
 

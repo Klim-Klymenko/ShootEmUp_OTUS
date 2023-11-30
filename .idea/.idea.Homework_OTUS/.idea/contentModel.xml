@@ -15,13 +15,13 @@
           <e p="Bullets" t="Include">
             <e p="Args.cs" t="Include" />
             <e p="Bullet.cs" t="Include" />
-            <e p="BulletBuilder.cs" t="Include" />
+            <e p="BulletDestructionObserver.cs" t="Include" />
             <e p="BulletManager.cs" t="Include" />
-            <e p="CollisionBulletObserver.cs" t="Include" />
+            <e p="BulletSpawner.cs" t="Include" />
+            <e p="IBulletSpawner.cs" t="Include" />
           </e>
           <e p="Character" t="Include">
-            <e p="CharacterBulletBuilder.cs" t="Include" />
-            <e p="CharacterBulletManager.cs" t="Include" />
+            <e p="CharacterBulletShooter.cs" t="Include" />
             <e p="CharacterHitPointsObserver.cs" t="Include" />
           </e>
           <e p="Common" t="Include">
@@ -45,15 +45,13 @@
               <e p="EnemyMoveAgent.cs" t="Include" />
             </e>
             <e p="Enemy Spawn" t="Include">
-              <e p="EnemyBuilder.cs" t="Include" />
-              <e p="EnemyManager.cs" t="Include" />
               <e p="EnemyPositionsGenerator.cs" t="Include" />
               <e p="EnemySpawnController.cs" t="Include" />
+              <e p="EnemySpawner.cs" t="Include" />
               <e p="EnemySpawnTimer.cs" t="Include" />
             </e>
+            <e p="Enemy.cs" t="Include" />
             <e p="EnemyDeathObserver.cs" t="Include" />
-            <e p="EnemyReferenceComponent.cs" t="Include" />
-            <e p="EnemyShootingController.cs" t="Include" />
           </e>
           <e p="Game Cycle" t="Include">
             <e p="GameManager.cs" t="Include" />
@@ -78,7 +76,8 @@
             <e p="StartButtonManager.cs" t="Include" />
           </e>
           <e p="Input" t="Include">
-            <e p="InputController.cs" t="Include" />
+            <e p="InputPlayerMovingController.cs" t="Include" />
+            <e p="InputPlayerShootingController.cs" t="Include" />
           </e>
           <e p="Level" t="Include">
             <e p="LevelBackground.cs" t="Include" />

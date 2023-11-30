@@ -4,11 +4,10 @@ using UnityEngine;
 namespace ShootEmUp
 {
     [RequireComponent(typeof(SwitchStateComponent))]
-    public sealed class InputController : MonoBehaviour, IGameUpdateListener, IGameFixedUpdateListener,
+    public sealed class InputPlayerMovingController : MonoBehaviour, IGameUpdateListener, IGameFixedUpdateListener,
         IGameStartListener, IGameFinishListener, IGameResumeListener, IGamePauseListener
     {
         [SerializeField] private MoveComponent _characterMoveComponent;
-        [SerializeField] private CharacterBulletManager bulletManager;
 
         [SerializeField] private SwitchStateComponent _switchComponent;
         
@@ -18,15 +17,9 @@ namespace ShootEmUp
         
         private void OnValidate() => _switchComponent = GetComponent<SwitchStateComponent>();
         
-        void IGameUpdateListener.OnUpdate()
-        {
-            _horizontal = Input.GetAxis("Horizontal");
-            
-            if (Input.GetKeyDown(KeyCode.Space))
-                bulletManager.RunBullet();
-        }
-        
-        void IGameFixedUpdateListener.OnFixedUpdate() =>
+        void IGameUpdateListener.OnUpdate() => _horizontal = Input.GetAxis("Horizontal");
+
+        void IGameFixedUpdateListener.OnFixedUpdate() => 
             _characterMoveComponent.Move(new Vector2(_horizontal, 0) * Time.fixedDeltaTime);
 
         void IGameStartListener.OnStart() => _switchComponent.TurnOn(this);
