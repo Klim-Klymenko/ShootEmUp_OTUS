@@ -12,7 +12,12 @@ namespace ShootEmUp
     {
         [SerializeField] private Bullet _bullet;
 
-        [HideInInspector] public BulletManager BulletManager;
+        private BulletManager _bulletManager;
+
+        public BulletManager BulletManager
+        {
+            set => _bulletManager = value;
+        }
 
         public bool IsOnlyUnityMethods { get; } = false;
 
@@ -22,7 +27,7 @@ namespace ShootEmUp
 
         private void Disable() => _bullet.OnBulletDestroyed -= UnspawnBullet;
 
-        private void UnspawnBullet() => BulletManager.UnspawnBullet(_bullet);
+        private void UnspawnBullet() => _bulletManager.UnspawnBullet(_bullet);
         
         public void OnStart()
         {

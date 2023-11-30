@@ -7,8 +7,12 @@ namespace ShootEmUp
     public sealed class EnemyDeathObserver : MonoBehaviour, IGameStartListener,
         IGameFinishListener, IGameResumeListener, IGamePauseListener
     {
-        public EnemySpawner EnemySpawner;
-        
+        private EnemySpawner _enemySpawner;
+        public EnemySpawner EnemySpawner
+        {
+            set => _enemySpawner = value;
+        }
+
         [SerializeField] private HitPointsComponent _hitPointsComponent;
 
         [SerializeField] private Enemy _referenceComponent;
@@ -26,7 +30,7 @@ namespace ShootEmUp
         private void Disable() => _hitPointsComponent.OnDeath -= UnspawnEnemy;
 
         private void UnspawnEnemy() =>
-            EnemySpawner.UnspawnEnemy(_referenceComponent);
+            _enemySpawner.UnspawnEnemy(_referenceComponent);
 
         public void OnStart() => Enable();
 
