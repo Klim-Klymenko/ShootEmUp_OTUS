@@ -2,10 +2,10 @@
 {
     public enum GameState
     {
+        None,
         Initialized,
-        Started,
+        Playing,
         Paused,
-        Resumed,
         Finished
     }
 }

@@ -2,7 +2,7 @@
 
 namespace ShootEmUp
 {
-    [RequireComponent(typeof(Enemy))]
+    [RequireComponent(typeof(EnemyReferenceComponent))]
     [RequireComponent(typeof(HitPointsComponent))]
     public sealed class EnemyDeathObserver : MonoBehaviour, IGameStartListener,
         IGameFinishListener, IGameResumeListener, IGamePauseListener
@@ -15,13 +15,11 @@ namespace ShootEmUp
 
         [SerializeField] private HitPointsComponent _hitPointsComponent;
 
-        [SerializeField] private Enemy _referenceComponent;
+        [SerializeField] private EnemyReferenceComponent _referenceComponent;
 
-        public bool IsOnlyUnityMethods { get; } = false;
-        
         private void OnValidate()
         {
-            _referenceComponent = GetComponent<Enemy>();
+            _referenceComponent = GetComponent<EnemyReferenceComponent>();
             _hitPointsComponent = GetComponent<HitPointsComponent>();
         }
 
@@ -32,7 +30,7 @@ namespace ShootEmUp
         private void UnspawnEnemy() =>
             _enemySpawner.UnspawnEnemy(_referenceComponent);
 
-        public void OnStart() => Enable();
+        void IGameStartListener.OnStart() => Enable();
 
         void IGameFinishListener.OnFinish() => Disable();
         

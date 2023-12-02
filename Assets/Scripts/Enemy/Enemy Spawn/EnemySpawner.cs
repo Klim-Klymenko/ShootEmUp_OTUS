@@ -6,7 +6,7 @@ namespace ShootEmUp
     public sealed class EnemySpawner : MonoBehaviour
     {
         [SerializeField] private  int _reservationAmount = 7;
-        [SerializeField] private Enemy _prefab;
+        [SerializeField] private EnemyReferenceComponent _prefab;
         [SerializeField] private Transform _parentToGet;
         [SerializeField] private Transform _parentToPut;
         
@@ -16,7 +16,7 @@ namespace ShootEmUp
         [SerializeField] private GameManager _gameManager;
         [SerializeField] private BulletManager _bulletManager;
         
-        private Pool<Enemy> _enemyPool;
+        private Pool<EnemyReferenceComponent> _enemyPool;
 
         public int ReservationAmount => _reservationAmount;
 
@@ -25,30 +25,25 @@ namespace ShootEmUp
             if (_enemyPool == null)
                 throw new Exception("Pull hasn't been allocated");
 
-            var enemy = _enemyPool.Get();
+            EnemyReferenceComponent enemy = _enemyPool.Get();
 
             enemy.Transform.position = _randomPositionGenerator.RandomSpawnPosition();
             enemy.MoveAgent.Destination = _randomPositionGenerator.RandomAttackPosition();
             
             enemy.AttackAgent.Target = _target;
-            
-            SwitchStateComponent switchComponent = enemy.GetComponent<SwitchStateComponent>();
-            switchComponent.GameManager = _gameManager;
-
-            _gameManager.AddEventListeners(enemy.MoveAgent);
-            enemy.MoveAgent.OnStart();
-
             enemy.AttackController.BulletManager = _bulletManager;
-            _gameManager.AddEventListeners(enemy.AttackController);
-            enemy.AttackController.OnStart();
-
-            EnemyDeathObserver deathObserver = enemy.GetComponent<EnemyDeathObserver>();
-            deathObserver.EnemySpawner = this;
-            _gameManager.AddEventListeners(deathObserver);
-            deathObserver.OnStart();
+            enemy.DeathObserver.EnemySpawner = this;
+            
+            IGameListener[] listeners = enemy.GetComponents<IGameListener>();
+            for (int i = 0; i < listeners.Length; i++)
+                _gameManager.AddListeners(listeners[i]);
+            
+            IGameStartListener[] startListeners = enemy.GetComponents<IGameStartListener>();
+            for (int i = 0; i < startListeners.Length; i++)
+                startListeners[i].OnStart();
         }
 
-        public void UnspawnEnemy(Enemy enemy)
+        public void UnspawnEnemy(EnemyReferenceComponent enemy)
         {
             if (_enemyPool == null)
                 throw new Exception("Pull hasn't been allocated");
@@ -58,7 +53,7 @@ namespace ShootEmUp
 
         public void InitializePool()
         {
-            _enemyPool ??= new Pool<Enemy>(_reservationAmount, _prefab, _parentToGet, _parentToPut);
+            _enemyPool ??= new Pool<EnemyReferenceComponent>(_reservationAmount, _prefab, _parentToGet, _parentToPut);
             _enemyPool.Reserve();
         }
     }

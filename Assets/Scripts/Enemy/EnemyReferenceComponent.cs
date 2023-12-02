@@ -5,20 +5,22 @@ namespace ShootEmUp
     [RequireComponent(typeof(EnemyAttackAgent))]
     [RequireComponent(typeof(EnemyMoveAgent))]
     [RequireComponent(typeof(EnemyAttackController))]
-    public sealed class Enemy : MonoBehaviour, IPoolable
+    public sealed class EnemyReferenceComponent : MonoBehaviour, IPoolable
     {
         [SerializeField] private Transform _transform;
         [SerializeField] private GameObject _gameObject;
         [SerializeField] private EnemyAttackAgent _attackAgent;
         [SerializeField] private EnemyMoveAgent _moveAgent;
         [SerializeField] private EnemyAttackController _attackController;
-        
+        [SerializeField] private EnemyDeathObserver _deathObserver;
+
         public Transform Transform => _transform;
         public GameObject GameObject => _gameObject;
         public EnemyAttackAgent AttackAgent => _attackAgent;
         public EnemyMoveAgent MoveAgent => _moveAgent;
         public EnemyAttackController AttackController => _attackController;
-
+        public EnemyDeathObserver DeathObserver => _deathObserver;
+        
         private void OnValidate()
         {
             _transform = transform;
@@ -26,6 +28,7 @@ namespace ShootEmUp
             _attackAgent = GetComponent<EnemyAttackAgent>();
             _moveAgent = GetComponent<EnemyMoveAgent>();
             _attackController = GetComponent<EnemyAttackController>();
+            _deathObserver = GetComponent<EnemyDeathObserver>();
         }
     }
 }

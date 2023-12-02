@@ -2,7 +2,6 @@
 
 namespace ShootEmUp
 {
-    [RequireComponent(typeof(SwitchStateComponent))]
     [RequireComponent(typeof(HitPointsComponent))]
     [RequireComponent(typeof(MoveComponent))]
     [RequireComponent(typeof(EnemyAttackAgent))]
@@ -17,17 +16,13 @@ namespace ShootEmUp
         [SerializeField] private EnemyAttackAgent _attackAgent;
         [SerializeField] private EnemyAttackTimer _enemyTimer;
 
-        private IBulletSpawner _bulletManager;
+        private BulletManager _bulletManager;
 
-        public IBulletSpawner BulletManager
+        public BulletManager BulletManager
         {
             set => _bulletManager = value;
         }
-        
-        [SerializeField] private SwitchStateComponent _switchComponent;
-        
-        public bool IsOnlyUnityMethods { get; } = false;
-        
+
         private void OnValidate()
         {
             _hitPointsComponent = GetComponent<HitPointsComponent>();
@@ -36,8 +31,6 @@ namespace ShootEmUp
             
             _attackAgent = GetComponent<EnemyAttackAgent>();
             _enemyTimer = GetComponent<EnemyAttackTimer>();
-
-            _switchComponent = GetComponent<SwitchStateComponent>();
         }
 
         private void Enable() => _enemyTimer.OnTimeToShoot += Fire;
@@ -49,32 +42,12 @@ namespace ShootEmUp
 
         private void Fire() => _attackAgent.Fire(_moveComponent.Position, _bulletManager);
         
-        public void OnStart()
-        {
-            _switchComponent.TurnOn(this);
+        void IGameStartListener.OnStart() => Enable();
 
-            Enable();
-        }
-        
-        void IGameFinishListener.OnFinish()
-        {
-            _switchComponent.TurnOff(this);
-            
-            Disable();
-        }
+        void IGameFinishListener.OnFinish() => Disable();
 
-        void IGameResumeListener.OnResume()
-        {
-            _switchComponent.TurnOn(this);
-            
-            Enable();
-        }
+        void IGameResumeListener.OnResume() => Enable();
         
-        void IGamePauseListener.OnPause()
-        {
-            _switchComponent.TurnOff(this);
-            
-            Disable();
-        }
+        void IGamePauseListener.OnPause() => Disable();
     }
 }

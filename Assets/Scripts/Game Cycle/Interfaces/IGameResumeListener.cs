@@ -1,6 +1,6 @@
 ﻿namespace ShootEmUp
 {
-    public interface IGameResumeListener : IGameListener, ISwitchable
+    public interface IGameResumeListener : IGameListener
     {
         void OnResume();
     }

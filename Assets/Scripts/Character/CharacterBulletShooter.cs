@@ -1,3 +1,5 @@
+using System;
+using ShootEmUp.Interfaces;
 using UnityEngine;
 
 namespace ShootEmUp
@@ -10,13 +12,17 @@ namespace ShootEmUp
         [SerializeField] private float _bulletSpeed;
         [SerializeField] private WeaponComponent _weaponComponent;
 
+        private IBulletSpawner _bulletSpawner;
         [SerializeField] private BulletManager _bulletManager;
 
         private void OnValidate() => _weaponComponent = GetComponent<WeaponComponent>();
-        
+
+        //косяк с таким кривым прокидыванием будет исправлен в домашке с DI
+        private void Awake() => _bulletSpawner = _bulletManager;
+
         public void ShootBullet()
         {
-            _bulletManager.SpawnBullet(new Args 
+            _bulletSpawner.SpawnBullet(new Args 
             {
                 CohesionType = CohesionType.Player, 
                 PhysicsLayer = (int) PhysicsLayer.PLAYER_BULLET, 

@@ -2,7 +2,6 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    [RequireComponent(typeof(SwitchStateComponent))]
     [RequireComponent(typeof(HitPointsComponent))]
     public sealed class CharacterHitPointsObserver : MonoBehaviour, IGameStartListener,
         IGameFinishListener, IGameResumeListener, IGamePauseListener
@@ -11,14 +10,7 @@ namespace ShootEmUp
 
         [SerializeField] private HitPointsComponent _hitPointsComponent;
 
-        [SerializeField] private SwitchStateComponent _switchComponent;
-        public bool IsOnlyUnityMethods { get; } = false;
-        
-        private void OnValidate()
-        {
-            _hitPointsComponent = GetComponent<HitPointsComponent>();
-            _switchComponent = GetComponent<SwitchStateComponent>();
-        }
+        private void OnValidate() => _hitPointsComponent = GetComponent<HitPointsComponent>();
 
         private void Enable() => _hitPointsComponent.OnDeath += CharacterDeath;
 

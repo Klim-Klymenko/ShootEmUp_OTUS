@@ -30,13 +30,16 @@ namespace ShootEmUp
             bullet.Damage = args.Damage;
             bullet.CohesionType = args.CohesionType;
             bullet.Velocity = args.Velocity;
-            
-            _gameManager.AddEventListeners(bullet);
-            bullet.OnStart();
 
-            BulletDestructionObserver destructionObserver = bullet.GetComponent<BulletDestructionObserver>();
-            destructionObserver.BulletManager = _bulletManager;
-            destructionObserver.OnStart();
+            bullet.GetComponent<BulletDestructionObserver>().BulletUnspawner = _bulletManager;
+            
+            IGameListener[] listeners = bullet.GetComponents<IGameListener>();
+            for (int i = 0; i < listeners.Length; i++)
+                _gameManager.AddListeners(listeners[i]);
+
+            IGameStartListener[] startListeners = bullet.GetComponents<IGameStartListener>();
+            for (int i = 0; i < startListeners.Length; i++)
+                startListeners[i].OnStart();
 
             return bullet;
         }

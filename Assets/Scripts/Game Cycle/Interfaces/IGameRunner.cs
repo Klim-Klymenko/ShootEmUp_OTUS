@@ -1,7 +1,4 @@
 ﻿namespace ShootEmUp
 {
-    public interface IGameRunner
-    {
-        
-    }
+    public interface IGameRunner { }
 }

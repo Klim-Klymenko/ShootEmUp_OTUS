@@ -18,7 +18,10 @@
             <e p="BulletDestructionObserver.cs" t="Include" />
             <e p="BulletManager.cs" t="Include" />
             <e p="BulletSpawner.cs" t="Include" />
-            <e p="IBulletSpawner.cs" t="Include" />
+            <e p="Interfaces" t="Include">
+              <e p="IBulletSpawner.cs" t="Include" />
+              <e p="IBulletUnspawner.cs" t="Include" />
+            </e>
           </e>
           <e p="Character" t="Include">
             <e p="CharacterBulletShooter.cs" t="Include" />
@@ -33,7 +36,6 @@
           <e p="Components" t="Include">
             <e p="HitPointsComponent.cs" t="Include" />
             <e p="MoveComponent.cs" t="Include" />
-            <e p="SwitchStateComponent.cs" t="Include" />
             <e p="TeamComponent.cs" t="Include" />
             <e p="WeaponComponent.cs" t="Include" />
           </e>
@@ -50,8 +52,8 @@
               <e p="EnemySpawner.cs" t="Include" />
               <e p="EnemySpawnTimer.cs" t="Include" />
             </e>
-            <e p="Enemy.cs" t="Include" />
             <e p="EnemyDeathObserver.cs" t="Include" />
+            <e p="EnemyReferenceComponent.cs" t="Include" />
           </e>
           <e p="Game Cycle" t="Include">
             <e p="GameManager.cs" t="Include" />
@@ -70,18 +72,19 @@
               <e p="IGameStartable.cs" t="Include" />
               <e p="IGameStartListener.cs" t="Include" />
               <e p="IGameUpdateListener.cs" t="Include" />
-              <e p="ISwitchable.cs" t="Include" />
             </e>
             <e p="PoolsInitializer.cs" t="Include" />
-            <e p="StartButtonManager.cs" t="Include" />
           </e>
           <e p="Input" t="Include">
-            <e p="InputPlayerMovingController.cs" t="Include" />
-            <e p="InputPlayerShootingController.cs" t="Include" />
+            <e p="InputMoveController.cs" t="Include" />
+            <e p="InputShootController.cs" t="Include" />
           </e>
           <e p="Level" t="Include">
             <e p="LevelBackground.cs" t="Include" />
             <e p="LevelBounds.cs" t="Include" />
+          </e>
+          <e p="UI" t="Include">
+            <e p="StartButtonSwitcher.cs" t="Include" />
           </e>
         </e>
       </e>

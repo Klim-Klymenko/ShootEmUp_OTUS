@@ -20,8 +20,6 @@ namespace ShootEmUp
         public Transform Transform => _transform;
         public GameObject GameObject => _gameObject;
 
-        public bool IsOnlyUnityMethods { get; } = true;
-        
         public CohesionType CohesionType { get; set; }
         public int Damage { get; set; }
         
@@ -74,7 +72,7 @@ namespace ShootEmUp
             OnBulletDestroyed?.Invoke();
         }
 
-        public void OnStart() => enabled = true;
+        void IGameStartListener.OnStart() => enabled = true;
 
         void IGameFinishListener.OnFinish()
         {

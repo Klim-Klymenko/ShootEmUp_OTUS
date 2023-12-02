@@ -1,6 +1,6 @@
 ﻿namespace ShootEmUp
 {
-    public interface IGamePauseListener : IGameListener, ISwitchable
+    public interface IGamePauseListener : IGameListener
     {
         void OnPause();
     }

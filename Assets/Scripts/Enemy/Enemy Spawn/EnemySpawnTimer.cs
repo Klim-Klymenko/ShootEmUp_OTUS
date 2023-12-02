@@ -14,7 +14,7 @@ namespace ShootEmUp
 
         public void  TimerCountdown(int reservationAmount, GameState gameState)
         {
-            if (gameState != GameState.Started && gameState != GameState.Resumed)
+            if (gameState != GameState.Playing)
                 return;
 
             if (_enemiesSpawned >= reservationAmount)

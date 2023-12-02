@@ -1,3 +1,4 @@
+using ShootEmUp.Interfaces;
 using UnityEngine;
 
 namespace ShootEmUp
@@ -12,14 +13,12 @@ namespace ShootEmUp
     {
         [SerializeField] private Bullet _bullet;
 
-        private BulletManager _bulletManager;
+        private IBulletUnspawner _bulletUnspawner;
 
-        public BulletManager BulletManager
+        public IBulletUnspawner BulletUnspawner
         {
-            set => _bulletManager = value;
+            set => _bulletUnspawner = value;
         }
-
-        public bool IsOnlyUnityMethods { get; } = false;
 
         private void OnValidate() => _bullet = GetComponent<Bullet>();
 
@@ -27,35 +26,14 @@ namespace ShootEmUp
 
         private void Disable() => _bullet.OnBulletDestroyed -= UnspawnBullet;
 
-        private void UnspawnBullet() => _bulletManager.UnspawnBullet(_bullet);
+        private void UnspawnBullet() => _bulletUnspawner.UnspawnBullet(_bullet);
         
-        public void OnStart()
-        {
-            enabled = true;
-            
-            Enable();
-        }
-        
-        void IGameFinishListener.OnFinish()
-        {
-            Disable();
-            
-            enabled = false;
-        }
+        void IGameStartListener.OnStart() => Enable();
 
-        void IGameResumeListener.OnResume()
-        {
-            enabled = true;
-            
-            Enable();
-        }
-        
-        void IGamePauseListener.OnPause()
-        {
-            Disable();
-            
-            enabled = false;
-        }
+        void IGameFinishListener.OnFinish() => Disable();
+
+        void IGameResumeListener.OnResume() => Enable();
+
+        void IGamePauseListener.OnPause() => Disable();
     }
-
 }

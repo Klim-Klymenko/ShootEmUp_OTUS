@@ -2,15 +2,12 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    [RequireComponent(typeof(SwitchStateComponent))]
     [RequireComponent(typeof(MoveComponent))]
-    public sealed class EnemyMoveAgent : MonoBehaviour, IGameFixedUpdateListener,
-        IGameStartListener, IGameFinishListener, IGameResumeListener, IGamePauseListener
+    public sealed class EnemyMoveAgent : MonoBehaviour, IGameFixedUpdateListener
     {
         [SerializeField] private MoveComponent _moveComponent;
-        [SerializeField] private SwitchStateComponent _switchComponent;
 
-        private Transform _transform;
+        [SerializeField] private Transform _transform;
         
         private Vector2 _destination;
 
@@ -24,16 +21,12 @@ namespace ShootEmUp
         }
 
         public bool IsReached { get; private set; }
-
-        public bool IsOnlyUnityMethods { get; } = false;
-
+        
         private void OnValidate()
         {
             _moveComponent = GetComponent<MoveComponent>();
-            _switchComponent = GetComponent<SwitchStateComponent>();
-        } 
-
-        private void Awake() => _transform = transform;
+            _transform = transform;
+        }
 
         void IGameFixedUpdateListener.OnFixedUpdate()
         {
@@ -53,13 +46,5 @@ namespace ShootEmUp
             Vector2 displacement = normalizedVector * Time.fixedDeltaTime;
             _moveComponent.Move(displacement);
         }
-
-        public void OnStart() => _switchComponent.TurnOn(this);
-
-        void IGameFinishListener.OnFinish() => _switchComponent.TurnOff(this);
-
-        void IGameResumeListener.OnResume() =>_switchComponent.TurnOn(this);
-
-        void IGamePauseListener.OnPause() => _switchComponent.TurnOff(this);
     }
 }
