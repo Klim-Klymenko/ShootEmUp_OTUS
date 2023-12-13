@@ -4,7 +4,7 @@ using UnityEngine;
 namespace ShootEmUp
 {
     [RequireComponent(typeof(BulletManager))]
-    public sealed class BulletSpawner : MonoBehaviour
+    public sealed class BulletSpawner : MonoBehaviour, IGameInitializeListener
     {
         [SerializeField] private int _reservationAmount = 1000;
         [SerializeField] private Bullet _prefab;
@@ -17,6 +17,14 @@ namespace ShootEmUp
 
         private void OnValidate() => _bulletManager = GetComponent<BulletManager>();
 
+        public void OnInitialize() => InitializePool();
+        
+        public void InitializePool()
+        {
+            _bulletPool ??= new Pool<Bullet>(_reservationAmount, _prefab, _parentToGet, _parentToPut);
+            _bulletPool.Reserve();
+        }
+        
         public Bullet SpawnBullet(Args args)
         {
             if (_bulletPool == null)
@@ -50,12 +58,6 @@ namespace ShootEmUp
                 throw new Exception("Pull hasn't been allocated");
 
             _bulletPool.Put(bullet);
-        }
-
-        public void InitializePool()
-        {
-            _bulletPool ??= new Pool<Bullet>(_reservationAmount, _prefab, _parentToGet, _parentToPut);
-            _bulletPool.Reserve();
         }
     }
 }

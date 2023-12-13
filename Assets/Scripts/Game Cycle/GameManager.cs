@@ -5,19 +5,21 @@ namespace ShootEmUp
 {
     public sealed class GameManager : MonoBehaviour, IGameStartable
     {
-        private readonly List<IGameUpdateListener> _updateListeners = new List<IGameUpdateListener>();
-        private readonly List<IGameFixedUpdateListener> _fixedUpdateListeners = new List<IGameFixedUpdateListener>();
-        
-        private readonly List<IGameInitializeListener> _initializeListeners = new List<IGameInitializeListener>();
-        private readonly List<IGameStartListener> _startListeners = new List<IGameStartListener>();
-        private readonly List<IGameFinishListener> _finishListeners = new List<IGameFinishListener>();
-        private readonly List<IGameResumeListener> _resumeListeners = new List<IGameResumeListener>();
-        private readonly List<IGamePauseListener> _pauseListeners = new List<IGamePauseListener>();
-        
         public GameState CurrentGameState { get; private set; }
         public bool HasGameRun { get; set; }
         private bool HasGameStarted { get; set; }
+        
+        private readonly List<IGameUpdateListener> _updateListeners = new();
+        private readonly List<IGameFixedUpdateListener> _fixedUpdateListeners = new();
+        
+        private readonly List<IGameInitializeListener> _initializeListeners = new();
+        private readonly List<IGameStartListener> _startListeners = new();
+        private readonly List<IGameFinishListener> _finishListeners = new();
+        private readonly List<IGameResumeListener> _resumeListeners = new();
+        private readonly List<IGamePauseListener> _pauseListeners = new();
 
+        private readonly GameStateController _gameStateController = new();
+        
         private void Awake() => OnInitialize();
 
         private void Update()
@@ -84,21 +86,11 @@ namespace ShootEmUp
             if (CurrentGameState != GameState.Paused && CurrentGameState != GameState.Initialized)
                 return;
 
-            for (int i = 0; i < _resumeListeners.Count; i++)
-            {
-                //если мы поставили на паузу во время обратного отсчета до начала игры
-                //IGameRunner - пустой маркер для трека скрипта, который фактически стартует игру
-                if (!HasGameStarted)
-                {
-                    if (_resumeListeners[i] is not IGameRunner)
-                        continue;
-                    
-                    _resumeListeners[i].OnResume();
-                }
-                else
-                    _resumeListeners[i].OnResume();
-            }
-            
+            List<IGameResumeListener> checkedResumeListeners = _gameStateController.ChangeState(_resumeListeners, HasGameStarted);
+
+            for (int i = 0; i < checkedResumeListeners.Count; i++) 
+                checkedResumeListeners[i].OnResume();
+
             if (HasGameStarted)
                 CurrentGameState = GameState.Playing;
         }
@@ -108,18 +100,11 @@ namespace ShootEmUp
             if (CurrentGameState == GameState.Paused || CurrentGameState == GameState.Finished || !HasGameRun)
                 return;
             
-            for (int i = 0; i < _pauseListeners.Count; i++)
-            {
-                if (!HasGameStarted)
-                {
-                    if (_pauseListeners[i] is not IGameRunner)
-                        continue;
-                    
-                    _pauseListeners[i].OnPause();
-                }
-                else
-                    _pauseListeners[i].OnPause();
-            }
+            List<IGamePauseListener> checkedPauseListeners = _gameStateController.ChangeState(_pauseListeners, HasGameStarted);
+
+            for (int i = 0; i < checkedPauseListeners.Count; i++) 
+                checkedPauseListeners[i].OnPause();
+            
             
             if (HasGameStarted)
                 CurrentGameState = GameState.Paused;

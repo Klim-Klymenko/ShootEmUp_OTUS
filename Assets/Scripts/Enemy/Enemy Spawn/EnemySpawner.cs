@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public sealed class EnemySpawner : MonoBehaviour
+    public sealed class EnemySpawner : MonoBehaviour, IGameInitializeListener
     {
         [SerializeField] private  int _reservationAmount = 7;
         [SerializeField] private EnemyReferenceComponent _prefab;
@@ -20,6 +20,14 @@ namespace ShootEmUp
 
         public int ReservationAmount => _reservationAmount;
 
+        public void OnInitialize() => InitializePool();
+        
+        public void InitializePool()
+        {
+            _enemyPool ??= new Pool<EnemyReferenceComponent>(_reservationAmount, _prefab, _parentToGet, _parentToPut);
+            _enemyPool.Reserve();
+        }
+        
         public void SpawnEnemy()
         {
             if (_enemyPool == null)
@@ -49,12 +57,6 @@ namespace ShootEmUp
                 throw new Exception("Pull hasn't been allocated");
             
             _enemyPool.Put(enemy);
-        }
-
-        public void InitializePool()
-        {
-            _enemyPool ??= new Pool<EnemyReferenceComponent>(_reservationAmount, _prefab, _parentToGet, _parentToPut);
-            _enemyPool.Reserve();
         }
     }
 }
