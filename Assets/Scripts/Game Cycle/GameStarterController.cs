@@ -4,8 +4,7 @@ namespace ShootEmUp
 {
     [RequireComponent(typeof(GameStarterTimer))]
     [RequireComponent(typeof(GameManager))]
-    public sealed class GameStarterController : MonoBehaviour, IGameRunner,
-        IGameFinishListener, IGameResumeListener, IGamePauseListener
+    public sealed class GameStarterController : MonoBehaviour, IGameFinishListener
     {
         [SerializeField] private GameStarterTimer _starterTimer;
         private IGameStartable _gameManager;
@@ -39,13 +38,13 @@ namespace ShootEmUp
             enabled = false;
         }
 
-        void IGameResumeListener.OnResume()
+        public void OnResume()
         {
             enabled = true;
             Enable();
         }
         
-        void IGamePauseListener.OnPause()
+        public void OnPause()
         {
             Disable();
             enabled = false;

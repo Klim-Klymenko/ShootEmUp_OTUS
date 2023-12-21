@@ -16,8 +16,7 @@ namespace ShootEmUp
         
         public void TimerCountdown(bool isRun)
         {
-            if (!isRun)
-                return;
+            if (!isRun) return;
 
             if (_secondsToStartDecimal > TimerFinishTime)
             {

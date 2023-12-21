@@ -7,7 +7,7 @@ namespace ShootEmUp
     {
         public GameState CurrentGameState { get; private set; }
         public bool HasGameRun { get; set; }
-        private bool HasGameStarted { get; set; }
+        public bool HasGameStarted { get; private set; }
         
         private readonly List<IGameUpdateListener> _updateListeners = new();
         private readonly List<IGameFixedUpdateListener> _fixedUpdateListeners = new();
@@ -17,8 +17,6 @@ namespace ShootEmUp
         private readonly List<IGameFinishListener> _finishListeners = new();
         private readonly List<IGameResumeListener> _resumeListeners = new();
         private readonly List<IGamePauseListener> _pauseListeners = new();
-
-        private readonly GameStateController _gameStateController = new();
         
         private void Awake() => OnInitialize();
 
@@ -37,8 +35,7 @@ namespace ShootEmUp
         {
             if (!HasGameStarted) return;
             
-            if (CurrentGameState != GameState.Playing)
-                return;
+            if (CurrentGameState != GameState.Playing) return;
             
             for (int i = 0; i < _fixedUpdateListeners.Count; i++)
                 _fixedUpdateListeners[i].OnFixedUpdate();
@@ -46,8 +43,7 @@ namespace ShootEmUp
 
         private void OnInitialize()
         {
-            if (CurrentGameState != GameState.None)
-                return;
+            if (CurrentGameState != GameState.None) return;
             
             for (int i = 0; i < _initializeListeners.Count; i++)
                 _initializeListeners[i].OnInitialize();
@@ -57,8 +53,7 @@ namespace ShootEmUp
         
         void IGameStartable.OnStart()
         {
-            if (CurrentGameState != GameState.Initialized)
-                return;
+            if (CurrentGameState != GameState.Initialized) return;
 
             for (int i = 0; i < _startListeners.Count; i++)
                 _startListeners[i].OnStart();
@@ -69,8 +64,7 @@ namespace ShootEmUp
         
         public void OnFinish()
         {
-            if (CurrentGameState == GameState.Finished)
-                return;
+            if (CurrentGameState == GameState.Finished) return;
             
             for (int i = 0; i < _finishListeners.Count; i++)
                 _finishListeners[i].OnFinish();
@@ -81,33 +75,22 @@ namespace ShootEmUp
         
         public void OnResume()
         {
-            if (!HasGameRun) return;
+            if (CurrentGameState != GameState.Paused) return;
             
-            if (CurrentGameState != GameState.Paused && CurrentGameState != GameState.Initialized)
-                return;
+            for (int i = 0; i < _resumeListeners.Count; i++) 
+                _resumeListeners[i].OnResume();
 
-            List<IGameResumeListener> checkedResumeListeners = _gameStateController.ChangeState(_resumeListeners, HasGameStarted);
-
-            for (int i = 0; i < checkedResumeListeners.Count; i++) 
-                checkedResumeListeners[i].OnResume();
-
-            if (HasGameStarted)
-                CurrentGameState = GameState.Playing;
+            CurrentGameState = GameState.Playing;
         }
         
         public void OnPause()
         {
-            if (CurrentGameState == GameState.Paused || CurrentGameState == GameState.Finished || !HasGameRun)
-                return;
+            if (CurrentGameState == GameState.Paused || CurrentGameState == GameState.Finished) return;
             
-            List<IGamePauseListener> checkedPauseListeners = _gameStateController.ChangeState(_pauseListeners, HasGameStarted);
-
-            for (int i = 0; i < checkedPauseListeners.Count; i++) 
-                checkedPauseListeners[i].OnPause();
+            for (int i = 0; i < _pauseListeners.Count; i++) 
+                _pauseListeners[i].OnPause();
             
-            
-            if (HasGameStarted)
-                CurrentGameState = GameState.Paused;
+            CurrentGameState = GameState.Paused;
         }
 
         public void AddListeners(IGameListener listener)
