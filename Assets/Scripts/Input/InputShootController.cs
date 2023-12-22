@@ -2,10 +2,16 @@
 
 namespace ShootEmUp
 {
-    public class InputShootController : MonoBehaviour, IGameUpdateListener
+    public sealed class InputShootController : IGameUpdateListener
     {
-        [SerializeField] private CharacterBulletShooter _bulletShooter;
+        private CharacterBulletShooter _bulletShooter;
         
+        [Inject]
+        private void Construct(CharacterBulletShooter bulletShooter)
+        {
+            _bulletShooter = bulletShooter;
+        }
+
         void IGameUpdateListener.OnUpdate()
         {
             if (Input.GetKeyDown(KeyCode.Space))

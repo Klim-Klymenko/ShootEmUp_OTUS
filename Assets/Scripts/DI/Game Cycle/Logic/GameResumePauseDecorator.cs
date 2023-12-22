@@ -1,14 +1,18 @@
-﻿using UnityEngine;
-
-namespace ShootEmUp
+﻿namespace ShootEmUp
 {
-    public sealed class GameResumePauseManager : MonoBehaviour
+    public sealed class GameResumePauseDecorator
     {
-        [SerializeField] private GameManager _gameManager;
-
-        [SerializeField] private GameStarterController _starterController;
+        private GameManager _gameManager;
+        private GameStarterController _starterController;
 
         private bool HasGameStarted => _gameManager.HasGameStarted;
+
+        [Inject]
+        private void Construct(GameManager gameManager, GameStarterController starterController)
+        {
+            _gameManager = gameManager;
+            _starterController = starterController;
+        }
         
         public void OnResume()
         {

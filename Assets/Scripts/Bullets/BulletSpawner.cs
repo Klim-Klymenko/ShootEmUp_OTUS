@@ -43,7 +43,7 @@ namespace ShootEmUp
             
             IGameListener[] listeners = bullet.GetComponents<IGameListener>();
             for (int i = 0; i < listeners.Length; i++)
-                _gameManager.AddListeners(listeners[i]);
+                _gameManager.AddGameListener(listeners[i]);
 
             IGameStartListener[] startListeners = bullet.GetComponents<IGameStartListener>();
             for (int i = 0; i < startListeners.Length; i++)

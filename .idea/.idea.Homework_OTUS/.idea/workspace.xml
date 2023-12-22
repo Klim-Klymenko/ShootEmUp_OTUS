@@ -23,16 +23,86 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e68b6294-9997-4a84-ac6e-3eb6d52f8fde" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/GameResumePauseManager.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/GameResumePauseManager.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Homework_OTUS/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Homework_OTUS/.idea/indexLayout.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/DI/Attributes.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/DI/Attributes/InjectAttribute.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/DI/Attributes/InjectAttribute.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/DI/Attributes/ListenerAttribute.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/DI/Attributes/ListenerAttribute.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/DI/Attributes/ServiceAttribute.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/DI/Attributes/ServiceAttribute.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/DI/DI Logic.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/DI/DI Logic/DependencyAssembler.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/DI/DI Logic/DependencyAssembler.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/DI/DI Logic/DependencyInjector.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/DI/DI Logic/DependencyInjector.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/DI/DI Logic/DependencyInstaller.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/DI/DI Logic/DependencyInstaller.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/DI/DI Logic/GameContext.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/DI/DI Logic/GameContext.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/DI/DI Logic/ServiceLocator.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/DI/DI Logic/ServiceLocator.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/DI/DTOs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/DI/DTOs/SystemInstallablesArgs.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/DI/DTOs/SystemInstallablesArgs.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/DI/Game Cycle/Data.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/DI/Game Cycle/Logic.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/DI/Installers.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/DI/Installers/CharacterInstaller.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/DI/Installers/CharacterInstaller.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/DI/Installers/EnemyInstaller.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/DI/Installers/EnemyInstaller.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/DI/Installers/LevelInstaller.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/DI/Installers/LevelInstaller.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/DI/Installers/UIInstaller.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/DI/Installers/UIInstaller.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/UI/ResumePauseButtonsController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/UI/ResumePauseButtonsController.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/UI/StartButtonManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Homework_OTUS/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Homework_OTUS/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Game.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Game.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/GameManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/GameStarterController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/GameStarterController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/GameStarterTimer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/GameStarterTimer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/GameStateController.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/GameStateController.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Bullets/BulletSpawner.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Bullets/BulletSpawner.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy/Enemy Spawn/EnemySpawnController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/Enemy Spawn/EnemySpawnController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy/Enemy Spawn/EnemySpawner.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/Enemy Spawn/EnemySpawner.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Cycle.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/GameManager.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/GameManager.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/GameManagerInstaller.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/GameManagerInstaller.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/GameResumePauseManager.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/GameResumePauseManager.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/GameStarterController.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/GameStarterController.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/GameStarterTimer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/GameStarterTimer.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/GameState.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/GameState.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/Interfaces.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/Interfaces/IGameFinishListener.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/Interfaces/IGameFinishListener.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/Interfaces/IGameFixedUpdateListener.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/Interfaces/IGameFixedUpdateListener.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/Interfaces/IGameInitializeListener.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/Interfaces/IGameInitializeListener.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/Interfaces/IGameListener.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/Interfaces/IGameListener.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/Interfaces/IGamePauseListener.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/Interfaces/IGamePauseListener.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/Interfaces/IGameResumeListener.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/Interfaces/IGameResumeListener.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/Interfaces/IGameRunner.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/Interfaces/IGameRunner.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/Interfaces/IGameStartListener.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/Interfaces/IGameStartListener.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/Interfaces/IGameStartable.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/Interfaces/IGameStartable.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/Interfaces/IGameUpdateListener.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/Interfaces/IGameUpdateListener.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Input/InputMoveController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Input/InputMoveController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Input/InputShootController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Input/InputShootController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Level/LevelBackground.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Level/LevelBackground.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Level/LevelBounds.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Level/LevelBounds.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/StartButtonSwitcher.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/StartButtonSwitcher.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/StartButtonManager.cs.meta" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,15 +114,12 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Bullets/BulletDestructionObserver.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Game Cycle/Interfaces/IGameFixedUpdateListener.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Game Cycle/GameManager.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Game Cycle/GameManagerInstaller.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Character/CharacterBulletShooter.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/UI/StartButtonSwitcher.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Character/CharacterHitPointsObserver.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Bullets/BulletSpawner.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Character/CharacterBulletShooter.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Character/CharacterHitPointsObserver.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/DI/Installers/SceneInstaller.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Input/InputMoveController.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Game Cycle/Interfaces/IGameUpdateListener.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/UI/StartButtonSwitcher.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -124,7 +191,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "git-widget-placeholder": "task-2-(Game-Cycle)",
+    "git-widget-placeholder": "task3-(DI)",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -200,6 +267,7 @@
       <workItem from="1702496241781" duration="41000" />
       <workItem from="1702496322388" duration="5000" />
       <workItem from="1703150117971" duration="4434000" />
+      <workItem from="1703242962854" duration="9254000" />
     </task>
     <task id="LOCAL-00001" summary="deleted-&quot;PoolInitializer&quot;-and-solved-resume/pause-issues-in-&quot;GameManager&quot;">
       <option name="closed" value="true" />

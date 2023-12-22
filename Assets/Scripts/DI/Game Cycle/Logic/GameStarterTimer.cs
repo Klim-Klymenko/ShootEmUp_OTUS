@@ -3,24 +3,25 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public sealed class GameStarterTimer : MonoBehaviour
+    public sealed class GameStarterTimer
     {
         public event Action OnGameStarted;
 
-        [SerializeField] private int _initialSecondsAmount = 3;
+        private const int InitialSecondsAmount = 3;
+        private const int TimerFinishTime = 0;
+        
         private int _secondsToStart;
         private float _secondsToStartDecimal;
-        private const int TimerFinishTime = 0;
 
-        private void Awake() => _secondsToStartDecimal = _secondsToStart = _initialSecondsAmount;
-        
+        public void InitTimer() => _secondsToStartDecimal = _secondsToStart = InitialSecondsAmount;
+
         public void TimerCountdown(bool isRun)
         {
             if (!isRun) return;
 
             if (_secondsToStartDecimal > TimerFinishTime)
             {
-                if (_initialSecondsAmount == _secondsToStart)
+                if (InitialSecondsAmount == _secondsToStart)
                     Debug.Log(_secondsToStart);
                     
 
@@ -38,7 +39,6 @@ namespace ShootEmUp
                 OnGameStarted?.Invoke();
                 OnGameStarted = null;
             }
-                
         }
     }
 }

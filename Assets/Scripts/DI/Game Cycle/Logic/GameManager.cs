@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public sealed class GameManager : MonoBehaviour, IGameStartable
+    public sealed class GameManager
     {
         public GameState CurrentGameState { get; private set; }
         public bool HasGameRun { get; set; }
@@ -18,9 +18,21 @@ namespace ShootEmUp
         private readonly List<IGameResumeListener> _resumeListeners = new();
         private readonly List<IGamePauseListener> _pauseListeners = new();
         
-        private void Awake() => OnInitialize();
+        public void InstallListeners(IEnumerable<DependencyInstaller> dependencyInstallers)
+        {
+            foreach (var installer in dependencyInstallers)
+                AddGameListeners(installer.ProvideGameListeners());
+            
+            MonoBehaviour[] sceneComponents = Object.FindObjectsOfType<MonoBehaviour>(true);
 
-        private void Update()
+            for (int i = 0; i < sceneComponents.Length; i++)
+            {
+                if (sceneComponents[i] is IGameListener gameListener)
+                    AddGameListener(gameListener);
+            }
+        }
+        
+        public void OnUpdate()
         {
             if (!HasGameStarted) return;
 
@@ -31,7 +43,7 @@ namespace ShootEmUp
                 _updateListeners[i].OnUpdate();
         }
 
-        private void FixedUpdate()
+        public void OnFixedUpdate()
         {
             if (!HasGameStarted) return;
             
@@ -41,7 +53,7 @@ namespace ShootEmUp
                 _fixedUpdateListeners[i].OnFixedUpdate();
         }
 
-        private void OnInitialize()
+        public void OnInitialize()
         {
             if (CurrentGameState != GameState.None) return;
             
@@ -51,7 +63,7 @@ namespace ShootEmUp
             CurrentGameState = GameState.Initialized;
         }
         
-        void IGameStartable.OnStart()
+        public void OnStart()
         {
             if (CurrentGameState != GameState.Initialized) return;
 
@@ -71,7 +83,6 @@ namespace ShootEmUp
 
             CurrentGameState = GameState.Finished;
         }
-        
         
         public void OnResume()
         {
@@ -93,13 +104,13 @@ namespace ShootEmUp
             CurrentGameState = GameState.Paused;
         }
 
-        public void AddListeners(IGameListener listener)
+        private void AddGameListeners(IEnumerable<IGameListener> listeners)
         {
-            AddUpdateListeners(listener);
-            AddEventListeners(listener);
+            foreach (var listener in listeners)
+                AddGameListener(listener);
         }
         
-        private void AddUpdateListeners(IGameListener listener)
+        public void AddGameListener(IGameListener listener)
         {
             if (listener is IGameUpdateListener updateListener)
                 if (!_updateListeners.Contains(updateListener))
@@ -108,10 +119,7 @@ namespace ShootEmUp
             if (listener is IGameFixedUpdateListener fixedUpdateListener)
                 if (!_fixedUpdateListeners.Contains(fixedUpdateListener))
                     AddFixedUpdateListener(fixedUpdateListener);
-        }
-
-        private void AddEventListeners(IGameListener listener)
-        {
+            
             if (listener is IGameInitializeListener initializeListener)
                 if (!_initializeListeners.Contains(initializeListener))
                     AddInitializeListener(initializeListener);

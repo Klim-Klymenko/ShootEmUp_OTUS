@@ -2,7 +2,8 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public sealed class LevelBackground : MonoBehaviour, IGameFixedUpdateListener
+    [System.Serializable]
+    public sealed class LevelBackground : IGameFixedUpdateListener
     {
         [SerializeField] private float _endPositionY;
         [SerializeField] private float _movingSpeedY;
@@ -10,8 +11,6 @@ namespace ShootEmUp
         [SerializeField] private Vector3 _startingPosition;
 
         [SerializeField] private Transform _transform;
-
-        private void OnValidate() => _transform = transform;
 
         void IGameFixedUpdateListener.OnFixedUpdate()
         {

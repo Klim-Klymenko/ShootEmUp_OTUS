@@ -44,7 +44,7 @@ namespace ShootEmUp
             
             IGameListener[] listeners = enemy.GetComponents<IGameListener>();
             for (int i = 0; i < listeners.Length; i++)
-                _gameManager.AddListeners(listeners[i]);
+                _gameManager.AddGameListener(listeners[i]);
             
             IGameStartListener[] startListeners = enemy.GetComponents<IGameStartListener>();
             for (int i = 0; i < startListeners.Length; i++)

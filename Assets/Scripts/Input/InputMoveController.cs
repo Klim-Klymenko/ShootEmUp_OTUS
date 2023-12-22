@@ -2,12 +2,18 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public sealed class InputMoveController : MonoBehaviour, IGameUpdateListener, IGameFixedUpdateListener
+    public sealed class InputMoveController : IGameUpdateListener, IGameFixedUpdateListener
     {
-        [SerializeField] private MoveComponent _characterMoveComponent;
+        private MoveComponent _characterMoveComponent;
         
         private float _horizontal;
         
+        [Inject]
+        private void Construct(MoveComponent characterMoveComponent)
+        {
+            _characterMoveComponent = characterMoveComponent;
+        }
+
         void IGameUpdateListener.OnUpdate() => _horizontal = Input.GetAxis("Horizontal");
 
         void IGameFixedUpdateListener.OnFixedUpdate() => 
