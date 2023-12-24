@@ -1,4 +1,4 @@
-﻿namespace ShootEmUp.Interfaces
+﻿namespace ShootEmUp
 {
     public interface IBulletSpawner
     {

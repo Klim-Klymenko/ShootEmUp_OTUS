@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnityEngine;
+using System.Diagnostics;
+using System.Linq;
+using Debug = UnityEngine.Debug;
 
 namespace ShootEmUp
 {
     public sealed class ServiceLocator
     {
-        private static readonly Dictionary<Type, object> _services = new();
+        private readonly Dictionary<Type, object> _services = new();
 
         public void InstallServices(SystemInstallablesArgs args, IEnumerable<DependencyInstaller> dependencyInstallers)
         {
@@ -14,9 +16,17 @@ namespace ShootEmUp
             BindService(args.GameManager);
             
             foreach (var installer in dependencyInstallers)
-                BindServices(installer.ProvideServices());
+                BindServices(installer);
         }
-
+        
+        public void InstallServices(DependencyAssembler dependencyAssembler, IEnumerable<DependencyInstaller> dependencyInstallers)
+        {
+            BindService(dependencyAssembler);
+            
+            foreach (var installer in dependencyInstallers)
+                BindServices(installer);
+        }
+        
         public T GetService<T>() where T : class
         {
             Type serviceType = typeof(T);
@@ -39,13 +49,30 @@ namespace ShootEmUp
         {
             Type elementType = service.GetType();
             if (!_services.ContainsKey(elementType))
+            {
                 _services.Add(elementType, service);
+            }
         }
-
-        public void BindServices(IEnumerable<object> services)
+        private void BindServiceWithExplicitType(object service, Type interfaceType)
         {
-            foreach (var service in services)
+            if (!_services.ContainsKey(interfaceType))
+                _services.Add(interfaceType, service);
+        }
+        
+        private void BindServices(DependencyInstaller dependencyInstaller)
+        {
+            foreach (var service in dependencyInstaller.ProvideServices())
+            {
                 BindService(service);
+
+                Type[] interfacesType = service.GetType().GetInterfaces();
+                
+                for (int i = 0; i < interfacesType.Length; i++)
+                {
+                    if (dependencyInstaller.InterfacesType.Contains(interfacesType[i])) 
+                        BindServiceWithExplicitType(service, interfacesType[i]);
+                }
+            }
         }
     }
 }

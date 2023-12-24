@@ -1,24 +1,23 @@
-using System;
-using ShootEmUp.Interfaces;
 using UnityEngine;
 
 namespace ShootEmUp
 {
-    [RequireComponent(typeof(WeaponComponent))]
-    public sealed class CharacterBulletShooter : MonoBehaviour
+    [System.Serializable]
+    public sealed class CharacterBulletShooter
     {
         [SerializeField] private Color _bulletColour;
         [SerializeField] private int _bulletDamage;
         [SerializeField] private float _bulletSpeed;
-        [SerializeField] private WeaponComponent _weaponComponent;
 
         private IBulletSpawner _bulletSpawner;
-        [SerializeField] private BulletManager _bulletManager;
+        private WeaponComponent _weaponComponent;
 
-        private void OnValidate() => _weaponComponent = GetComponent<WeaponComponent>();
-
-        //косяк с таким кривым прокидыванием будет исправлен в домашке с DI
-        private void Awake() => _bulletSpawner = _bulletManager;
+        [Inject]
+        private void Construct(IBulletSpawner bulletSpawner, WeaponComponent weaponComponent)
+        {
+            _bulletSpawner = bulletSpawner;
+            _weaponComponent = weaponComponent;
+        }
 
         public void ShootBullet()
         {

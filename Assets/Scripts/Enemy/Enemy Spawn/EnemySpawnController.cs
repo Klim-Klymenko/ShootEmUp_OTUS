@@ -1,21 +1,18 @@
-﻿using UnityEngine;
-
-namespace ShootEmUp
+﻿namespace ShootEmUp
 {
-    [RequireComponent(typeof(EnemySpawner))]
-    [RequireComponent(typeof(EnemySpawnTimer))]
-    public sealed class EnemySpawnController : MonoBehaviour, IGameUpdateListener,
+    public sealed class EnemySpawnController : IGameUpdateListener,
         IGameStartListener, IGameFinishListener, IGameResumeListener, IGamePauseListener
     {
-        [SerializeField] private GameManager _gameManager;
+        private GameManager _gameManager;
         
-        [SerializeField] private EnemySpawner _enemySpawner;
-        [SerializeField] private EnemySpawnTimer _spawnTimer;
+        private EnemySpawner _enemySpawner;
+        private readonly EnemySpawnTimer _spawnTimer = new();
         
-        private void OnValidate()
+        [Inject]
+        private void Construct(GameManager gameManager, EnemySpawner enemySpawner)
         {
-            _spawnTimer = GetComponent<EnemySpawnTimer>();
-            _enemySpawner = GetComponent<EnemySpawner>();
+            _gameManager = gameManager;
+            _enemySpawner = enemySpawner;
         }
         
         private void Enable() => _spawnTimer.OnTimeToSpawn += SpawnEnemy;

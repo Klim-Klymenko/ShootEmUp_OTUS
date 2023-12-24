@@ -1,28 +1,25 @@
-﻿using UnityEngine;
-
-namespace ShootEmUp
+﻿namespace ShootEmUp
 {
-    [RequireComponent(typeof(EnemyReferenceComponent))]
-    [RequireComponent(typeof(HitPointsComponent))]
-    public sealed class EnemyDeathObserver : MonoBehaviour, IGameStartListener,
+    public sealed class EnemyDeathObserver : IGameStartListener,
         IGameFinishListener, IGameResumeListener, IGamePauseListener
     {
         private EnemySpawner _enemySpawner;
-        public EnemySpawner EnemySpawner
+        
+        private readonly HitPointsComponent _hitPointsComponent;
+        private readonly EnemyReferenceComponent _referenceComponent;
+
+        public EnemyDeathObserver(HitPointsComponent hitPointsComponent, EnemyReferenceComponent referenceComponent)
         {
-            set => _enemySpawner = value;
+            _hitPointsComponent = hitPointsComponent;
+            _referenceComponent = referenceComponent;
         }
 
-        [SerializeField] private HitPointsComponent _hitPointsComponent;
-
-        [SerializeField] private EnemyReferenceComponent _referenceComponent;
-
-        private void OnValidate()
+        [Inject]
+        private void Construct(EnemySpawner enemySpawner)
         {
-            _referenceComponent = GetComponent<EnemyReferenceComponent>();
-            _hitPointsComponent = GetComponent<HitPointsComponent>();
+            _enemySpawner = enemySpawner;
         }
-
+        
         private void Enable() => _hitPointsComponent.OnDeath += UnspawnEnemy;
 
         private void Disable() => _hitPointsComponent.OnDeath -= UnspawnEnemy;

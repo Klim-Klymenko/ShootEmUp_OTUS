@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public sealed class EnemySpawnTimer : MonoBehaviour
+    public sealed class EnemySpawnTimer
     {
         public event Action OnTimeToSpawn;
         
@@ -12,7 +12,7 @@ namespace ShootEmUp
         
         private int _enemiesSpawned;
 
-        public void  TimerCountdown(int reservationAmount, GameState gameState)
+        public void TimerCountdown(int reservationAmount, GameState gameState)
         {
             if (gameState != GameState.Playing)
                 return;

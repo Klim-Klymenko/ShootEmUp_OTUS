@@ -110,6 +110,17 @@ namespace ShootEmUp
                 AddGameListener(listener);
         }
         
+        public void AddAndStartGameListeners(IEnumerable<IGameListener> listeners)
+        {
+            foreach (var listener in listeners)
+            {
+                AddGameListener(listener);
+            
+                if (listener is IGameStartListener startListener)
+                    startListener.OnStart();
+            }
+        }
+        
         public void AddGameListener(IGameListener listener)
         {
             if (listener is IGameUpdateListener updateListener)

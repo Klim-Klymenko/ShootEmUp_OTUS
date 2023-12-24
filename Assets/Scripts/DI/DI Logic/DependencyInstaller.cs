@@ -7,13 +7,45 @@ namespace ShootEmUp
 {
     public abstract class DependencyInstaller : MonoBehaviour
     {
-    public virtual IEnumerable<object> ProvideServices()
-    {
-        FieldInfo[] fields = GetType().GetFields(BindingFlags.Instance | BindingFlags.Public |
-                                                 BindingFlags.NonPublic | BindingFlags.DeclaredOnly);
-        for (int i = 0; i < fields.Length; i++)
+        public readonly List<Type> InterfacesType = new();
+        
+        public virtual IEnumerable<object> ProvideServices()
         {
-            if (fields[i].IsDefined(typeof(ServiceAttribute)))
+            FieldInfo[] fields = GetType().GetFields(BindingFlags.Instance | BindingFlags.Public |
+                                                     BindingFlags.NonPublic | BindingFlags.DeclaredOnly);
+            
+            for (int i = 0; i < fields.Length; i++)
+            {
+                if (fields[i].IsDefined(typeof(InterfacesAttribute)))
+                {
+                    InterfacesAttribute interfacesAttribute = fields[i].GetCustomAttribute<InterfacesAttribute>();
+                    if (interfacesAttribute.InterfacesType != null)
+                    {
+                        foreach (var interfaceType in interfacesAttribute.InterfacesType)
+                        {
+                            if (!InterfacesType.Contains(interfaceType)) 
+                                InterfacesType.Add(interfaceType);
+                        }
+                    }
+                }
+                
+                if (fields[i].IsDefined(typeof(ServiceAttribute)))
+                {
+                    object value = fields[i].GetValue(this);
+
+                    if (value == null)
+                        throw new NullReferenceException($"Field {fields[i].Name} is null");
+
+                    yield return value;
+                }
+            } 
+        }
+
+        public virtual IEnumerable<object> ProvideInjectables()
+        {
+            FieldInfo[] fields = GetType().GetFields(BindingFlags.Instance | BindingFlags.Public |
+                                                     BindingFlags.NonPublic | BindingFlags.DeclaredOnly);
+            for (int i = 0; i < fields.Length; i++)
             {
                 object value = fields[i].GetValue(this);
 
@@ -23,42 +55,26 @@ namespace ShootEmUp
                 yield return value;
             }
         }
-    }
 
-    public virtual IEnumerable<object> ProvideInjectables()
-    {
-        FieldInfo[] fields = GetType().GetFields(BindingFlags.Instance | BindingFlags.Public |
-                                                 BindingFlags.NonPublic | BindingFlags.DeclaredOnly);
-        for (int i = 0; i < fields.Length; i++)
+        public virtual IEnumerable<IGameListener> ProvideGameListeners()
         {
-            object value = fields[i].GetValue(this);
-
-            if (value == null)
-                throw new NullReferenceException($"Field {fields[i].Name} is null");
-
-            yield return value;
-        }
-    }
-
-    public virtual IEnumerable<IGameListener> ProvideGameListeners()
-    {
-        FieldInfo[] fields = GetType().GetFields(BindingFlags.Instance | BindingFlags.Public |
-                                                 BindingFlags.NonPublic | BindingFlags.DeclaredOnly);
-        for (int i = 0; i < fields.Length; i++)
-        {
-            if (fields[i].IsDefined(typeof(ListenerAttribute)))
+            FieldInfo[] fields = GetType().GetFields(BindingFlags.Instance | BindingFlags.Public |
+                                                     BindingFlags.NonPublic | BindingFlags.DeclaredOnly);
+            for (int i = 0; i < fields.Length; i++)
             {
-                object value = fields[i].GetValue(this);
+                if (fields[i].IsDefined(typeof(ListenerAttribute)))
+                {
+                    object value = fields[i].GetValue(this);
 
-                if (value == null)
-                    throw new NullReferenceException($"Field {fields[i].Name} is null");
+                    if (value == null)
+                        throw new NullReferenceException($"Field {fields[i].Name} is null");
 
-                if (value is not IGameListener listener)
-                    throw new NullReferenceException($"Field {fields[i].Name} is not IGameListener");
+                    if (value is not IGameListener listener)
+                        throw new NullReferenceException($"Field {fields[i].Name} is not IGameListener");
 
-                yield return listener;
+                    yield return listener;
+                }
             }
         }
-    }
     }
 }

@@ -11,7 +11,7 @@ namespace ShootEmUp
         private readonly T _prefab;
         private readonly Transform _parentToGet;
         private readonly Transform _parentToPut;
-        private readonly List<T> _entities = new List<T>();
+        private readonly List<T> _entities = new();
 
         public Pool(int reservationAmount, T prefab, Transform parentToGet, Transform parentToPut)
         {

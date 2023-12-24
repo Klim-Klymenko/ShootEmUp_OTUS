@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace ShootEmUp
 {
-    public sealed class GameContext : MonoBehaviour
+    public sealed class SceneContext : MonoBehaviour
     {
         [SerializeField] private DependencyInstaller[] _installers;
         
@@ -33,7 +34,5 @@ namespace ShootEmUp
         private void Update() => _gameManager.OnUpdate();
 
         private void FixedUpdate() => _gameManager.OnFixedUpdate();
-        
-        public void OnFinish() => _gameManager.OnFinish();
     }
 }

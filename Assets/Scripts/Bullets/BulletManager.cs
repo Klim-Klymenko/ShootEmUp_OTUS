@@ -1,20 +1,20 @@
 using System.Collections.Generic;
-using ShootEmUp.Interfaces;
-using UnityEngine;
-using UnityEngine.UI;
 
 namespace ShootEmUp
 {
-    [RequireComponent(typeof(BulletSpawner))]
-    public sealed class BulletManager : MonoBehaviour, IGameFixedUpdateListener, IBulletSpawner, IBulletUnspawner
+    public sealed class BulletManager : IGameFixedUpdateListener, IBulletSpawner, IBulletUnspawner
     {
-        [SerializeField] private LevelBounds _levelBounds;
+        private readonly List<Bullet> _bullets = new();
+        
+        private LevelBounds _levelBounds;
+        private BulletSpawner _bulletSpawner;
 
-        [SerializeField] private BulletSpawner bulletSpawner;
-
-        private readonly List<Bullet> _bullets = new List<Bullet>();
-
-        private void OnValidate() => bulletSpawner = GetComponent<BulletSpawner>();
+        [Inject]
+        private void Construct(LevelBounds levelBounds, BulletSpawner bulletSpawner)
+        {
+            _levelBounds = levelBounds;
+            _bulletSpawner = bulletSpawner;
+        }
 
         void IGameFixedUpdateListener.OnFixedUpdate()
         {
@@ -29,14 +29,12 @@ namespace ShootEmUp
             }
         }
 
-        private void UnspawnBullet(Bullet bullet)
+        void IBulletSpawner.SpawnBullet(Args args) => _bullets.Add(_bulletSpawner.SpawnBullet(args));
+
+        public void UnspawnBullet(Bullet bullet)
         {
             _bullets.Remove(bullet);
-            bulletSpawner.UnspawnBullet(bullet);
+            _bulletSpawner.UnspawnBullet(bullet);
         }
-        
-        void IBulletSpawner.SpawnBullet(Args args) => _bullets.Add(bulletSpawner.SpawnBullet(args));
-
-        void IBulletUnspawner.UnspawnBullet(Bullet bullet) => UnspawnBullet(bullet);
     }
 }

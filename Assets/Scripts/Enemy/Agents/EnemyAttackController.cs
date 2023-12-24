@@ -1,38 +1,32 @@
-﻿using UnityEngine;
-
-namespace ShootEmUp
+﻿namespace ShootEmUp
 {
-    [RequireComponent(typeof(HitPointsComponent))]
-    [RequireComponent(typeof(MoveComponent))]
-    [RequireComponent(typeof(EnemyAttackAgent))]
-    [RequireComponent(typeof(EnemyAttackTimer))]
-    public sealed class EnemyAttackController : MonoBehaviour, IGameFixedUpdateListener,
+    public sealed class EnemyAttackController : IGameFixedUpdateListener,
         IGameStartListener, IGameFinishListener, IGameResumeListener, IGamePauseListener
     {
-        [SerializeField] private HitPointsComponent _hitPointsComponent;
-        [SerializeField] private EnemyMoveAgent _enemyMove;
-        [SerializeField] private MoveComponent _moveComponent;
+        private readonly EnemyAttackTimer _enemyTimer = new();
         
-        [SerializeField] private EnemyAttackAgent _attackAgent;
-        [SerializeField] private EnemyAttackTimer _enemyTimer;
+        private readonly HitPointsComponent _hitPointsComponent;
+        private readonly MoveComponent _moveComponent;
+        private readonly EnemyMoveAgent _enemyMove;
+        private readonly EnemyAttackAgent _attackAgent;
 
         private BulletManager _bulletManager;
 
-        public BulletManager BulletManager
+        public EnemyAttackController (HitPointsComponent hitPointsComponent, EnemyMoveAgent enemyMove,
+            MoveComponent moveComponent, EnemyAttackAgent attackAgent)
         {
-            set => _bulletManager = value;
+            _hitPointsComponent = hitPointsComponent;
+            _moveComponent = moveComponent;
+            _enemyMove = enemyMove;
+            _attackAgent = attackAgent;
         }
-
-        private void OnValidate()
+        
+        [Inject]
+        private void Construct(BulletManager bulletManager)
         {
-            _hitPointsComponent = GetComponent<HitPointsComponent>();
-            _enemyMove = GetComponent<EnemyMoveAgent>();
-            _moveComponent = GetComponent<MoveComponent>();
-            
-            _attackAgent = GetComponent<EnemyAttackAgent>();
-            _enemyTimer = GetComponent<EnemyAttackTimer>();
+            _bulletManager = bulletManager;
         }
-
+        
         private void Enable() => _enemyTimer.OnTimeToShoot += Fire;
 
         private void Disable() => _enemyTimer.OnTimeToShoot -= Fire;

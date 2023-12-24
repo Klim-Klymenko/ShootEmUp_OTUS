@@ -1,16 +1,14 @@
-using ShootEmUp.Interfaces;
 using UnityEngine;
 
 namespace ShootEmUp
 {
-    public sealed class EnemyAttackAgent : MonoBehaviour
+    public sealed class EnemyAttackAgent
     {
         public Transform Target { private get; set; }
 
         public void Fire(Vector2 startPosition, BulletManager bulletSpawner)
         {
-            if (Target == null)
-                return;
+            if (Target == null) return;
             
             Vector2 vectorToPlayer = (Vector2) Target.position - startPosition;
             Vector2 directionToPlayer = vectorToPlayer.normalized;

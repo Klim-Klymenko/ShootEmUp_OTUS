@@ -3,11 +3,11 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public sealed class EnemyAttackTimer : MonoBehaviour
+    public sealed class EnemyAttackTimer
     {
         public event Action OnTimeToShoot;
         
-        [SerializeField] private float _countdown = 1.0f;
+        private const float Countdown = 1.0f;
     
         private float _currentTime;
 
@@ -29,6 +29,6 @@ namespace ShootEmUp
             Reset();
         }
 
-        private void Reset() => _currentTime = _countdown;
+        private void Reset() => _currentTime = Countdown;
     }
 }

@@ -3,24 +3,34 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public sealed class EnemySpawner : MonoBehaviour, IGameInitializeListener
+    [Serializable]
+    public sealed class EnemySpawner : IGameInitializeListener
     {
+        public int ReservationAmount => _reservationAmount;
+        
         [SerializeField] private  int _reservationAmount = 7;
         [SerializeField] private EnemyReferenceComponent _prefab;
         [SerializeField] private Transform _parentToGet;
         [SerializeField] private Transform _parentToPut;
         
         [SerializeField] private Transform _target;
-        [SerializeField] private EnemyPositionsGenerator _randomPositionGenerator;
-
-        [SerializeField] private GameManager _gameManager;
-        [SerializeField] private BulletManager _bulletManager;
         
         private Pool<EnemyReferenceComponent> _enemyPool;
+        
+        private DependencyAssembler _dependencyAssembler;
+        private GameManager _gameManager;
+        private EnemyPositionsGenerator _randomPositionGenerator;
 
-        public int ReservationAmount => _reservationAmount;
-
-        public void OnInitialize() => InitializePool();
+        [Inject]
+        private void Construct(DependencyAssembler dependencyAssembler,
+            GameManager gameManager, EnemyPositionsGenerator enemyPositionsGenerator)
+        {
+            _dependencyAssembler = dependencyAssembler;
+            _gameManager = gameManager;
+            _randomPositionGenerator = enemyPositionsGenerator;
+        }
+        
+        void IGameInitializeListener.OnInitialize() => InitializePool();
         
         public void InitializePool()
         {
@@ -35,20 +45,14 @@ namespace ShootEmUp
 
             EnemyReferenceComponent enemy = _enemyPool.Get();
 
+            foreach (var injectable in enemy.EnemyContextInstaller.ProvideInjectablesWithSceneDependencies())
+                _dependencyAssembler.Inject(injectable);
+            
             enemy.Transform.position = _randomPositionGenerator.RandomSpawnPosition();
-            enemy.MoveAgent.Destination = _randomPositionGenerator.RandomAttackPosition();
+            enemy.EnemyDependencyAssembler.Resolve<EnemyMoveAgent>().Destination = _randomPositionGenerator.RandomAttackPosition();
+            enemy.EnemyDependencyAssembler.Resolve<EnemyAttackAgent>().Target = _target;
             
-            enemy.AttackAgent.Target = _target;
-            enemy.AttackController.BulletManager = _bulletManager;
-            enemy.DeathObserver.EnemySpawner = this;
-            
-            IGameListener[] listeners = enemy.GetComponents<IGameListener>();
-            for (int i = 0; i < listeners.Length; i++)
-                _gameManager.AddGameListener(listeners[i]);
-            
-            IGameStartListener[] startListeners = enemy.GetComponents<IGameStartListener>();
-            for (int i = 0; i < startListeners.Length; i++)
-                startListeners[i].OnStart();
+            _gameManager.AddAndStartGameListeners(enemy.EnemyContextInstaller.ProvideGameListeners());
         }
 
         public void UnspawnEnemy(EnemyReferenceComponent enemy)

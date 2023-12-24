@@ -29,6 +29,17 @@ namespace ShootEmUp
             for (int i = 0; i < sceneComponents.Length; i++)
                 _dependencyInjector.Inject(sceneComponents[i], _serviceLocator);
         }
+        
+        public void InjectRequiredInstancesOnly(DependencyInstaller[] installers)
+        {
+            for (int i = 0; i < installers.Length; i++)
+            {
+                IEnumerable<object> injectables = installers[i].ProvideInjectables();
+                
+                foreach (var injectable in injectables)
+                    _dependencyInjector.Inject(injectable, _serviceLocator);
+            }
+        }
 
         public void BindService(object service) => _serviceLocator.BindService(service);
         

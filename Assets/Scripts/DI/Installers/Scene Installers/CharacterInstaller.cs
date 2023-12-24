@@ -8,7 +8,16 @@ namespace ShootEmUp
         private MoveComponent _moveComponent;
         
         [SerializeField, Service]
+        private WeaponComponent _weaponComponent;
+
+        [SerializeField, Service]
+        private HitPointsComponent _hitPointsComponent;
+        
+        [SerializeField, Service]
         private CharacterBulletShooter _characterBulletShooter;
+        
+        [Listener]
+        private CharacterHitPointsObserver _characterHitPointsObserver = new();
         
         [Listener]
         private InputMoveController _inputMoveController = new();

@@ -5,7 +5,6 @@ namespace ShootEmUp
     public sealed class InputMoveController : IGameUpdateListener, IGameFixedUpdateListener
     {
         private MoveComponent _characterMoveComponent;
-        
         private float _horizontal;
         
         [Inject]

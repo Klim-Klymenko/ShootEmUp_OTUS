@@ -2,12 +2,10 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    [RequireComponent(typeof(MoveComponent))]
-    public sealed class EnemyMoveAgent : MonoBehaviour, IGameFixedUpdateListener
+    public sealed class EnemyMoveAgent : IGameFixedUpdateListener
     {
-        [SerializeField] private MoveComponent _moveComponent;
-
-        [SerializeField] private Transform _transform;
+        private MoveComponent _moveComponent;
+        private Transform _transform;
         
         private Vector2 _destination;
 
@@ -21,17 +19,17 @@ namespace ShootEmUp
         }
 
         public bool IsReached { get; private set; }
-        
-        private void OnValidate()
+
+        [Inject]
+        private void Construct(MoveComponent moveComponent, Transform transform)
         {
-            _moveComponent = GetComponent<MoveComponent>();
+            _moveComponent = moveComponent;
             _transform = transform;
         }
-
+        
         void IGameFixedUpdateListener.OnFixedUpdate()
         {
-            if (IsReached) 
-                return;
+            if (IsReached) return;
             
             Vector2 vectorToDestination = _destination - (Vector2) _transform.position;
             float vectorLength = vectorToDestination.magnitude;
