@@ -13,15 +13,18 @@ namespace SaveSystem
         [SerializeField]
         private ResourceService _resourceService;
         
+        [SerializeField]
+        private SaveLoadManager _saveLoadManager;
+        
         public override void InstallBindings()
         {
             BindSceneObjects();
             BindManagers();
-            InjectManagers();
             BindDataLayer();
             BindSpawners();
             BindInstallers();
             BindControllers();
+            InjectManagers();
         }
 
         private void BindDataLayer()
@@ -29,7 +32,6 @@ namespace SaveSystem
             Container.BindInterfacesAndSelfTo<UnitSaveLoader>().AsSingle();
             Container.BindInterfacesAndSelfTo<ResourcesSaveLoader>().AsSingle();
             Container.BindInterfacesTo<Repository>().AsSingle();
-            Container.Bind<SaveLoadManager>().FromComponentInHierarchy().AsSingle();
         }
 
         private void BindControllers()
@@ -59,12 +61,14 @@ namespace SaveSystem
         {
             Container.BindInterfacesAndSelfTo<UnitManager>().FromInstance(_unitManager).AsSingle();
             Container.BindInterfacesTo<ResourceService>().FromInstance(_resourceService).AsSingle();
+            Container.Bind<SaveLoadManager>().FromInstance(_saveLoadManager).AsSingle();
         }
 
         private void InjectManagers()
         {
             Container.Inject(_unitManager);
             Container.Inject(_resourceService);
+            Container.Inject(_saveLoadManager);
         }
     }
 }

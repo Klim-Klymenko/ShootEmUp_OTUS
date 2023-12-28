@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
-using UnityEngine;
 using Zenject;
 
 namespace SaveSystem
 {
-    public sealed class SaveLoadManager : MonoBehaviour
+    [Serializable]
+    public sealed class SaveLoadManager
     {
         private IGameRepository _repository;
         private List<ISaveLoader> _saveLoaders;
