@@ -1,0 +1,16 @@
+﻿using System.Collections.Generic;
+using GameEngine;
+using UnityEngine;
+
+namespace SaveSystem
+{
+    [System.Serializable]
+    public struct UnitsData
+    {
+        public List<Unit> Units;
+        public List<Vector3> UnitsPositions;
+        public List<Quaternion> UnitsRotations;
+        public List<int> UnitsHitPoints;
+        public List<string> UnitsTypes;
+    }
+}

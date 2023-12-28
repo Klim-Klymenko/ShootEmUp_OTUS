@@ -8,6 +8,7 @@ namespace GameEngine
         public string ID
         {
             get => id;
+            set => id = value;
         }
 
         public int Amount

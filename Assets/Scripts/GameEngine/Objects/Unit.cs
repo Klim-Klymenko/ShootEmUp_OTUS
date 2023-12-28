@@ -8,6 +8,7 @@ namespace GameEngine
         public string Type
         {
             get => type;
+            set => type = value;
         }
 
         public int HitPoints
@@ -16,15 +17,9 @@ namespace GameEngine
             set => hitPoints = value;
         }
 
-        public Vector3 Position
-        {
-            get => this.transform.position;
-        }
-        
-        public Vector3 Rotation
-        {
-            get => this.transform.eulerAngles;
-        }
+        public Vector3 Position => transform.position;
+   
+        public Vector3 Rotation => transform.eulerAngles;
 
         [SerializeField]
         private string type;
@@ -34,8 +29,8 @@ namespace GameEngine
 
         private void Reset()
         {
-            this.type = this.name;
-            this.hitPoints = 10;
+            type = name;
+            hitPoints = 10;
         }
     }
 }

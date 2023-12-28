@@ -1,25 +1,35 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using SaveSystem;
 using Sirenix.OdinInspector;
+using Zenject;
 
 namespace GameEngine
 {
     //Нельзя менять!
     [Serializable]
-    public sealed class ResourceService
+    public sealed class ResourceService : IResourcesProvider
     {
         [ShowInInspector, ReadOnly]
         private Dictionary<string, Resource> sceneResources = new();
 
+        [Inject]
         public void SetResources(IEnumerable<Resource> resources)
         {
-            this.sceneResources = resources.ToDictionary(it => it.ID);
+            sceneResources = resources.ToDictionary(it => it.ID);
         }
 
-        public IEnumerable<Resource> GetResources()
+        IEnumerable<Resource> IResourcesProvider.GetResources()
         {
-            return this.sceneResources.Values;
+            IEnumerable<Resource> resourcesToProvider = sceneResources.Values;
+
+            foreach (var resource in resourcesToProvider)
+            {
+                if (resource == null) continue;
+
+                yield return resource;
+            }
         }
     }
 }
