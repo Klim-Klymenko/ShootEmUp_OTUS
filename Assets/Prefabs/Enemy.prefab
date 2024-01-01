@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 5568771391735819373}
   - component: {fileID: 5568771391735819374}
   - component: {fileID: 5216015519080925319}
-  - component: {fileID: 5430222066957282342}
+  - component: {fileID: 2435510934488747110}
   - component: {fileID: 6430790723517010824}
   m_Layer: 11
   m_Name: Enemy
@@ -197,9 +197,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05561fab8ab041c2b5a5e61675d63bca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _transform: {fileID: 3470145497817149085}
-  _gameObject: {fileID: 559606060570185700}
---- !u!114 &5430222066957282342
+--- !u!114 &2435510934488747110
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -211,7 +209,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea6170cbb14a4e78a7f85a018137759d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _installers:
+  Installers:
   - {fileID: 6430790723517010824}
 --- !u!114 &6430790723517010824
 MonoBehaviour:
@@ -225,10 +223,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 153e11b897e6477fbce3592555309202, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _transform: {fileID: 3470145497817149085}
   _referenceComponent: {fileID: 5216015519080925319}
-  _hitPointsComponent: {fileID: 5568771391735819373}
-  _moveComponent: {fileID: 5568771391735819372}
+  _enemyService:
+    _gameObject: {fileID: 559606060570185700}
+    _transform: {fileID: 3470145497817149085}
+    _hitPointsComponent: {fileID: 5568771391735819373}
+    _moveComponent: {fileID: 5568771391735819372}
 --- !u!1 &2239154907127902911
 GameObject:
   m_ObjectHideFlags: 0

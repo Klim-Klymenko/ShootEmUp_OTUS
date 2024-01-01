@@ -21,10 +21,10 @@ namespace ShootEmUp
         public bool IsReached { get; private set; }
 
         [Inject]
-        private void Construct(MoveComponent moveComponent, Transform transform)
+        private void Construct(EnemyService enemyService)
         {
-            _moveComponent = moveComponent;
-            _transform = transform;
+            _moveComponent = enemyService.MoveComponent;
+            _transform = enemyService.Transform;
         }
         
         void IGameFixedUpdateListener.OnFixedUpdate()

@@ -5,18 +5,23 @@ namespace ShootEmUp
     [System.Serializable]
     public sealed class CharacterBulletShooter
     {
-        [SerializeField] private Color _bulletColour;
-        [SerializeField] private int _bulletDamage;
-        [SerializeField] private float _bulletSpeed;
+        [SerializeField]
+        private Color _bulletColour;
+        
+        [SerializeField]
+        private int _bulletDamage;
+        
+        [SerializeField]
+        private float _bulletSpeed;
 
         private IBulletSpawner _bulletSpawner;
         private WeaponComponent _weaponComponent;
 
         [Inject]
-        private void Construct(IBulletSpawner bulletSpawner, WeaponComponent weaponComponent)
+        private void Construct(IBulletSpawner bulletSpawner, CharacterService characterService)
         {
             _bulletSpawner = bulletSpawner;
-            _weaponComponent = weaponComponent;
+            _weaponComponent = characterService.WeaponComponent;
         }
 
         public void ShootBullet()

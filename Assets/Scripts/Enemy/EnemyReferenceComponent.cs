@@ -1,32 +1,24 @@
 ﻿using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace ShootEmUp
 {
-    [RequireComponent(typeof(EnemyContextInstaller))]
     public sealed class EnemyReferenceComponent : MonoBehaviour, IPoolable
     {
-        public Transform Transform => _transform;
-        public GameObject GameObject => _gameObject;
-        public DependencyAssembler EnemyDependencyAssembler => _enemyDependencyAssembler;
-        public EnemyContextInstaller EnemyContextInstaller => _enemyContextInstaller;
+        public Vector3 Position
+        {
+            set => transform.position = value;  
+        } 
+        public Transform Transform => transform;
+        public GameObject GameObject => gameObject;
         
-        [SerializeField] private Transform _transform;
-        [SerializeField] private GameObject _gameObject;
-        [SerializeField] private EnemyContextInstaller _enemyContextInstaller;
-        private DependencyAssembler _enemyDependencyAssembler;
+        private DiContainer _enemyDiContainer;
         
         [Inject]
-        private void Construct(DependencyAssembler dependencyAssembler)
+        private void Construct(DiContainer diContainer)
         {
-            _enemyDependencyAssembler = dependencyAssembler;
+            _enemyDiContainer = diContainer;
         }
         
-        private void OnValidate()
-        {
-            _transform = transform;
-            _gameObject = gameObject;
-            _enemyContextInstaller = GetComponent<EnemyContextInstaller>();
-        }
+        public T Resolve<T>() where T : class => _enemyDiContainer.Resolve<T>();
     }
 }

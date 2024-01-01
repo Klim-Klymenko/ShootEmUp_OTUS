@@ -12,11 +12,10 @@
 
         private BulletManager _bulletManager;
 
-        public EnemyAttackController (HitPointsComponent hitPointsComponent, EnemyMoveAgent enemyMove,
-            MoveComponent moveComponent, EnemyAttackAgent attackAgent)
+        public EnemyAttackController(EnemyService enemyService, EnemyMoveAgent enemyMove, EnemyAttackAgent attackAgent)
         {
-            _hitPointsComponent = hitPointsComponent;
-            _moveComponent = moveComponent;
+            _hitPointsComponent = enemyService.HitPointsComponent;
+            _moveComponent = enemyService.MoveComponent;
             _enemyMove = enemyMove;
             _attackAgent = attackAgent;
         }

@@ -4,16 +4,18 @@ namespace ShootEmUp
 {
     public sealed class InputMoveController : IGameUpdateListener, IGameFixedUpdateListener
     {
-        private MoveComponent _characterMoveComponent;
+        private const string HorizontalAxis = "Horizontal";
         private float _horizontal;
         
+        private MoveComponent _characterMoveComponent;
+
         [Inject]
-        private void Construct(MoveComponent characterMoveComponent)
+        private void Construct(CharacterService characterService)
         {
-            _characterMoveComponent = characterMoveComponent;
+            _characterMoveComponent = characterService.MoveComponent;
         }
 
-        void IGameUpdateListener.OnUpdate() => _horizontal = Input.GetAxis("Horizontal");
+        void IGameUpdateListener.OnUpdate() => _horizontal = Input.GetAxis(HorizontalAxis);
 
         void IGameFixedUpdateListener.OnFixedUpdate() => 
             _characterMoveComponent.Move(new Vector2(_horizontal, 0) * Time.fixedDeltaTime);

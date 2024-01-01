@@ -1,36 +1,27 @@
-﻿using System;
-using UnityEngine;
-
-namespace ShootEmUp
+﻿namespace ShootEmUp
 {
-    public sealed class SceneContext : MonoBehaviour
+    public sealed class SceneContext : GameContext
     {
-        [SerializeField] private DependencyInstaller[] _installers;
-        
-        private DependencyAssembler _dependencyAssembler;
-        private readonly ServiceLocator _serviceLocator = new();
-        private readonly DependencyInjector _dependencyInjector = new();
+        private GameManagerInstaller _gameManagerInstaller;
         private readonly GameManager _gameManager = new();
         
         private void Awake()
         {
-            _dependencyAssembler = new(_serviceLocator, _dependencyInjector);
-
+            InitializeDi();
+            
+            _gameManagerInstaller = new(_gameManager);
+            
             SystemInstallablesArgs args = new SystemInstallablesArgs
             {
-                DependencyAssembler = _dependencyAssembler, GameManager = _gameManager
+                DiContainer = DiContainer, GameManager = _gameManager
             };
-            _serviceLocator.InstallServices(args, _installers);
+            InstallServices(args);
+            InjectSceneContext();
             
-            _gameManager.InstallListeners(_installers);
-            _gameManager.OnInitialize();
+            _gameManagerInstaller.InstallListeners(Installers);
+            _gameManager.OnInitialize(); 
         }
-
-        private void Start()
-        {
-            _dependencyAssembler.Inject(_installers);
-        }
-
+        
         private void Update() => _gameManager.OnUpdate();
 
         private void FixedUpdate() => _gameManager.OnFixedUpdate();

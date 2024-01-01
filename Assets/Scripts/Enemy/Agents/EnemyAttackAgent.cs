@@ -6,7 +6,7 @@ namespace ShootEmUp
     {
         public Transform Target { private get; set; }
 
-        public void Fire(Vector2 startPosition, BulletManager bulletSpawner)
+        public void Fire(Vector2 startPosition, IBulletSpawner bulletSpawner)
         {
             if (Target == null) return;
             

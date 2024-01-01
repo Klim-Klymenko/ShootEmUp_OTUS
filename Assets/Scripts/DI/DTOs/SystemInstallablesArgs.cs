@@ -2,7 +2,7 @@
 {
     public struct SystemInstallablesArgs
     {
-        public DependencyAssembler DependencyAssembler;
+        public DiContainer DiContainer;
         public GameManager GameManager;
     }
 }

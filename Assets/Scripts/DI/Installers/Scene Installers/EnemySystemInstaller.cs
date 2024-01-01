@@ -2,7 +2,7 @@
 
 namespace ShootEmUp
 {
-    public sealed class EnemyInstaller : DependencyInstaller
+    public sealed class EnemySystemInstaller : Installer
     {
         [SerializeField, Service]
         private EnemyPositionsGenerator _enemyPositionsGenerator;

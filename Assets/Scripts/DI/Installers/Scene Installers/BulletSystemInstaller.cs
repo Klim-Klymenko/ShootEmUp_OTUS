@@ -2,12 +2,12 @@
 
 namespace ShootEmUp
 {
-    public sealed class BulletInstaller : DependencyInstaller
+    public sealed class BulletSystemInstaller : Installer
     {
         [SerializeField, Service, Listener]
         private BulletSpawner _bulletSpawner;
         
-        [Service, Listener, Interfaces(typeof(IBulletUnspawner), typeof(IBulletSpawner))]
+        [Service(typeof(IBulletUnspawner), typeof(IBulletSpawner)), Listener]
         private BulletManager _bulletManager = new();
     }
 }

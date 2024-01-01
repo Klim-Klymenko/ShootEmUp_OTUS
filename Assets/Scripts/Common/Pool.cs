@@ -26,7 +26,7 @@ namespace ShootEmUp
             for (var i = 0; i < _initialAmount; i++)
             {
                 T currentEntity = Object.Instantiate(_prefab, _parentToPut);
-
+                
                 currentEntity.GameObject.SetActive(false);
 
                 _entities.Add(currentEntity);

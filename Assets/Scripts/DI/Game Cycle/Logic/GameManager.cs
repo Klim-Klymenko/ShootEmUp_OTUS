@@ -18,20 +18,6 @@ namespace ShootEmUp
         private readonly List<IGameResumeListener> _resumeListeners = new();
         private readonly List<IGamePauseListener> _pauseListeners = new();
         
-        public void InstallListeners(IEnumerable<DependencyInstaller> dependencyInstallers)
-        {
-            foreach (var installer in dependencyInstallers)
-                AddGameListeners(installer.ProvideGameListeners());
-            
-            MonoBehaviour[] sceneComponents = Object.FindObjectsOfType<MonoBehaviour>(true);
-
-            for (int i = 0; i < sceneComponents.Length; i++)
-            {
-                if (sceneComponents[i] is IGameListener gameListener)
-                    AddGameListener(gameListener);
-            }
-        }
-        
         public void OnUpdate()
         {
             if (!HasGameStarted) return;
@@ -104,23 +90,14 @@ namespace ShootEmUp
             CurrentGameState = GameState.Paused;
         }
 
-        private void AddGameListeners(IEnumerable<IGameListener> listeners)
-        {
-            foreach (var listener in listeners)
-                AddGameListener(listener);
-        }
-        
-        public void AddAndStartGameListeners(IEnumerable<IGameListener> listeners)
+        public void AddGameListeners(IEnumerable<IGameListener> listeners)
         {
             foreach (var listener in listeners)
             {
                 AddGameListener(listener);
-            
-                if (listener is IGameStartListener startListener)
-                    startListener.OnStart();
             }
         }
-        
+
         public void AddGameListener(IGameListener listener)
         {
             if (listener is IGameUpdateListener updateListener)
@@ -134,10 +111,17 @@ namespace ShootEmUp
             if (listener is IGameInitializeListener initializeListener)
                 if (!_initializeListeners.Contains(initializeListener))
                     AddInitializeListener(initializeListener);
-            
+
             if (listener is IGameStartListener startListener)
+            {
                 if (!_startListeners.Contains(startListener))
+                {
                     AddStartListener(startListener);
+                    
+                    if (HasGameStarted)
+                        startListener.OnStart();
+                }
+            }
             
             if (listener is IGameFinishListener finishListener)
                 if (!_finishListeners.Contains(finishListener))

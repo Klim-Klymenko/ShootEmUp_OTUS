@@ -3,22 +3,15 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    [RequireComponent(typeof(Rigidbody2D))]
-    [RequireComponent(typeof(SpriteRenderer))]
     public sealed class Bullet : MonoBehaviour, IPoolable, IGameStartListener,
         IGameFinishListener, IGameResumeListener, IGamePauseListener
     {
         public event Action OnBulletDestroyed;
         
-        [SerializeField] private Rigidbody2D _rigidbody;
-        [SerializeField] private SpriteRenderer _spriteRenderer;
-        [SerializeField] private Transform _transform;
-        [SerializeField] private GameObject _gameObject;
-
         private Vector2 _previousVelocity;
 
-        public Transform Transform => _transform;
-        public GameObject GameObject => _gameObject;
+        public Transform Transform => transform;
+        public GameObject GameObject => gameObject;
 
         public CohesionType CohesionType { get; set; }
         public int Damage { get; set; }
@@ -36,26 +29,30 @@ namespace ShootEmUp
 
         public Vector3 Position
         {
-            set => _transform.position = value;
-            get => _transform.position;
+            set => transform.position = value;
+            get => transform.position;
         }
 
         public Color Color
         {
             set => _spriteRenderer.color = value;
         }
-        
-        private void OnValidate() => AccessFields();
+     
+        private Rigidbody2D _rigidbody;
+        private SpriteRenderer _spriteRenderer;
+        private DiContainer _diContainer;
 
-        private void OnCollisionEnter2D(Collision2D collision) => DealDamage(collision);
-
-        private void AccessFields()
+        [Inject]
+        public void Construct(DiContainer diContainer, BulletService bulletService)
         {
-            _transform = transform;
-            _gameObject = gameObject;
-            _spriteRenderer = GetComponent<SpriteRenderer>();
-            _rigidbody = GetComponent<Rigidbody2D>();
+            _diContainer = diContainer;
+            _rigidbody = bulletService.Rigidbody;
+            _spriteRenderer = bulletService.SpriteRenderer;
         }
+        
+        public T Resolve<T>() where T : class => _diContainer.Resolve<T>();
+        
+        private void OnCollisionEnter2D(Collision2D collision) => DealDamage(collision);
         
         private void DealDamage(Collision2D collision)
         {

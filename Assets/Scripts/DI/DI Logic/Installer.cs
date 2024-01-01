@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public abstract class DependencyInstaller : MonoBehaviour
+    public abstract class Installer : MonoBehaviour
     {
         public readonly List<Type> InterfacesType = new();
         
@@ -13,31 +13,26 @@ namespace ShootEmUp
         {
             FieldInfo[] fields = GetType().GetFields(BindingFlags.Instance | BindingFlags.Public |
                                                      BindingFlags.NonPublic | BindingFlags.DeclaredOnly);
-            
             for (int i = 0; i < fields.Length; i++)
             {
-                if (fields[i].IsDefined(typeof(InterfacesAttribute)))
+                if (!fields[i].IsDefined(typeof(ServiceAttribute))) continue;
+                
+                ServiceAttribute serviceAttribute = fields[i].GetCustomAttribute<ServiceAttribute>();
+                if (serviceAttribute.InterfacesType != null)
                 {
-                    InterfacesAttribute interfacesAttribute = fields[i].GetCustomAttribute<InterfacesAttribute>();
-                    if (interfacesAttribute.InterfacesType != null)
+                    foreach (var interfaceType in serviceAttribute.InterfacesType)
                     {
-                        foreach (var interfaceType in interfacesAttribute.InterfacesType)
-                        {
-                            if (!InterfacesType.Contains(interfaceType)) 
-                                InterfacesType.Add(interfaceType);
-                        }
+                        if (!InterfacesType.Contains(interfaceType))
+                            InterfacesType.Add(interfaceType);
                     }
                 }
-                
-                if (fields[i].IsDefined(typeof(ServiceAttribute)))
-                {
-                    object value = fields[i].GetValue(this);
+                    
+                object value = fields[i].GetValue(this);
+                    
+                if (value == null)
+                    throw new NullReferenceException($"Field {fields[i].Name} is null");
 
-                    if (value == null)
-                        throw new NullReferenceException($"Field {fields[i].Name} is null");
-
-                    yield return value;
-                }
+                yield return value;
             } 
         }
 

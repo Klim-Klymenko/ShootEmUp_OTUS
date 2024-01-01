@@ -6,8 +6,11 @@ namespace ShootEmUp
     [System.Serializable]
     public sealed class ResumePauseButtonsController : IGameInitializeListener, IGameFinishListener
     {
-        [SerializeField] private Button _resumeButton;
-        [SerializeField] private Button _pauseButton;
+        [SerializeField]
+        private Button _resumeButton;
+        
+        [SerializeField] 
+        private Button _pauseButton;
 
         private GameResumePauseDecorator _resumePauseDecorator;
 

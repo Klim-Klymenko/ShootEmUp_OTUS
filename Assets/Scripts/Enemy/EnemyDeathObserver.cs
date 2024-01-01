@@ -8,9 +8,9 @@
         private readonly HitPointsComponent _hitPointsComponent;
         private readonly EnemyReferenceComponent _referenceComponent;
 
-        public EnemyDeathObserver(HitPointsComponent hitPointsComponent, EnemyReferenceComponent referenceComponent)
+        public EnemyDeathObserver(EnemyService enemyService, EnemyReferenceComponent referenceComponent)
         {
-            _hitPointsComponent = hitPointsComponent;
+            _hitPointsComponent = enemyService.HitPointsComponent;
             _referenceComponent = referenceComponent;
         }
 

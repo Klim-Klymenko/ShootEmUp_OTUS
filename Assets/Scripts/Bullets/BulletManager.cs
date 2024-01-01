@@ -22,8 +22,7 @@ namespace ShootEmUp
             {
                 Bullet currentBullet = _bullets[i];
 
-                if (_levelBounds.InBounds(currentBullet.Position))
-                    return;
+                if (_levelBounds.InBounds(currentBullet.Position)) return;
 
                 UnspawnBullet(currentBullet);
             }

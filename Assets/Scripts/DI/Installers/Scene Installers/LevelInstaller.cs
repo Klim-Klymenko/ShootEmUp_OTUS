@@ -2,7 +2,7 @@
 
 namespace ShootEmUp
 {
-    public sealed class LevelInstaller : DependencyInstaller
+    public sealed class LevelInstaller : Installer
     {
         [SerializeField, Listener]
         private LevelBackground _levelBackground;

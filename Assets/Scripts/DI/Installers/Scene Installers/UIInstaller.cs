@@ -1,14 +1,15 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace ShootEmUp
 {
-    public sealed class UIInstaller : DependencyInstaller
+    public sealed class UIInstaller : Installer
     {
         [SerializeField, Listener, Service]
         private GameStarterController _gameStarterController;
         
         [SerializeField, Listener]
-        private StartButtonManager startButtonManager;
+        private StartFinishButtonsAdapter _startFinishButtonsAdapter;
 
         [Service]
         private GameResumePauseDecorator _gameResumePauseDecorator = new();

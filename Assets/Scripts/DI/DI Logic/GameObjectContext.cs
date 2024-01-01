@@ -1,29 +1,23 @@
 ﻿using System.Threading.Tasks;
-using UnityEngine;
 
 namespace ShootEmUp
 {
-    public sealed class GameObjectContext : MonoBehaviour
+    public sealed class GameObjectContext : GameContext
     {
-        [SerializeField] private DependencyInstaller[] _installers;
-        
-        private DependencyAssembler _dependencyAssembler;
         private readonly ServiceLocator _serviceLocator = new();
-        private readonly DependencyInjector _dependencyInjector = new();
         
         private Task InitializeServices()
         {
-            _dependencyAssembler = new(_serviceLocator, _dependencyInjector);
-
-            _serviceLocator.InstallServices(_dependencyAssembler, _installers);
+            InitializeDi(_serviceLocator);
+            InstallServices();
             return Task.CompletedTask;
         }
         
-        private async void OnEnable()
+        public async void Awake()
         {
             await InitializeServices();
-            
-            _dependencyAssembler.InjectRequiredInstancesOnly(_installers);
+
+            InjectGameObjectContext();
         }
     }
 }

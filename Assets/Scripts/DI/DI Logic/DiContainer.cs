@@ -3,41 +3,41 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public sealed class DependencyAssembler
+    public sealed class DiContainer
     {
         private readonly ServiceLocator _serviceLocator;
-        private readonly DependencyInjector _dependencyInjector;
+        private readonly Injector _injector;
         
-        public DependencyAssembler(ServiceLocator serviceLocator, DependencyInjector dependencyInjector)
+        public DiContainer(ServiceLocator serviceLocator, Injector injector)
         {
             _serviceLocator = serviceLocator;
-            _dependencyInjector = dependencyInjector;
+            _injector = injector;
         }
         
-        public void Inject(DependencyInstaller[] installers)
+        public void Inject(Installer[] installers)
         {
             for (int i = 0; i < installers.Length; i++)
             {
                 IEnumerable<object> injectables = installers[i].ProvideInjectables();
                 
                 foreach (var injectable in injectables)
-                   _dependencyInjector.Inject(injectable, _serviceLocator);
+                   _injector.Inject(injectable, _serviceLocator);
             }
             
             MonoBehaviour[] sceneComponents = Object.FindObjectsOfType<MonoBehaviour>(true);
 
             for (int i = 0; i < sceneComponents.Length; i++)
-                _dependencyInjector.Inject(sceneComponents[i], _serviceLocator);
+                _injector.Inject(sceneComponents[i], _serviceLocator);
         }
         
-        public void InjectRequiredInstancesOnly(DependencyInstaller[] installers)
+        public void Inject(Installer[] installers, ServiceLocator parentServiceLocator)
         {
             for (int i = 0; i < installers.Length; i++)
             {
                 IEnumerable<object> injectables = installers[i].ProvideInjectables();
-                
+
                 foreach (var injectable in injectables)
-                    _dependencyInjector.Inject(injectable, _serviceLocator);
+                    _injector.Inject(injectable, _serviceLocator, parentServiceLocator);
             }
         }
 
@@ -47,28 +47,28 @@ namespace ShootEmUp
         
         public void Inject(object target)
         {
-            _dependencyInjector.Inject(target, _serviceLocator);
+            _injector.Inject(target, _serviceLocator);
             BindService(target);
         }
 
         public T Instantiate<T>(T prefab) where T : Object
         {
             T instance = Object.Instantiate(prefab, Vector3.zero, Quaternion.identity);
-            _dependencyInjector.Inject(instance, _serviceLocator);
+            _injector.Inject(instance, _serviceLocator);
             return instance;
         }
         
         public T Instantiate<T>(T prefab, Vector3 position, Quaternion rotation) where T : Object
         {
             T instance = Object.Instantiate(prefab, position, rotation);
-            _dependencyInjector.Inject(instance, _serviceLocator);
+            _injector.Inject(instance, _serviceLocator);
             return instance;
         }
         
         public T Instantiate<T>(T prefab, Vector3 position, Quaternion rotation, Transform parent) where T : Object
         {
             T instance = Object.Instantiate(prefab, position, rotation, parent);
-            _dependencyInjector.Inject(instance, _serviceLocator);
+            _injector.Inject(instance, _serviceLocator);
             return instance;
         }
     }
