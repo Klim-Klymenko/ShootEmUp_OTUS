@@ -17,7 +17,10 @@ namespace ShootEmUp
 
         void IGameUpdateListener.OnUpdate() => _horizontal = Input.GetAxis(HorizontalAxis);
 
-        void IGameFixedUpdateListener.OnFixedUpdate() => 
-            _characterMoveComponent.Move(new Vector2(_horizontal, 0) * Time.fixedDeltaTime);
+        void IGameFixedUpdateListener.OnFixedUpdate()
+        {
+            Vector2 moveDirection = new Vector2(_horizontal, 0);
+            _characterMoveComponent.Move(moveDirection * Time.fixedDeltaTime);
+        } 
     }
 }

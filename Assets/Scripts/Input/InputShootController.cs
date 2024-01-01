@@ -4,6 +4,8 @@ namespace ShootEmUp
 {
     public sealed class InputShootController : IGameUpdateListener
     {
+        private const KeyCode ShootKey = KeyCode.Space;
+        
         private CharacterBulletShooter _bulletShooter;
         
         [Inject]
@@ -14,7 +16,7 @@ namespace ShootEmUp
 
         void IGameUpdateListener.OnUpdate()
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(ShootKey))
                 _bulletShooter.ShootBullet();
         }
     }

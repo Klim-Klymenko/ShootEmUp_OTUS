@@ -321,7 +321,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gameStarterController: {fileID: 1526096698}
-  _startFinishButtonsAdapter:
+  _startFinishButtonsController:
     _finishButton: {fileID: 524045398}
     _startButton: {fileID: 313677827}
     _startButtonGameObject: {fileID: 313677825}

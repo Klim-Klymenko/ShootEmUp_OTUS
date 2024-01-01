@@ -9,7 +9,7 @@ namespace ShootEmUp
         private GameStarterController _gameStarterController;
         
         [SerializeField, Listener]
-        private StartFinishButtonsAdapter _startFinishButtonsAdapter;
+        private StartFinishButtonsController _startFinishButtonsController;
 
         [Service]
         private GameResumePauseDecorator _gameResumePauseDecorator = new();

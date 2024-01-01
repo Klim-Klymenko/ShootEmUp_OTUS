@@ -4,7 +4,7 @@ using UnityEngine.UI;
 namespace ShootEmUp
 {
     [System.Serializable]
-    public sealed class StartFinishButtonsAdapter : IGameInitializeListener, IGameFinishListener
+    public sealed class StartFinishButtonsController : IGameInitializeListener, IGameFinishListener
     {
         [SerializeField]
         private Button _finishButton;

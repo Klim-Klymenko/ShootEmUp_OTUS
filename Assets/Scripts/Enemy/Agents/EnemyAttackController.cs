@@ -10,7 +10,7 @@
         private readonly EnemyMoveAgent _enemyMove;
         private readonly EnemyAttackAgent _attackAgent;
 
-        private BulletManager _bulletManager;
+        private IBulletSpawner _bulletSpawner;
 
         public EnemyAttackController(EnemyService enemyService, EnemyMoveAgent enemyMove, EnemyAttackAgent attackAgent)
         {
@@ -21,9 +21,9 @@
         }
         
         [Inject]
-        private void Construct(BulletManager bulletManager)
+        private void Construct(IBulletSpawner bulletSpawner)
         {
-            _bulletManager = bulletManager;
+            _bulletSpawner = bulletSpawner;
         }
         
         private void Enable() => _enemyTimer.OnTimeToShoot += Fire;
@@ -33,7 +33,7 @@
         void IGameFixedUpdateListener.OnFixedUpdate() => 
             _enemyTimer.TimerCountdown(_enemyMove.IsReached, _hitPointsComponent.AnyHitPoints);
 
-        private void Fire() => _attackAgent.Fire(_moveComponent.Position, _bulletManager);
+        private void Fire() => _attackAgent.Fire(_moveComponent.Position, _bulletSpawner);
         
         void IGameStartListener.OnStart() => Enable();
 

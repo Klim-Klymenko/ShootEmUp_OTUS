@@ -82,7 +82,7 @@ namespace ShootEmUp
         
         public void OnPause()
         {
-            if (CurrentGameState == GameState.Paused || CurrentGameState == GameState.Finished) return;
+            if (CurrentGameState is GameState.Paused or GameState.Finished) return;
             
             for (int i = 0; i < _pauseListeners.Count; i++) 
                 _pauseListeners[i].OnPause();
@@ -92,10 +92,8 @@ namespace ShootEmUp
 
         public void AddGameListeners(IEnumerable<IGameListener> listeners)
         {
-            foreach (var listener in listeners)
-            {
+            foreach (var listener in listeners) 
                 AddGameListener(listener);
-            }
         }
 
         public void AddGameListener(IGameListener listener)
