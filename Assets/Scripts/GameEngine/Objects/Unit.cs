@@ -5,11 +5,7 @@ namespace GameEngine
     //Нельзя менять!
     public sealed class Unit : MonoBehaviour
     {
-        public string Type
-        {
-            get => type;
-            set => type = value;
-        }
+        public string Type => type;
 
         public int HitPoints
         {

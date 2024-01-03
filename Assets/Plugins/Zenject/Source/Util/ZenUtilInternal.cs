@@ -208,7 +208,7 @@ namespace Zenject.Internal
         public static bool IsInjectableMonoBehaviourType(Type type)
         {
             // Do not inject on installers since these are always injected before they are installed
-            return type != null && !type.DerivesFrom<MonoInstaller>() && TypeAnalyzer.HasInfo(type);
+            return type != null && TypeAnalyzer.HasInfo(type);
         }
 
         public static IEnumerable<GameObject> GetRootGameObjects(Scene scene)

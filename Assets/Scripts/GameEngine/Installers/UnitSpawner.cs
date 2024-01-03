@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using SaveSystem;
+using UnityEngine;
 
 namespace GameEngine
 {
@@ -12,14 +12,12 @@ namespace GameEngine
             _unitSpawner = unitSpawner;
         }
         
-        public void SpawnUnits(UnitsData data)
+        public void SpawnUnits(List<Unit> units, List<Vector3> positions, List<Quaternion> rotations, List<int> hitPoints)
         {
-            List<Unit> units = data.Units;
             for (int i = 0; i < units.Count; i++)
             {
-                Unit unit = _unitSpawner.SpawnUnit(units[i], data.UnitsPositions[i], data.UnitsRotations[i]);
-                unit.HitPoints = data.UnitsHitPoints[i];
-                unit.Type = data.UnitsTypes[i];
+                Unit unit = _unitSpawner.SpawnUnit(units[i], positions[i], rotations[i]);
+                unit.HitPoints = hitPoints[i];
             }
         }
     }

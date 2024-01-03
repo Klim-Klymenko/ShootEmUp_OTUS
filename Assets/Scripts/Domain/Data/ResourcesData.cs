@@ -1,13 +1,11 @@
 ﻿using System.Collections.Generic;
-using GameEngine;
 
-namespace SaveSystem
+namespace Domain
 {
     [System.Serializable]
     public struct ResourcesData
     {
-        public List<Resource> Resources;
-        public List<int> ResourcesAmounts;
+        public List<int> ResourcesAmount;
         public List<string> ResourcesIDs;
     }
 }

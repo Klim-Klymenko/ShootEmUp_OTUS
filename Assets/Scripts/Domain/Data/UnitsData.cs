@@ -2,7 +2,7 @@
 using GameEngine;
 using UnityEngine;
 
-namespace SaveSystem
+namespace Domain
 {
     [System.Serializable]
     public struct UnitsData
@@ -11,6 +11,5 @@ namespace SaveSystem
         public List<Vector3> UnitsPositions;
         public List<Quaternion> UnitsRotations;
         public List<int> UnitsHitPoints;
-        public List<string> UnitsTypes;
     }
 }

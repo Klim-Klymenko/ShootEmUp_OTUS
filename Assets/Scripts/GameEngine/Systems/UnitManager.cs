@@ -10,7 +10,7 @@ namespace GameEngine
 {
     //Нельзя менять!
     [Serializable]
-    public sealed class UnitManager : IUnitsProvider, IUnitSpawner
+    public sealed class UnitManager : IUnitsProvider, IUnitSpawner, IUnitDestroyer
     {
         [SerializeField]
         private Transform container;
@@ -45,6 +45,14 @@ namespace GameEngine
             }
         }
 
+        void IUnitDestroyer.DestroyUnits()
+        {
+            foreach (var unit in sceneUnits)
+                Object.Destroy(unit.gameObject);
+            
+            sceneUnits.Clear();
+        }
+        
         IEnumerable<Unit> IUnitsProvider.GetAllUnits()
         {
             foreach (var unit in sceneUnits)
@@ -53,15 +61,6 @@ namespace GameEngine
                 
                 yield return unit;
             }
-        }
-
-        public void ClearPreviousUnits()
-        {
-            //if pool would exist, we would return units to the pool
-            foreach (var unit in sceneUnits)
-                unit.gameObject.SetActive(false);
-            
-            sceneUnits.Clear();
         }
     }
 }

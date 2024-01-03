@@ -1,11 +1,10 @@
 ﻿using System;
+using SaveSystem;
 
-namespace SaveSystem
+namespace Domain
 {
     public abstract class SaveLoadMediator<TService, TData> : ISaveLoader
     {
-        public event Action<TData> OnDataLoaded;
-        
         private readonly TService _service;
 
         protected SaveLoadMediator(TService service)
@@ -22,11 +21,12 @@ namespace SaveSystem
         void ISaveLoader.Load(IGameRepository repository)
         {
             if (repository.TryGetData(out TData data))
-                OnDataLoaded?.Invoke(data);    
+                ApplyData(data); 
             else
                 throw new Exception($"Data of type {typeof(TData)} not found");
         }
         
         protected abstract TData ConvertToData(TService service);
+        protected abstract void ApplyData(TData data);
     }
 }

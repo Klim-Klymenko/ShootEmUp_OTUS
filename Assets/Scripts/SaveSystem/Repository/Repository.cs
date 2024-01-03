@@ -45,7 +45,7 @@ namespace SaveSystem
         void IGameRepository.SaveState()
         {
             string serializedStorage = JsonConvert.SerializeObject(_storage);
-            string encryptedStorage = AESCryptographicSystem.Encrypt(serializedStorage);
+            string encryptedStorage = AesEncryptor.Encrypt(serializedStorage);
             File.WriteAllText(_filePath, encryptedStorage);
         }
         
@@ -54,7 +54,7 @@ namespace SaveSystem
             if (!File.Exists(_filePath)) return;
             
             string serializedStorage = File.ReadAllText(_filePath);
-            string decryptedStorage = AESCryptographicSystem.Decrypt(serializedStorage);
+            string decryptedStorage = AesEncryptor.Decrypt(serializedStorage);
             _storage = JsonConvert.DeserializeObject<Dictionary<Type, string>>(decryptedStorage);
         }
     }

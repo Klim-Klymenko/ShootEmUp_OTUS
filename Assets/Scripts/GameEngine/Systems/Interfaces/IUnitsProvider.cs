@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using GameEngine;
 
-namespace SaveSystem
+namespace GameEngine
 {
     public interface IUnitsProvider
     {

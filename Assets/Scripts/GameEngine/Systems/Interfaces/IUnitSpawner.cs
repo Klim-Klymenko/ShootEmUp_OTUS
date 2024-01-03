@@ -1,7 +1,7 @@
 ﻿using GameEngine;
 using UnityEngine;
 
-namespace SaveSystem
+namespace GameEngine
 {
     public interface IUnitSpawner
     {

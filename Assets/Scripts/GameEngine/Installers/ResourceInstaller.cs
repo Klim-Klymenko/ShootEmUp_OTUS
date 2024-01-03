@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using GameEngine;
+using SaveSystem;
 
-namespace SaveSystem
+namespace GameEngine
 {
     public sealed class ResourceInstaller
     {
@@ -12,14 +12,14 @@ namespace SaveSystem
             _resourcesProvider = resourcesProvider;
         }
         
-        public void InstallResources(ResourcesData data)
+        public void InstallResources(List<int> amount, List<string> ids)
         {
             List<Resource> resources = new(_resourcesProvider.GetResources());
             
             for (int i = 0; i < resources.Count; i++)
             {
-                resources[i].Amount = data.ResourcesAmounts[i];
-                resources[i].ID = data.ResourcesIDs[i];
+                resources[i].Amount = amount[i];
+                resources[i].ID = ids[i];
             }       
         }
     }
