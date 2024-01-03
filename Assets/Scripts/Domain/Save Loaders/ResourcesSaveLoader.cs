@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using SaveSystem;
 using GameEngine;
 
@@ -15,10 +16,21 @@ namespace Domain
 
         protected override ResourcesData ConvertToData(IResourcesProvider resourcesProvider)
         {
+            List<int> resourcesAmount = new();
+            List<string> resourcesIDs = new();
+            
+            List<Resource> resources = new(resourcesProvider.GetResources());
+
+            for (int i = 0; i < resources.Count; i++)
+            {
+                resourcesAmount.Add(resources[i].Amount);
+                resourcesIDs.Add(resources[i].ID);
+            }
+            
             return new ResourcesData
             {
-                ResourcesAmount = resourcesProvider.GetResources().Select(resource => resource.Amount).ToList(),
-                ResourcesIDs = resourcesProvider.GetResources().Select(resource => resource.ID).ToList()
+                ResourcesAmount = resourcesAmount,
+                ResourcesIDs = resourcesIDs
             };
         }
 

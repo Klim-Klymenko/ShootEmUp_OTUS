@@ -1,5 +1,4 @@
-﻿using GameEngine;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace GameEngine
 {
