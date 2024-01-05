@@ -9,7 +9,7 @@ namespace Domain
     {
         private readonly ResourceInstaller _resourceInstaller;
         
-        public ResourcesSaveLoader(IResourcesProvider service, ResourceInstaller resourceInstaller) : base(service)
+        internal ResourcesSaveLoader(IResourcesProvider service, ResourceInstaller resourceInstaller) : base(service)
         {
             _resourceInstaller = resourceInstaller;
         }

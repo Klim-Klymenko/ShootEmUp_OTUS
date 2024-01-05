@@ -15,7 +15,7 @@ namespace GameEngine
         private Dictionary<string, Resource> sceneResources = new();
 
         [Inject]
-        public void SetResources(IEnumerable<Resource> resources)
+        internal void SetResources(IEnumerable<Resource> resources)
         {
             sceneResources = resources.ToDictionary(it => it.ID);
         }

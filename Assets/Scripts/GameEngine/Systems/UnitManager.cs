@@ -17,14 +17,14 @@ namespace GameEngine
         [ShowInInspector, ReadOnly]
         private HashSet<Unit> sceneUnits = new();
 
-        public UnitManager() { }
+        internal UnitManager() { }
 
-        public UnitManager(Transform container) => this.container = container;
+        internal UnitManager(Transform container) => this.container = container;
 
         [Inject]
-        public void SetupUnits(IEnumerable<Unit> units) => sceneUnits = new HashSet<Unit>(units);
+        internal void SetupUnits(IEnumerable<Unit> units) => sceneUnits = new HashSet<Unit>(units);
 
-        public void SetContainer(Transform container) => this.container = container;
+        internal void SetContainer(Transform container) => this.container = container;
 
         [Button]
         public Unit SpawnUnit(Unit prefab, Vector3 position, Quaternion rotation)
@@ -36,7 +36,7 @@ namespace GameEngine
         }
 
         [Button]
-        public void DestroyUnit(Unit unit)
+        internal void DestroyUnit(Unit unit)
         {
             if (sceneUnits.Remove(unit))
             {

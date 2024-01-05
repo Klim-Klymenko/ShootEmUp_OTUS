@@ -20,7 +20,7 @@ namespace IDZ_Digital.Extensions
         /// <param name="salt">If not set [NOT RECOMMENDED], default 8 byte SALT will be used.</param>
         /// <returns>Encrypted byte array.</returns>
         /// <remarks>Recommendation: Provide password and SALT while encrypting and keep it safe. Failure to store password and SALT correctly/securely would result in loss of data or data getting compromised.</remarks>
-        public static byte[] Encrypt(byte[] input, string password = null, byte[] salt = null)
+        internal static byte[] Encrypt(byte[] input, string password = null, byte[] salt = null)
         {
             password ??= _PASSWORD;
             salt ??= _SALT;
@@ -46,7 +46,7 @@ namespace IDZ_Digital.Extensions
         /// <param name="salt">If not set [NOT RECOMMENDED], default 8 byte SALT will be used.</param>
         /// <returns>Encrypted string.</returns>
         /// <remarks>Recommendation: Provide password and SALT while encrypting and keep it safe. Failure to store password and SALT correctly/securely would result in loss of data or data getting compromised.</remarks>
-        public static string Encrypt(string input, string password = null, byte[] salt = null)
+        internal static string Encrypt(string input, string password = null, byte[] salt = null)
         {
             password ??= _PASSWORD;
             salt ??= _SALT;
@@ -60,7 +60,7 @@ namespace IDZ_Digital.Extensions
         /// <param name="password">Password that was used for encryption.</param>
         /// <param name="salt">Salt that was used for encryption</param>
         /// <returns>Decrypted byte array.</returns>
-        public static byte[] Decrypt(byte[] input, string password = null, byte[] salt = null)
+        internal static byte[] Decrypt(byte[] input, string password = null, byte[] salt = null)
         {
             password ??= _PASSWORD;
             salt ??= _SALT;
@@ -84,7 +84,7 @@ namespace IDZ_Digital.Extensions
         /// <param name="password">Password that was used for encryption.</param>
         /// <param name="salt">Salt that was used for encryption</param>
         /// <returns>Decrypted string.</returns>
-        public static string Decrypt(string input, string password = null, byte[] salt = null)
+        internal static string Decrypt(string input, string password = null, byte[] salt = null)
         {
             password ??= _PASSWORD;
             salt ??= _SALT;
