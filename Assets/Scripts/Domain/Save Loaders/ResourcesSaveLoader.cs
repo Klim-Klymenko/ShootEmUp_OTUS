@@ -5,7 +5,7 @@ using GameEngine;
 
 namespace Domain
 {
-    public sealed class ResourcesSaveLoader : SaveLoadMediator<IResourcesProvider, ResourcesData>
+    internal sealed class ResourcesSaveLoader : SaveLoadMediator<IResourcesProvider, ResourcesData>
     {
         private readonly ResourceInstaller _resourceInstaller;
         
@@ -14,7 +14,7 @@ namespace Domain
             _resourceInstaller = resourceInstaller;
         }
 
-        protected override ResourcesData ConvertToData(IResourcesProvider resourcesProvider)
+        internal override ResourcesData ConvertToData(IResourcesProvider resourcesProvider)
         {
             List<int> resourcesAmount = new();
             List<string> resourcesIDs = new();
@@ -34,7 +34,7 @@ namespace Domain
             };
         }
 
-        protected override void ApplyData(ResourcesData data)
+        internal override void ApplyData(ResourcesData data)
         {
             _resourceInstaller.InstallResources(data.ResourcesAmount, data.ResourcesIDs);
         }

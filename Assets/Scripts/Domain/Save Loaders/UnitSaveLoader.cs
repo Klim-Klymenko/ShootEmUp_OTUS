@@ -4,20 +4,20 @@ using UnityEngine;
 
 namespace Domain
 {
-    public sealed class UnitSaveLoader : SaveLoadMediator<IUnitsProvider, UnitsData>
+    internal sealed class UnitSaveLoader : SaveLoadMediator<IUnitsProvider, UnitsData>
     {
         private readonly UnitsCatalog _catalog;
         private readonly UnitSpawner _unitSpawner;
         private readonly IUnitDestroyer _unitDestroyer;
         
-        public UnitSaveLoader(IUnitsProvider unitManager, UnitsCatalog catalog, UnitSpawner unitSpawner, IUnitDestroyer unitDestroyer) : base(unitManager)
+        internal UnitSaveLoader(IUnitsProvider unitManager, UnitsCatalog catalog, UnitSpawner unitSpawner, IUnitDestroyer unitDestroyer) : base(unitManager)
         {
             _catalog = catalog;
             _unitSpawner = unitSpawner;
             _unitDestroyer = unitDestroyer;
         }
         
-        protected override UnitsData ConvertToData(IUnitsProvider unitsProvider)
+        internal override UnitsData ConvertToData(IUnitsProvider unitsProvider)
         {
             List<Unit> unitPrefabs = new();
             List<Vector3> unitsPositions = new();
@@ -46,7 +46,7 @@ namespace Domain
             };
         }
 
-        protected override void ApplyData(UnitsData data)
+        internal override void ApplyData(UnitsData data)
         {
             _unitDestroyer.DestroyUnits();
             _unitSpawner.SpawnUnits(data.Units, data.UnitsPositions, data.UnitsRotations, data.UnitsHitPoints);

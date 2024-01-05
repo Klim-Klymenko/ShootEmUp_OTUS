@@ -7,7 +7,7 @@ namespace GameEngine
     {
         private readonly IUnitSpawner _unitSpawner;
         
-        public UnitSpawner(IUnitSpawner unitSpawner)
+        internal UnitSpawner(IUnitSpawner unitSpawner)
         {
             _unitSpawner = unitSpawner;
         }

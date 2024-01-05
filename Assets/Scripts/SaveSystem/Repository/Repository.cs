@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace SaveSystem
 {
-    public sealed class Repository : IGameRepository
+    internal sealed class Repository : IGameRepository
     {
         private Dictionary<Type, string> _storage = new();
         

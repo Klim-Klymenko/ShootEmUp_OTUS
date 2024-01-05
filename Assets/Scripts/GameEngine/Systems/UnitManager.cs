@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using SaveSystem;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using Zenject;
@@ -10,7 +9,7 @@ namespace GameEngine
 {
     //Нельзя менять!
     [Serializable]
-    public sealed class UnitManager : IUnitsProvider, IUnitSpawner, IUnitDestroyer
+    internal sealed class UnitManager : IUnitsProvider, IUnitSpawner, IUnitDestroyer
     {
         [SerializeField]
         private Transform container;

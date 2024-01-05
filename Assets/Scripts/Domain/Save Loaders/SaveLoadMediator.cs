@@ -3,11 +3,11 @@ using SaveSystem;
 
 namespace Domain
 {
-    public abstract class SaveLoadMediator<TService, TData> : ISaveLoader
+    internal abstract class SaveLoadMediator<TService, TData> : ISaveLoader
     {
         private readonly TService _service;
 
-        protected SaveLoadMediator(TService service)
+        internal SaveLoadMediator(TService service)
         {
             _service = service;
         }
@@ -26,7 +26,7 @@ namespace Domain
                 throw new Exception($"Data of type {typeof(TData)} not found");
         }
         
-        protected abstract TData ConvertToData(TService service);
-        protected abstract void ApplyData(TData data);
+        internal abstract TData ConvertToData(TService service);
+        internal abstract void ApplyData(TData data);
     }
 }

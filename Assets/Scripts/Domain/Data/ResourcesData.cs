@@ -3,7 +3,7 @@
 namespace Domain
 {
     [System.Serializable]
-    public struct ResourcesData
+    internal struct ResourcesData
     {
         public List<int> ResourcesAmount;
         public List<string> ResourcesIDs;

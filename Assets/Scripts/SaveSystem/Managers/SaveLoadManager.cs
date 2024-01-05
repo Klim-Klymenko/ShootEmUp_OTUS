@@ -6,7 +6,7 @@ using Zenject;
 namespace SaveSystem
 {
     [Serializable]
-    public sealed class SaveLoadManager
+    internal sealed class SaveLoadManager
     {
         private IGameRepository _repository;
         private List<ISaveLoader> _saveLoaders;

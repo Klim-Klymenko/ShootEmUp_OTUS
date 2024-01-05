@@ -3,7 +3,7 @@ using Zenject;
 
 namespace Domain
 {
-    public class DomainInstaller : MonoInstaller
+    internal class DomainInstaller : MonoInstaller
     {
         [SerializeField]
         private UnitsCatalog _catalog;

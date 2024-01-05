@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace Domain
 {
-    [CreateAssetMenu(fileName = "UnitsCatalog", menuName = "GameEngine/UnitsCatalog")]
-    public sealed class UnitsCatalog : ScriptableObject
+    [CreateAssetMenu(fileName = "UnitsCatalog", menuName = "Domain/UnitsCatalog")]
+    internal sealed class UnitsCatalog : ScriptableObject
     {
         [SerializeField]
         private List<Unit> _unitPrefabs;

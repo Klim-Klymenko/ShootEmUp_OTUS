@@ -3,7 +3,7 @@ using Zenject;
 
 namespace SaveSystem
 {
-    public sealed class SaveSystemInstaller : MonoInstaller
+    internal sealed class SaveSystemInstaller : MonoInstaller
     {
         [SerializeField]
         private SaveLoadManager _saveLoadManager;
@@ -23,7 +23,7 @@ namespace SaveSystem
             
             SubscribeConstruct();
         }
-
+        
         private void OnDestroy()
         {
             UnsubscribeConstruct();

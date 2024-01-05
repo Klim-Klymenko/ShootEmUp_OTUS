@@ -1,10 +1,10 @@
-﻿using GameEngine;
+﻿using System.ComponentModel;
 using UnityEngine;
 using Zenject;
 
-namespace SaveSystem
+namespace GameEngine
 {
-    public sealed class GameEngineInstaller : MonoInstaller
+    internal sealed class GameEngineInstaller : MonoInstaller
     {
         [SerializeField]
         private UnitManager _unitManager;

@@ -9,7 +9,7 @@ namespace GameEngine
 {
     //Нельзя менять!
     [Serializable]
-    public sealed class ResourceService : IResourcesProvider
+    internal sealed class ResourceService : IResourcesProvider
     {
         [ShowInInspector, ReadOnly]
         private Dictionary<string, Resource> sceneResources = new();

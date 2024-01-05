@@ -7,7 +7,7 @@ namespace GameEngine
     {
         private readonly IResourcesProvider _resourcesProvider;
         
-        public ResourceInstaller(IResourcesProvider resourcesProvider)
+        internal ResourceInstaller(IResourcesProvider resourcesProvider)
         {
             _resourcesProvider = resourcesProvider;
         }

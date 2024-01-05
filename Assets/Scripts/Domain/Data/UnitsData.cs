@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Domain
 {
     [System.Serializable]
-    public struct UnitsData
+    internal struct UnitsData
     {
         public List<Unit> Units;
         public List<Vector3> UnitsPositions;

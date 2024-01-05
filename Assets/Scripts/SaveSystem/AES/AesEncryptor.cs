@@ -7,7 +7,7 @@ namespace IDZ_Digital.Extensions
     using System.IO;
     using System.Security.Cryptography;
 
-    public static class AesEncryptor
+    internal static class AesEncryptor
     {
         private const string _PASSWORD = "DFg%KzaUpf@k#H*FaJ8s";
         private static readonly byte[] _SALT = new byte[] { 0x52, 0x41, 0x16, 0x79, 0x86, 0x64, 0x97, 0x22 };
