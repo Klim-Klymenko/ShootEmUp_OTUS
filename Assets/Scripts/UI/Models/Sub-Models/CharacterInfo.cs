@@ -1,0 +1,43 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace PM
+{
+    public sealed class CharacterInfo
+    {
+        //когда в менеджере вызываем появление нового попапа, создается модель для каждого
+        public event Action<CharacterStat> OnStatAdded;
+        public event Action<CharacterStat> OnStatRemoved;
+        
+        private readonly HashSet<CharacterStat> _stats = new();
+
+        public void AddStat(CharacterStat stat)
+        {
+            if (_stats.Add(stat))
+                OnStatAdded?.Invoke(stat);
+        }
+
+        public void RemoveStat(CharacterStat stat)
+        {
+            if (_stats.Remove(stat)) 
+                OnStatRemoved?.Invoke(stat);
+        }
+
+        public CharacterStat GetStat(string name)
+        {
+            foreach (var stat in _stats)
+            {
+                if (stat.Name == name) 
+                    return stat;
+            }
+
+            throw new Exception($"Stat {name} is not found!");
+        }
+
+        public CharacterStat[] GetStats()
+        {
+            return _stats.ToArray();
+        }
+    }
+}
