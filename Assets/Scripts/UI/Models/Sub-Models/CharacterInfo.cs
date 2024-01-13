@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace PM
 {
     public sealed class CharacterInfo
     {
-        //когда в менеджере вызываем появление нового попапа, создается модель для каждого
         public event Action<CharacterStat> OnStatAdded;
         public event Action<CharacterStat> OnStatRemoved;
         

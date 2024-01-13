@@ -22,7 +22,7 @@ namespace PM
             _userInfo.OnIconChanged += UpdateAvatar;
         }
         
-        void IDisposable.Dispose()
+        public void Dispose()
         {
             _userInfo.OnNameChanged -= UpdateName;
             _userInfo.OnDescriptionChanged -= UpdateDescription;

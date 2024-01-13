@@ -22,7 +22,7 @@ namespace PM
         
         private void UpdateValue(int value, string valueName)
         {
-            if (_characterStat.IsInitialized)
+            if (_characterStat.IsDisplayed)
                 _popupView.UpdateValue(value, valueName);
             else
                 _popupView.InitializeValue(value, valueName);

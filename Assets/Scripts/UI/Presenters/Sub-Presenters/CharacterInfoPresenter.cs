@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace PM
 {
@@ -26,7 +27,7 @@ namespace PM
             _characterInfo.OnStatRemoved += RemoveStatPresenter;
         }
         
-        void IDisposable.Dispose()
+        public void Dispose()
         {
             _characterInfo.OnStatAdded -= CreateStatPresenter;
             _characterInfo.OnStatRemoved -= RemoveStatPresenter;
@@ -39,6 +40,8 @@ namespace PM
 
         private void RemoveStatPresenter(CharacterStat characterStat)
         {
+            _popupView.RemoveValue(_characterInfo.GetStats()[^1].Name);
+            
             CharacterStatPresenter statPresenter = _characterStatPresenters[characterStat];
             
             statPresenter.Dispose();

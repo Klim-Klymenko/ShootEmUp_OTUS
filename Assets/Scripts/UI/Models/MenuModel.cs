@@ -3,38 +3,49 @@ using SO;
 
 namespace PM
 {
-    public sealed class MenuModel
+    public sealed class MenuModel : IMenuModel
     {
-        private readonly List<PopupModel> _models = new();
-        public List<PopupModel> Models => _models;
-
-        public string[] this[int index] => _models[index].ValuesNames;
+        private readonly List<PopupModel> _popupModels = new();
+        public IReadOnlyList<PopupModel> PopupModels => _popupModels;
         
-        public MenuModel(PopupConfigCollection configCollection)
+        public MenuModel(IReadOnlyList<PopupConfig> configs)
         {
-            CreateModels(configCollection.PopupConfigs);
+            CreateModels(configs);
         }
 
         private void CreateModels(IReadOnlyList<PopupConfig> configs)
         {
             for (int i = 0; i < configs.Count; i++)
-                CreateModel(configs[i]);
+                CreatePopupModel(configs[i]);
         }
         
-        public PopupModel CreateModel(PopupConfig config)
+        public PopupModel CreatePopupModel(PopupConfig config)
         {
             PopupModel popupModel = new PopupModel(config);
-            _models.Add(popupModel);
+            _popupModels.Add(popupModel);
             
             return popupModel;
         }
+        
+        public void DestroyModel(PopupModel popupModel)
+        {
+            _popupModels.Remove(popupModel);
+        }
+        
+        public void DestroyModels()
+        {
+            for (int i = 0; i < _popupModels.Count; i++)
+                DestroyModel(_popupModels[i]);
+        }
+        
+        public void DestroyLastModel() => DestroyModel(_popupModels[^1]);
         
         public List<UserInfo> GetUserInfos()
         {
             List<UserInfo> userInfos = new();
             
-            for (int i = 0; i < _models.Count; i++)
-                userInfos.Add(_models[i].UserInfo);
+            for (int i = 0; i < _popupModels.Count; i++)
+                userInfos.Add(_popupModels[i].UserInfo);
 
             return userInfos;
         }
@@ -43,8 +54,8 @@ namespace PM
         {
             List<PlayerLevel> playerLevels = new();
             
-            for (int i = 0; i < _models.Count; i++)
-                playerLevels.Add(_models[i].PlayerLevel);
+            for (int i = 0; i < _popupModels.Count; i++)
+                playerLevels.Add(_popupModels[i].PlayerLevel);
 
             return playerLevels;
         }
@@ -53,8 +64,8 @@ namespace PM
         {
             List<CharacterInfo> characterInfos = new();
             
-            for (int i = 0; i < _models.Count; i++)
-                characterInfos.Add(_models[i].CharacterInfo);
+            for (int i = 0; i < _popupModels.Count; i++)
+                characterInfos.Add(_popupModels[i].CharacterInfo);
             
             return characterInfos;
         }

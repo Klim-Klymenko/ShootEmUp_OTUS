@@ -9,6 +9,9 @@ namespace SO
         private string[] _statNames;
         
         [SerializeField]
+        private int[] _values;
+        
+        [SerializeField]
         private string _name;
         
         [SerializeField]
@@ -16,9 +19,6 @@ namespace SO
         
         [SerializeField]
         private Sprite _icon;
-        
-        [SerializeField]
-        private int[] _values;
         
         public string[] StatNames => _statNames;
         public string Name => _name;

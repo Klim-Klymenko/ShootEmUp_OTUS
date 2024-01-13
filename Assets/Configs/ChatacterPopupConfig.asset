@@ -15,7 +15,7 @@ MonoBehaviour:
   _statNames:
   - Health
   - Damage
+  _values: 6400000019000000
   _name: Chatacter
   _description: I am the best warrior in the Light Kingdom!
   _icon: {fileID: 21300000, guid: 954d79ad0f5124da59b33552ab47a641, type: 3}
-  _values: 6400000019000000

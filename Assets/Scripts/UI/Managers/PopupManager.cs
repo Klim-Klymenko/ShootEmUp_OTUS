@@ -31,36 +31,41 @@ namespace PM
         [ContextMenu("Show")]
         public void Show()
         {
-            MenuModel = new MenuModel(_configCollection);
+            MenuModel = new MenuModel(_configCollection.PopupConfigs);
             
-            _menuPresenter = new MenuPresenter(MenuModel);
+            _menuPresenter = new MenuPresenter(MenuModel.PopupModels);
             
             _menuView = Instantiate(_menuViewPrefab, _popupPanel);
             
-            _menuView.Construct(_menuPresenter.GetCharacterPresenters(), _viewPool);
-            _menuPresenter.Construct(_menuView.Views);
+            _menuView.Construct(_viewPool, _menuPresenter, MenuModel);
+            _menuPresenter.Construct(_menuView.PopupViews);
         }
-        
+
         [ContextMenu("Hide")]
         public void Hide()
         {
-            _menuView.HidePopups(); 
+            MenuModel.DestroyModels();
+            _menuPresenter.DestroyPresenters();
+            _menuView.HidePopups();
+            
             Destroy(_menuView.gameObject);
         }
 
         [ContextMenu("Add New Popup")]
         public void AddPopup()
         {
-            PopupModel model = MenuModel.CreateModel(_configCollection.PopupConfigs[0]);
-            PopupPresenter presenter = _menuPresenter.CreatePresenter(model);
-            PopupView view = _menuView.ShowPopup(presenter.CharacterPresenter);
+            PopupModel popupModel = MenuModel.CreatePopupModel(_configCollection.PopupConfigs[0]);
+            PopupPresenter popupPresenter = _menuPresenter.CreatePresenter(popupModel);
+            PopupView popupView = _menuView.ShowPopup(popupPresenter, popupModel);
             
-            presenter.Construct(view);
+            popupPresenter.Construct(popupView);
         }
-        
+
         [ContextMenu("Remove Last Popup")]
         public void RemovePopup()
         {
+            MenuModel.DestroyLastModel();
+            _menuPresenter.DestroyLastPresenter();
             _menuView.HideLastPopup();
         }
     }

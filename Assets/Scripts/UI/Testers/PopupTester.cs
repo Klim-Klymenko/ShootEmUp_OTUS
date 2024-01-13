@@ -24,6 +24,8 @@ namespace PM
         
         private MenuModel MenuModel => _popupManager.MenuModel;
         
+        private int _createdStatsAmount;
+        
         [ContextMenu("Change Name")]
         public void ChangeName()
         {
@@ -70,8 +72,17 @@ namespace PM
             foreach (var characterInfo in MenuModel.GetCharactersInfos())
                 characterInfo.AddStat(stat);
 
-            stat.Name = "Test";
+            stat.Name = $"Test {_createdStatsAmount}";
             stat.ChangeValue(100);
+
+            _createdStatsAmount++;
+        }
+        
+        [ContextMenu("Remove Stat")]
+        public void RemoveStat()
+        {
+            foreach (var characterInfo in MenuModel.GetCharactersInfos())
+                characterInfo.RemoveStat(characterInfo.GetStats()[^1]);
         }
     }
 }

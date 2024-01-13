@@ -20,7 +20,7 @@ namespace PM
             _playerLevel.OnLevelUp += UpdateLevel;
         }
 
-        void IDisposable.Dispose()
+        public void Dispose()
         {
             _playerLevel.OnExperienceChanged -= UpdateExperience;
             _playerLevel.OnLevelUp -= UpdateLevel;

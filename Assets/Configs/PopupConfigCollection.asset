@@ -14,5 +14,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _popupConfigs:
   - {fileID: 11400000, guid: f5640b942c554774292319ee9449e501, type: 2}
-  - {fileID: 11400000, guid: f5640b942c554774292319ee9449e501, type: 2}
-  - {fileID: 11400000, guid: f5640b942c554774292319ee9449e501, type: 2}

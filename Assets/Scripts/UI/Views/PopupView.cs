@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -31,13 +32,17 @@ namespace PM
         private Button _closeButton;
         
         private readonly Dictionary<string, Text> _statTexts = new();
-        private int _lastStatTextIndex;
+        private int _lastDisplayedStatTextIndex;
+        private int FirstEmptyStatTextIndex => _lastDisplayedStatTextIndex + 1;
         
         private ICharacterPresenter _presenter;
+        
+        private Action _closeAction;
 
-        public void Construct(ICharacterPresenter presenter)
+        public void Construct(ICharacterPresenter presenter, Action closeAction)
         {
             _presenter = presenter;
+            _closeAction = closeAction;
             
             Show();
         }
@@ -58,6 +63,8 @@ namespace PM
         
         private void Hide()
         {
+            _closeAction();
+            
             _levelUpButton.onClick.RemoveListener(_presenter.LevelUp);
             _levelUpButton.onClick.RemoveListener(UpdateLevelUpButton);
             _closeButton.onClick.RemoveListener(Hide);
@@ -81,38 +88,47 @@ namespace PM
         public void UpdateDescription(string description) => _descriptionText.text = description;
         public void UpdateAvatar(Sprite icon) => _avatar.sprite = icon;
         
-        public void UpdateValues(int[] values, string[] valuesNames)
+        private void UpdateValues(IReadOnlyList<int> values, IReadOnlyList<string> valuesNames)
         {
-            for (int i = 0; i < values.Length; i++)
+            for (int i = 0; i < values.Count; i++)
             {
-                _valuesTexts[i].text = $"{valuesNames[i]}: {values[i]}";
                 _statTexts[valuesNames[i]] = _valuesTexts[i];
-                _lastStatTextIndex = i;
+                UpdateValue(values[i], valuesNames[i]);
+                _lastDisplayedStatTextIndex = i;
             }
             
-            int nextEmptyStatTextIndex = _lastStatTextIndex + 1;
-            for (int i = nextEmptyStatTextIndex; i < _valuesTexts.Length; i++)
+            for (int i = FirstEmptyStatTextIndex; i < _valuesTexts.Length; i++)
                 _valuesTexts[i].text = string.Empty;
         }
 
         public void UpdateValue(int value, string valueName)
         {
+            if (!_statTexts.ContainsKey(valueName)) return;
+            
             _statTexts[valueName].text = $"{valueName}: {value}";
         }
         
         public void InitializeValue(int value, string valueName)
         {
-            int nextStatTextIndex = _lastStatTextIndex + 1;
+            if (FirstEmptyStatTextIndex >= _valuesTexts.Length) return;
+            if (_valuesTexts[FirstEmptyStatTextIndex] == null) return;
             
-            if (nextStatTextIndex >= _valuesTexts.Length) return;
-            if (_valuesTexts[nextStatTextIndex] == null) return;
+            _statTexts[valueName] = _valuesTexts[FirstEmptyStatTextIndex];
+            UpdateValue(value, valueName);
             
-            _statTexts[valueName] = _valuesTexts[nextStatTextIndex];
-            _statTexts[valueName].text = $"{valueName}: {value}";
-            
-            _lastStatTextIndex = nextStatTextIndex;
+            _lastDisplayedStatTextIndex = FirstEmptyStatTextIndex;
         }
 
+        public void RemoveValue(string valueName)
+        {
+            if (!_statTexts.ContainsKey(valueName)) return;
+
+            _valuesTexts[_lastDisplayedStatTextIndex].text = string.Empty;
+            _statTexts.Remove(valueName);
+
+            _lastDisplayedStatTextIndex--;
+        }
+        
         public void UpdateExperience(int experience, int requiredExperience)
         {
             _experienceText.text = $"{experience}/{requiredExperience}";

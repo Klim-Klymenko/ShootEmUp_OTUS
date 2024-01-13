@@ -1,47 +1,59 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace PM
 {
-    public sealed class MenuPresenter
+    public sealed class MenuPresenter : IMenuPresenter
     {
-        private readonly List<PopupPresenter> _presenters = new();
+        private readonly List<PopupPresenter> _popupPresenters = new();
+        public IReadOnlyList<PopupPresenter> PopupPresenters => _popupPresenters;
         
-        public MenuPresenter(MenuModel menuModel)
+        public MenuPresenter(IReadOnlyList<PopupModel> popupModels)
         {
-            CreatePresenters(menuModel);
+            CreatePresenters(popupModels);
         }
 
-        public void Construct(List<PopupView> popupViews)
+        public void Construct(IReadOnlyList<PopupView> popupViews)
         {
-            for (int i = 0; i < _presenters.Count; i++)
-                _presenters[i].Construct(popupViews[i]);
+            for (int i = 0; i < _popupPresenters.Count; i++)
+                _popupPresenters[i].Construct(popupViews[i]);
         }
         
-        private void CreatePresenters(MenuModel menuModel)
+        private void CreatePresenters(IReadOnlyList<PopupModel> popupModels)
         {
-            List<PopupModel> models = menuModel.Models;
-
-            for (int i = 0; i < models.Count; i++)
-                CreatePresenter(models[i]);
+            for (int i = 0; i < popupModels.Count; i++)
+                CreatePresenter(popupModels[i]);
         }
 
         public PopupPresenter CreatePresenter(PopupModel popupModel)
         {
-            PopupPresenter presenter = new PopupPresenter(popupModel.ValuesNames,
+            PopupPresenter popupPresenter = new PopupPresenter(popupModel.ValuesNames,
                 popupModel.UserInfo, popupModel.PlayerLevel, popupModel.CharacterInfo);
                 
-            _presenters.Add(presenter);
+            _popupPresenters.Add(popupPresenter);
 
-            return presenter;
+            return popupPresenter;
         }
         
-        public List<CharacterPresenter> GetCharacterPresenters()
+        public void DestroyPresenter(PopupPresenter popupPresenter)
+        {
+            popupPresenter.DestroyPresenters();
+            _popupPresenters.Remove(popupPresenter);
+        }
+        
+        public void DestroyPresenters()
+        {
+            for (int i = 0; i < _popupPresenters.Count; i++)
+                DestroyPresenter(_popupPresenters[i]);
+        }
+
+        public void DestroyLastPresenter() => DestroyPresenter(_popupPresenters[^1]);
+        
+        public IReadOnlyList<CharacterPresenter> GetCharacterPresenters()
         {
             List<CharacterPresenter> characterPresenters = new();
 
-            for (int i = 0; i < _presenters.Count; i++)
-                characterPresenters.Add(_presenters[i].CharacterPresenter);
+            for (int i = 0; i < _popupPresenters.Count; i++)
+                characterPresenters.Add(_popupPresenters[i].CharacterPresenter);
 
             return characterPresenters;
         }

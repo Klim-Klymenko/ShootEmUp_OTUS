@@ -26,5 +26,12 @@
             _playerLevelPresenter.Construct(popupView);
             _characterInfoPresenter.Construct(popupView);
         }
+        
+        public void DestroyPresenters()
+        {
+            _userInfoPresenter.Dispose();
+            _playerLevelPresenter.Dispose();
+            _characterInfoPresenter.Dispose();
+        }
     }
 }
