@@ -1,5 +1,5 @@
-﻿using Adapters;
-using Pool;
+﻿using System.Collections.Generic;
+using Adapters;
 using SO;
 using UnityEngine;
 using Zenject;
@@ -9,15 +9,9 @@ namespace PM
     public sealed class PopupManager : MonoBehaviour
     {
         [SerializeField]
-        private Transform _popupPanel;
-        
-        [SerializeField]
-        private MenuView _menuViewPrefab;
-        
-        [SerializeField]
         private PopupConfigCollection _configCollection;
         
-        private Pool<PopupView> _viewPool;
+        private Factory.IFactory<MenuView> _menuViewFactory;
         
         public MenuModel MenuModel { get; private set; }
         private MenuPresenter _menuPresenter;
@@ -26,51 +20,45 @@ namespace PM
         private MenuAdapter _menuAdapter;
 
         [Inject]
-        public void Construct(Pool<PopupView> viewPool)
+        public void Construct(Factory.IFactory<MenuView> menuViewFactory)
         {
-            _viewPool = viewPool;  
+            _menuViewFactory = menuViewFactory;
         }
 
         [ContextMenu("Show")]
         public void Show()
         {
-            MenuModel = new MenuModel(_configCollection.PopupConfigs);
-            _menuPresenter = new MenuPresenter(MenuModel.PopupModels);
-            _menuView = Instantiate(_menuViewPrefab, _popupPanel);
+            MenuModel = new MenuModel();
+            _menuPresenter = new MenuPresenter();
+            _menuView = _menuViewFactory.Create();
             
-            _menuView.Construct(_viewPool, _menuPresenter.GetCharacterPresenters());
-            _menuPresenter.Construct(_menuView.PopupViews);
-
-            _menuAdapter = new MenuAdapter(_menuView, _menuPresenter, MenuModel);
+            _menuAdapter = new MenuAdapter(_menuView, _menuPresenter, MenuModel, _configCollection);
+            
+            for (int i = 0; i < _configCollection.Count; i++)
+                _menuView.ShowPopup();
         }
         
         [ContextMenu("Hide")]
         public void Hide()
         {
+            IReadOnlyList<PopupView> popupViews = _menuView.PopupViews;
+            
+            for (int i = 0; i < popupViews.Count; i++)
+                _menuView.DestroyPopup(popupViews[i]);
+            
             _menuAdapter.Dispose();
-            
-            MenuModel.DestroyModels();
-            _menuPresenter.DestroyPresenters();
-            _menuView.HidePopups();
-            
             Destroy(_menuView.gameObject);
         }
 
         [ContextMenu("Add New Popup")]
         public void AddPopup()
         {
-            PopupModel popupModel = MenuModel.CreatePopupModel(_configCollection.PopupConfigs[0]);
-            PopupPresenter popupPresenter = _menuPresenter.CreatePresenter(popupModel);
-            PopupView popupView = _menuView.ShowPopup(popupPresenter.CharacterPresenter);
-            
-            popupPresenter.Construct(popupView);
+            _menuView.ShowPopup();
         }
 
         [ContextMenu("Remove Last Popup")]
         public void RemoveLastPopup()
         {
-            MenuModel.DestroyLastModel();
-            _menuPresenter.DestroyLastPresenter();
             _menuView.HideLastPopup();
         }
     }

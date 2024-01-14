@@ -1,34 +1,25 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace PM
 {
     public sealed class MenuPresenter
     {
+        public event Func<PopupModel> OnPresenterCreated; 
+        
         private readonly List<PopupPresenter> _popupPresenters = new();
         public IReadOnlyList<PopupPresenter> PopupPresenters => _popupPresenters;
         
-        public MenuPresenter(IReadOnlyList<PopupModel> popupModels)
+        public PopupPresenter CreatePresenter(PopupView popupView)
         {
-            CreatePresenters(popupModels);
-        }
+            PopupModel popupModel = OnPresenterCreated?.Invoke();
 
-        public void Construct(IReadOnlyList<PopupView> popupViews)
-        {
-            for (int i = 0; i < _popupPresenters.Count; i++)
-                _popupPresenters[i].Construct(popupViews[i]);
-        }
-        
-        private void CreatePresenters(IReadOnlyList<PopupModel> popupModels)
-        {
-            for (int i = 0; i < popupModels.Count; i++)
-                CreatePresenter(popupModels[i]);
-        }
-
-        public PopupPresenter CreatePresenter(PopupModel popupModel)
-        {
+            if (popupModel == null) throw new NullReferenceException("PopupModel is null when creating presenter");
+            
             PopupPresenter popupPresenter = new PopupPresenter(popupModel.ValuesNames,
                 popupModel.UserInfo, popupModel.PlayerLevel, popupModel.CharacterInfo);
-                
+            
+            popupPresenter.Construct(popupView);    
             _popupPresenters.Add(popupPresenter);
 
             return popupPresenter;
@@ -39,14 +30,6 @@ namespace PM
             popupPresenter.DestroyPresenters();
             _popupPresenters.Remove(popupPresenter);
         }
-        
-        public void DestroyPresenters()
-        {
-            for (int i = 0; i < _popupPresenters.Count; i++)
-                DestroyPresenter(_popupPresenters[i]);
-        }
-
-        public void DestroyLastPresenter() => DestroyPresenter(_popupPresenters[^1]);
         
         public IReadOnlyList<CharacterPresenter> GetCharacterPresenters()
         {

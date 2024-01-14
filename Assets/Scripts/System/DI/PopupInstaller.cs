@@ -9,6 +9,9 @@ namespace DI
     public sealed class PopupInstaller : MonoInstaller
     {
         [SerializeField]
+        private MenuView _menuViewPrefab;
+        
+        [SerializeField]
         private PopupView _popupViewPrefab;
 
         [SerializeField]
@@ -20,8 +23,6 @@ namespace DI
         [SerializeField]
         private int _poolSize;
         
-        private PopupViewFactory _popupViewFactory;
-        
         public override void InstallBindings()
         {
             BindFactory();
@@ -30,13 +31,13 @@ namespace DI
 
         private void BindFactory()
         {
-            _popupViewFactory = new PopupViewFactory(_popupViewPrefab, _popupPanel);
-            Container.Bind<PopupViewFactory>().FromInstance(_popupViewFactory).AsSingle();
+            Container.BindInterfacesTo<MenuViewFactory>().AsCached().WithArguments(_menuViewPrefab, _popupPanel);
         }
 
         private void BindPool()
         {
-            Container.Bind<Pool<PopupView>>().AsSingle().WithArguments(_popupViewFactory, _poolSize, _viewPoolContainer);
+            Factory.IFactory<PopupView> popupViewFactory = new PopupViewFactory(_popupViewPrefab, _popupPanel);
+            Container.Bind<Pool<PopupView>>().AsSingle().WithArguments(popupViewFactory, _poolSize, _viewPoolContainer);
         }
     }
 }

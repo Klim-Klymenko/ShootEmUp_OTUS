@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
 using Factory;
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace Pool
 {
+    [UsedImplicitly]
     public sealed class Pool<TPrefab> where TPrefab : class, new()
     {
         private readonly List<TPrefab> _spawnedEntities = new();
@@ -21,7 +23,7 @@ namespace Pool
             Reserve();
         }
         
-        public void Reserve()
+        private void Reserve()
         {
             for (int i = 0; i < _reservationAmount; i++)
             {
@@ -60,12 +62,6 @@ namespace Pool
             }
             
             _spawnedEntities.Add(entity);
-        }
-        
-        public void Put(IEnumerable<TPrefab> entities)
-        {
-            foreach (var entity in entities)
-                Put(entity);
         }
     }
 }

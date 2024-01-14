@@ -10,10 +10,10 @@
 
         public PopupPresenter(string[] valuesNames, UserInfo userInfo, PlayerLevel playerLevel, CharacterInfo characterInfo)
         {
-            CharacterPresenter characterPresenter = new CharacterPresenter(valuesNames, userInfo, playerLevel, characterInfo);
             _userInfoPresenter = new UserInfoPresenter(userInfo);
             _playerLevelPresenter = new PlayerLevelPresenter(playerLevel);
             _characterInfoPresenter = new CharacterInfoPresenter(characterInfo);
+            CharacterPresenter characterPresenter = new CharacterPresenter(valuesNames, userInfo, playerLevel, characterInfo);
 
             CharacterPresenter = characterPresenter;
         }

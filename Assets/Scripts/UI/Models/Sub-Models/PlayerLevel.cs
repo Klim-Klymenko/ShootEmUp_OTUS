@@ -4,7 +4,6 @@ namespace PM
 {
     public sealed class PlayerLevel
     {
-        //для еще более мелекой вью и модели
         public event Action<int> OnLevelUp;
         public event Action<int, int> OnExperienceChanged;
         

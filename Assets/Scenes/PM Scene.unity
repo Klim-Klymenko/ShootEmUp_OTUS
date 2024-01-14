@@ -713,8 +713,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30ab1b392c5c44d486459d04172c03ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _popupPanel: {fileID: 1632556610}
-  _menuViewPrefab: {fileID: 1697253808125717578, guid: ca8f746ffcb11ed448bf02ee7456353a, type: 3}
   _configCollection: {fileID: 11400000, guid: 8eafa0ce4ec187c4daa6878c691f735c, type: 2}
 --- !u!114 &1632556612
 MonoBehaviour:
@@ -844,6 +842,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf655fac4097422a9bcf32978a9dcc26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _menuViewPrefab: {fileID: 1697253808125717578, guid: ca8f746ffcb11ed448bf02ee7456353a, type: 3}
   _popupViewPrefab: {fileID: 8020091219445436451, guid: 665f02f5ebf89824c9bfd347348d6703, type: 3}
   _popupPanel: {fileID: 1632556610}
   _viewPoolContainer: {fileID: 568186998}

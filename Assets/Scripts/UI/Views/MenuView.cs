@@ -7,6 +7,7 @@ namespace PM
 {
     public sealed class MenuView : MonoBehaviour
     {
+        public event Func<PopupView, ICharacterPresenter> OnPopupShown; 
         public event Action <PopupView> OnPopupDestroyed;
         
         [SerializeField]
@@ -17,51 +18,31 @@ namespace PM
 
         private Pool<PopupView> _viewPool;
         
-        public void Construct(Pool<PopupView> viewPool, IReadOnlyList<CharacterPresenter> characterPresenters)
+        public void Construct(Pool<PopupView> viewPool)
         {
             _viewPool = viewPool;
-            
-            ShowPopups(characterPresenters);
         }
         
-        private void ShowPopups(IReadOnlyList<CharacterPresenter> characterPresenters)
+        public void ShowPopup()
         {
-            for (int i = 0; i < characterPresenters.Count; i++)
-                ShowPopup(characterPresenters[i]);
-        }
-
-        public PopupView ShowPopup(CharacterPresenter characterPresenter)
-        {
-            PopupView view = _viewPool.Get();
-            view.Construct(characterPresenter, () => DestroyPopup(view));
-            view.transform.SetParent(_contentContainer);
+            PopupView popupView = _viewPool.Get();
             
-            _popupViews.Add(view);
+            ICharacterPresenter characterPresenter = OnPopupShown?.Invoke(popupView);
             
-            return view;
+            popupView.Construct(characterPresenter, () => DestroyPopup(popupView));
+            popupView.transform.SetParent(_contentContainer);
+            
+            _popupViews.Add(popupView);
         }
         
-        private void DestroyPopup(PopupView view)
+        public void DestroyPopup(PopupView popupView)
         {
-            HidePopup(view);
+            _viewPool.Put(popupView);
+            _popupViews.Remove(popupView);
             
-            OnPopupDestroyed?.Invoke(view);
+            OnPopupDestroyed?.Invoke(popupView);
         }
         
-        private void HidePopup(PopupView view)
-        {
-            _viewPool.Put(view);
-            _popupViews.Remove(view);
-        }
-        
-        public void HidePopups()
-        {
-            for (int i = 0; i < _popupViews.Count; i++)
-                HidePopup(_popupViews[i]);
-            
-            Destroy(gameObject);
-        }
-
-        public void HideLastPopup() => HidePopup(_popupViews[^1]);
+        public void HideLastPopup() => DestroyPopup(_popupViews[^1]);
     }
 }

@@ -8,17 +8,6 @@ namespace PM
         private readonly List<PopupModel> _popupModels = new();
         public IReadOnlyList<PopupModel> PopupModels => _popupModels;
         
-        public MenuModel(IReadOnlyList<PopupConfig> configs)
-        {
-            CreateModels(configs);
-        }
-
-        private void CreateModels(IReadOnlyList<PopupConfig> configs)
-        {
-            for (int i = 0; i < configs.Count; i++)
-                CreatePopupModel(configs[i]);
-        }
-        
         public PopupModel CreatePopupModel(PopupConfig config)
         {
             PopupModel popupModel = new PopupModel(config);
@@ -27,18 +16,10 @@ namespace PM
             return popupModel;
         }
         
-        public void DestroyModel(PopupModel popupModel)
+        public void DestroyPopupModel(PopupModel popupModel)
         {
             _popupModels.Remove(popupModel);
         }
-        
-        public void DestroyModels()
-        {
-            for (int i = 0; i < _popupModels.Count; i++)
-                DestroyModel(_popupModels[i]);
-        }
-        
-        public void DestroyLastModel() => DestroyModel(_popupModels[^1]);
         
         public List<UserInfo> GetUserInfos()
         {
