@@ -14,12 +14,12 @@ namespace PM
         {
             PopupModel popupModel = OnPopupPresenterCreated?.Invoke();
 
-            if (popupModel == null) throw new NullReferenceException("PopupModel is null when creating presenter");
+            if (popupModel == null)
+                throw new NullReferenceException("PopupModel is null when creating presenter");
             
-            PopupPresenter popupPresenter = new PopupPresenter(popupModel.ValuesNames,
-                popupModel.UserInfo, popupModel.PlayerLevel, popupModel.CharacterInfo);
+            PopupPresenter popupPresenter = new PopupPresenter(popupModel.ValueNames,
+                popupModel.UserInfo, popupModel.PlayerLevel, popupModel.CharacterInfo, popupView);
             
-            popupPresenter.Construct(popupView);    
             _popupPresenters.Add(popupPresenter);
 
             return popupPresenter;

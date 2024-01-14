@@ -6,17 +6,13 @@ namespace PM
     public sealed class UserInfoPresenter : IDisposable
     {
         private readonly UserInfo _userInfo;
-        private PopupView _popupView;
+        private readonly PopupView _popupView;
         
-        public UserInfoPresenter(UserInfo userInfo)
+        public UserInfoPresenter(UserInfo userInfo, PopupView popupView)
         {
             _userInfo = userInfo;
-        }
-
-        public void Construct(PopupView popupView)
-        {
             _popupView = popupView;
-
+            
             _userInfo.OnNameChanged += UpdateName;
             _userInfo.OnDescriptionChanged += UpdateDescription;
             _userInfo.OnIconChanged += UpdateAvatar;

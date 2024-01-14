@@ -641,7 +641,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1321865385}
   m_Layer: 0
-  m_Name: Pools
+  m_Name: Containers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -672,7 +672,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1632556610}
-  - component: {fileID: 1632556611}
   - component: {fileID: 1632556612}
   m_Layer: 5
   m_Name: Popup Panel
@@ -701,19 +700,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1632556611
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1632556609}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30ab1b392c5c44d486459d04172c03ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _configCollection: {fileID: 11400000, guid: 8eafa0ce4ec187c4daa6878c691f735c, type: 2}
 --- !u!114 &1632556612
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -726,7 +712,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c3f75d83efa40ffb6dfb2b8b3b172a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _popupManager: {fileID: 1632556611}
   _name: Changed Name
   _description: Changed Description
   _icon: {fileID: 21300000, guid: a564258f7260e47d58e9ee37e2a3abb7, type: 3}
@@ -846,4 +831,5 @@ MonoBehaviour:
   _popupViewPrefab: {fileID: 8020091219445436451, guid: 665f02f5ebf89824c9bfd347348d6703, type: 3}
   _popupPanel: {fileID: 1632556610}
   _viewPoolContainer: {fileID: 568186998}
+  _configCollection: {fileID: 11400000, guid: 8eafa0ce4ec187c4daa6878c691f735c, type: 2}
   _poolSize: 100

@@ -8,21 +8,14 @@
         private readonly PlayerLevelPresenter _playerLevelPresenter;
         private readonly CharacterInfoPresenter _characterInfoPresenter;
 
-        public PopupPresenter(string[] valuesNames, UserInfo userInfo, PlayerLevel playerLevel, CharacterInfo characterInfo)
+        public PopupPresenter(string[] valuesNames, UserInfo userInfo, PlayerLevel playerLevel, CharacterInfo characterInfo, PopupView popupView)
         {
-            _userInfoPresenter = new UserInfoPresenter(userInfo);
-            _playerLevelPresenter = new PlayerLevelPresenter(playerLevel);
-            _characterInfoPresenter = new CharacterInfoPresenter(characterInfo);
+            _userInfoPresenter = new UserInfoPresenter(userInfo, popupView);
+            _playerLevelPresenter = new PlayerLevelPresenter(playerLevel, popupView);
+            _characterInfoPresenter = new CharacterInfoPresenter(characterInfo, popupView);
             CharacterPresenter characterPresenter = new CharacterPresenter(valuesNames, userInfo, playerLevel, characterInfo);
 
             CharacterPresenter = characterPresenter;
-        }
-
-        public void Construct(PopupView popupView)
-        {
-            _userInfoPresenter.Construct(popupView);
-            _playerLevelPresenter.Construct(popupView);
-            _characterInfoPresenter.Construct(popupView);
         }
         
         public void DestroyPresenters()

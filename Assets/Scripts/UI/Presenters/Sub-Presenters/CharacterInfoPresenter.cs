@@ -9,15 +9,11 @@ namespace PM
         private readonly Dictionary<CharacterStat, CharacterStatPresenter> _characterStatPresenters = new();
         
         private readonly CharacterInfo _characterInfo;
-        private PopupView _popupView;
+        private readonly PopupView _popupView;
         
-        public CharacterInfoPresenter(CharacterInfo characterInfo)
+        public CharacterInfoPresenter(CharacterInfo characterInfo, PopupView popupView)
         {
             _characterInfo = characterInfo;
-        }
-
-        public void Construct(PopupView popupView)
-        {
             _popupView = popupView;
             
             foreach (var characterStat in _characterInfo.GetStats())

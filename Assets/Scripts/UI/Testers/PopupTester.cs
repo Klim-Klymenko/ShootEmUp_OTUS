@@ -1,12 +1,10 @@
 ﻿using UnityEngine;
+using Zenject;
 
 namespace PM
 {
     public sealed class PopupTester : MonoBehaviour
     {
-        [SerializeField]
-        private PopupManager _popupManager;
-
         [SerializeField]
         private string _name;
 
@@ -21,10 +19,41 @@ namespace PM
         
         [SerializeField]
         private int _value;
+
+        private int _createdStatsAmount;
         
+        private PopupManager _popupManager;
         private MenuModel MenuModel => _popupManager.MenuModel;
         
-        private int _createdStatsAmount;
+        [Inject]
+        public void Construct(PopupManager popupManager)
+        {
+            _popupManager = popupManager;
+        }
+        
+        [ContextMenu("Show Popups")]
+        public void ShowPopups()
+        {
+            _popupManager.Show();
+        }
+        
+        [ContextMenu("Hide Popups")]
+        public void HidePopups()
+        {
+            _popupManager.Hide();
+        }
+        
+        [ContextMenu("Add Popup")]
+        public void AddPopup()
+        {
+            _popupManager.AddPopup();
+        }
+        
+        [ContextMenu("Remove Last Popup")]
+        public void RemoveLastPopup()
+        {
+            _popupManager.RemoveLastPopup();
+        }
         
         [ContextMenu("Change Name")]
         public void ChangeName()

@@ -1,31 +1,29 @@
 ﻿using System.Collections.Generic;
 using Adapters;
+using JetBrains.Annotations;
 using SO;
 using UnityEngine;
-using Zenject;
 
 namespace PM
 {
-    public sealed class PopupManager : MonoBehaviour
+    [UsedImplicitly]
+    public sealed class PopupManager
     {
-        [SerializeField]
-        private PopupConfigCollection _configCollection;
-        
-        private Factory.IFactory<MenuView> _menuViewFactory;
-        
         public MenuModel MenuModel { get; private set; }
         private MenuPresenter _menuPresenter;
         private MenuView _menuView;
         
         private MenuAdapter _menuAdapter;
 
-        [Inject]
-        public void Construct(Factory.IFactory<MenuView> menuViewFactory)
+        private readonly PopupConfigCollection _configCollection;
+        private readonly Factory.IFactory<MenuView> _menuViewFactory;
+        
+        public PopupManager(Factory.IFactory<MenuView> menuViewFactory, PopupConfigCollection configCollection)
         {
             _menuViewFactory = menuViewFactory;
+            _configCollection = configCollection;
         }
 
-        [ContextMenu("Show")]
         public void Show()
         {
             MenuModel = new MenuModel();
@@ -38,7 +36,6 @@ namespace PM
                 _menuView.ShowPopup();
         }
         
-        [ContextMenu("Hide")]
         public void Hide()
         {
             IReadOnlyList<PopupView> popupViews = _menuView.PopupViews;
@@ -47,16 +44,14 @@ namespace PM
                 _menuView.DestroyPopup(popupViews[i]);
             
             _menuAdapter.Dispose();
-            Destroy(_menuView.gameObject);
+            Object.Destroy(_menuView.gameObject);
         }
 
-        [ContextMenu("Add New Popup")]
         public void AddPopup()
         {
             _menuView.ShowPopup();
         }
 
-        [ContextMenu("Remove Last Popup")]
         public void RemoveLastPopup()
         {
             _menuView.HideLastPopup();

@@ -7,11 +7,11 @@ namespace PM
         public UserInfo UserInfo { get; private set; }
         public CharacterInfo CharacterInfo { get; private set; }
         public PlayerLevel PlayerLevel { get; private set; }
-        public string[] ValuesNames { get; }
+        public string[] ValueNames { get; }
         
         public PopupModel(PopupConfig config)
         {
-            ValuesNames = config.StatNames;
+            ValueNames = config.StatNames;
             
             CreateModels(config);
         }

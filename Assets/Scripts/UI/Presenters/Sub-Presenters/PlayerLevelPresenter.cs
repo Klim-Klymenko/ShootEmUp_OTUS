@@ -5,15 +5,11 @@ namespace PM
     public sealed class PlayerLevelPresenter : IDisposable
     {
         private readonly PlayerLevel _playerLevel;
-        private PopupView _popupView;
+        private readonly PopupView _popupView;
         
-        public PlayerLevelPresenter(PlayerLevel playerLevel)
+        public PlayerLevelPresenter(PlayerLevel playerLevel, PopupView popupView)
         {
             _playerLevel = playerLevel;
-        }
-        
-        public void Construct(PopupView popupView)
-        {
             _popupView = popupView;
             
             _playerLevel.OnExperienceChanged += UpdateExperience;
