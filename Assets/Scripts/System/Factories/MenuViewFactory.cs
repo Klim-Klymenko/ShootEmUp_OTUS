@@ -19,7 +19,7 @@ namespace Factory
             _popupViewPool = popupViewPool;
         }
 
-        public MenuView Create()
+        MenuView IFactory<MenuView>.Create()
         {
             MenuView menuView = Object.Instantiate(_menuViewPrefab, _popupPanel);
             menuView.Construct(_popupViewPool);
