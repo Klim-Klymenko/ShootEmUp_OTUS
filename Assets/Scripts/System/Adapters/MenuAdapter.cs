@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using PM;
 using SO;
+using UnityEngine;
 
 namespace Adapters
 {
@@ -40,11 +41,13 @@ namespace Adapters
             _menuView.OnPopupDestroyed += DestroyPopupModel;
 
             _menuView.OnPopupShown += CreatePopupPresenter;
-            _menuPresenter.OnPresenterCreated += CreatePopupModel;
+            _menuPresenter.OnPopupPresenterCreated += CreatePopupModel;
         }
 
         private void DestroyPopupPresenter(PopupView view)
         {
+            if (!_popupPresenters.ContainsKey(view)) return;
+            
             _menuPresenter.DestroyPresenter(_popupPresenters[view]);
             
             _popupPresenters.Remove(view);
@@ -52,6 +55,8 @@ namespace Adapters
         
         private void DestroyPopupModel(PopupView view)
         {
+            if (!_popupModels.ContainsKey(view)) return;
+            
             _menuModel.DestroyPopupModel(_popupModels[view]);
             
             _popupModels.Remove(view);
@@ -81,7 +86,7 @@ namespace Adapters
             _menuView.OnPopupDestroyed -= DestroyPopupModel;
             
             _menuView.OnPopupShown -= CreatePopupPresenter;
-            _menuPresenter.OnPresenterCreated -= CreatePopupModel;
+            _menuPresenter.OnPopupPresenterCreated -= CreatePopupModel;
         }
     }
 }

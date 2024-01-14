@@ -5,14 +5,14 @@ namespace PM
 {
     public sealed class MenuPresenter
     {
-        public event Func<PopupModel> OnPresenterCreated; 
+        public event Func<PopupModel> OnPopupPresenterCreated; 
         
         private readonly List<PopupPresenter> _popupPresenters = new();
         public IReadOnlyList<PopupPresenter> PopupPresenters => _popupPresenters;
         
         public PopupPresenter CreatePresenter(PopupView popupView)
         {
-            PopupModel popupModel = OnPresenterCreated?.Invoke();
+            PopupModel popupModel = OnPopupPresenterCreated?.Invoke();
 
             if (popupModel == null) throw new NullReferenceException("PopupModel is null when creating presenter");
             
