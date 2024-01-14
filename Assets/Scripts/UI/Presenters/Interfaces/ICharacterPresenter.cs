@@ -5,7 +5,7 @@ namespace PM
     public interface ICharacterPresenter
     {
         string Name { get; }
-        string[] ValuesNames { get; }
+        string[] ValueNames { get; }
         string Description { get; }
         int[] Values { get; }
         Sprite Icon { get; }

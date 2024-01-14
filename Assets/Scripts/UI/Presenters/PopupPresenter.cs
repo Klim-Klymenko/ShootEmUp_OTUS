@@ -17,7 +17,7 @@
 
             CharacterPresenter = characterPresenter;
         }
-        
+
         public void DestroyPresenters()
         {
             _userInfoPresenter.Dispose();

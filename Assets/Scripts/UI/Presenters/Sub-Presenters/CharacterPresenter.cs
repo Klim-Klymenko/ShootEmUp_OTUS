@@ -5,7 +5,7 @@ namespace PM
     public sealed class CharacterPresenter : ICharacterPresenter
     {
         public string Name { get; }
-        public string[] ValuesNames { get; }
+        public string[] ValueNames { get; }
         public string Description { get; }
         public Sprite Icon { get; }
         public int[] Values { get; }
@@ -15,7 +15,7 @@ namespace PM
         
         private readonly PlayerLevel _playerLevel;
         
-        public CharacterPresenter(string[] valuesNames, UserInfo userInfo, PlayerLevel playerLevel, CharacterInfo characterInfo)
+        public CharacterPresenter(string[] valueNames, UserInfo userInfo, PlayerLevel playerLevel, CharacterInfo characterInfo)
         {
             Name = userInfo.Name;
             Description = userInfo.Description;
@@ -24,11 +24,11 @@ namespace PM
             RequiredExperience = playerLevel.RequiredExperience;
             Level = playerLevel.CurrentLevel;
             
-            ValuesNames = valuesNames;
-            Values = new int[valuesNames.Length];
+            ValueNames = valueNames;
+            Values = new int[valueNames.Length];
             
-            for (int i = 0; i < ValuesNames.Length; i++)
-                Values[i] = characterInfo.GetStat(ValuesNames[i]).Value;
+            for (int i = 0; i < ValueNames.Length; i++)
+                Values[i] = characterInfo.GetStat(ValueNames[i]).Value;
             
             _playerLevel = playerLevel;
         }

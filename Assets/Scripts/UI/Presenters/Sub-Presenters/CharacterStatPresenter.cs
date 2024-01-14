@@ -14,11 +14,6 @@ namespace PM
             
             _characterStat.OnValueChanged += UpdateValue;
         }
-
-        public void Dispose()
-        {
-            _characterStat.OnValueChanged -= UpdateValue;
-        }
         
         private void UpdateValue(int value, string valueName)
         {
@@ -26,6 +21,11 @@ namespace PM
                 _popupView.UpdateValue(value, valueName);
             else
                 _popupView.InitializeValue(value, valueName);
+        }
+        
+        public void Dispose()
+        {
+            _characterStat.OnValueChanged -= UpdateValue;
         }
     }
 }

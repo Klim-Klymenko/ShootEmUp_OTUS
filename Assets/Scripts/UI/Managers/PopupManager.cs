@@ -15,9 +15,9 @@ namespace PM
         
         private MenuAdapter _menuAdapter;
 
-        private readonly PopupConfigCollection _configCollection;
         private readonly Factory.IFactory<MenuView> _menuViewFactory;
-        
+        private readonly PopupConfigCollection _configCollection;
+
         public PopupManager(Factory.IFactory<MenuView> menuViewFactory, PopupConfigCollection configCollection)
         {
             _menuViewFactory = menuViewFactory;
@@ -47,14 +47,8 @@ namespace PM
             Object.Destroy(_menuView.gameObject);
         }
 
-        public void AddPopup()
-        {
-            _menuView.ShowPopup();
-        }
-
-        public void RemoveLastPopup()
-        {
-            _menuView.HideLastPopup();
-        }
+        public void AddPopup() => _menuView.ShowPopup();
+        
+        public void RemoveLastPopup() => _menuView.HideLastPopup();
     }
 }

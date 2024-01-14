@@ -23,15 +23,6 @@ namespace PM
             _characterInfo.OnStatRemoved += RemoveStatPresenter;
         }
         
-        public void Dispose()
-        {
-            _characterInfo.OnStatAdded -= CreateStatPresenter;
-            _characterInfo.OnStatRemoved -= RemoveStatPresenter;
-            
-            foreach (var characterStatPresenter in _characterStatPresenters.Values)
-                characterStatPresenter.Dispose();
-        }
-        
         private void CreateStatPresenter(CharacterStat characterStat)
         {
             _characterStatPresenters.TryAdd(characterStat, new CharacterStatPresenter(characterStat, _popupView));
@@ -45,6 +36,15 @@ namespace PM
             
             statPresenter.Dispose();
             _characterStatPresenters.Remove(characterStat);
+        }
+        
+        public void Dispose()
+        {
+            _characterInfo.OnStatAdded -= CreateStatPresenter;
+            _characterInfo.OnStatRemoved -= RemoveStatPresenter;
+            
+            foreach (var characterStatPresenter in _characterStatPresenters.Values)
+                characterStatPresenter.Dispose();
         }
     }
 }

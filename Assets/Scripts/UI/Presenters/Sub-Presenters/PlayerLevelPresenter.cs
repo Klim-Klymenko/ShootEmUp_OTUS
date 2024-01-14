@@ -15,12 +15,6 @@ namespace PM
             _playerLevel.OnExperienceChanged += UpdateExperience;
             _playerLevel.OnLevelUp += UpdateLevel;
         }
-
-        public void Dispose()
-        {
-            _playerLevel.OnExperienceChanged -= UpdateExperience;
-            _playerLevel.OnLevelUp -= UpdateLevel;
-        }
         
         private void UpdateExperience(int currentExperience, int requiredExperience)
         {
@@ -30,6 +24,12 @@ namespace PM
         private void UpdateLevel(int level)
         {
             _popupView.UpdateLevel(level);
+        }
+        
+        public void Dispose()
+        {
+            _playerLevel.OnExperienceChanged -= UpdateExperience;
+            _playerLevel.OnLevelUp -= UpdateLevel;
         }
     }
 }

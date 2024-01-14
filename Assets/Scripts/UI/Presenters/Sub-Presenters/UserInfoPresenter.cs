@@ -18,13 +18,6 @@ namespace PM
             _userInfo.OnIconChanged += UpdateAvatar;
         }
         
-        public void Dispose()
-        {
-            _userInfo.OnNameChanged -= UpdateName;
-            _userInfo.OnDescriptionChanged -= UpdateDescription;
-            _userInfo.OnIconChanged -= UpdateAvatar;
-        }
-
         private void UpdateName(string name)
         {
             _popupView.UpdateName(name);
@@ -39,5 +32,12 @@ namespace PM
         {
             _popupView.UpdateAvatar(icon);
         } 
+        
+        public void Dispose()
+        {
+            _userInfo.OnNameChanged -= UpdateName;
+            _userInfo.OnDescriptionChanged -= UpdateDescription;
+            _userInfo.OnIconChanged -= UpdateAvatar;
+        }
     }
 }

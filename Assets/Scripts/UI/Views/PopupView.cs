@@ -52,7 +52,7 @@ namespace PM
             UpdateName(_presenter.Name);
             UpdateDescription(_presenter.Description);
             UpdateAvatar(_presenter.Icon);
-            UpdateValues(_presenter.Values, _presenter.ValuesNames);
+            UpdateValues(_presenter.Values, _presenter.ValueNames);
             UpdateExperience(_presenter.Experience, _presenter.RequiredExperience);
             UpdateLevel(_presenter.Level);
             
@@ -89,12 +89,12 @@ namespace PM
         public void UpdateDescription(string description) => _descriptionText.text = description;
         public void UpdateAvatar(Sprite icon) => _avatar.sprite = icon;
         
-        private void UpdateValues(IReadOnlyList<int> values, IReadOnlyList<string> valuesNames)
+        private void UpdateValues(IReadOnlyList<int> values, IReadOnlyList<string> valueNames)
         {
             for (int i = 0; i < values.Count; i++)
             {
-                _statTexts[valuesNames[i]] = _valuesTexts[i];
-                UpdateValue(values[i], valuesNames[i]);
+                _statTexts[valueNames[i]] = _valuesTexts[i];
+                UpdateValue(values[i], valueNames[i]);
                 _lastDisplayedStatTextIndex = i;
             }
             
@@ -137,9 +137,6 @@ namespace PM
             UpdateLevelUpButton();
         }
 
-        public void UpdateLevel(int level)
-        {
-            _levelText.text = $"Level: {level}";
-        }
+        public void UpdateLevel(int level) => _levelText.text = $"Level: {level}";
     }
 }
