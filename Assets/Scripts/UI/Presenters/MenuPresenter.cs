@@ -2,7 +2,7 @@
 
 namespace PM
 {
-    public sealed class MenuPresenter : IMenuPresenter
+    public sealed class MenuPresenter
     {
         private readonly List<PopupPresenter> _popupPresenters = new();
         public IReadOnlyList<PopupPresenter> PopupPresenters => _popupPresenters;

@@ -3,7 +3,7 @@ using SO;
 
 namespace PM
 {
-    public sealed class MenuModel : IMenuModel
+    public sealed class MenuModel
     {
         private readonly List<PopupModel> _popupModels = new();
         public IReadOnlyList<PopupModel> PopupModels => _popupModels;

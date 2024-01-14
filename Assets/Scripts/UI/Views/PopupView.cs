@@ -64,6 +64,7 @@ namespace PM
         private void Hide()
         {
             _closeAction();
+            _statTexts.Clear();
             
             _levelUpButton.onClick.RemoveListener(_presenter.LevelUp);
             _levelUpButton.onClick.RemoveListener(UpdateLevelUpButton);

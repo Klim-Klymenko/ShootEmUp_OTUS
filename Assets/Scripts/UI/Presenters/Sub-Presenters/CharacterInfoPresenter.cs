@@ -31,6 +31,9 @@ namespace PM
         {
             _characterInfo.OnStatAdded -= CreateStatPresenter;
             _characterInfo.OnStatRemoved -= RemoveStatPresenter;
+            
+            foreach (var characterStatPresenter in _characterStatPresenters.Values)
+                characterStatPresenter.Dispose();
         }
         
         private void CreateStatPresenter(CharacterStat characterStat)

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Pool;
 using UnityEngine;
 
@@ -6,48 +7,36 @@ namespace PM
 {
     public sealed class MenuView : MonoBehaviour
     {
+        public event Action <PopupView> OnPopupDestroyed;
+        
         [SerializeField]
         private Transform _contentContainer;
-        
-        private readonly Dictionary<PopupView, PopupPresenter> _popupPresenters = new();
-        private readonly Dictionary<PopupView, PopupModel> _popupModels = new();
         
         private readonly List<PopupView> _popupViews = new();
         public List<PopupView> PopupViews => _popupViews;
 
         private Pool<PopupView> _viewPool;
         
-        private IMenuPresenter _menuPresenter;
-        private IMenuModel _menuModel;
-        
-        private IReadOnlyList<CharacterPresenter> CharacterPresenters => _menuPresenter.GetCharacterPresenters();
-        private IReadOnlyList<PopupPresenter> PopupPresenters => _menuPresenter.PopupPresenters;
-        private IReadOnlyList<PopupModel> PopupModels => _menuModel.PopupModels;
-        
-        public void Construct(Pool<PopupView> viewPool, IMenuPresenter menuPresenter, IMenuModel menuModel)
+        public void Construct(Pool<PopupView> viewPool, IReadOnlyList<CharacterPresenter> characterPresenters)
         {
             _viewPool = viewPool;
-            _menuPresenter = menuPresenter;
-            _menuModel = menuModel;
             
-            ShowPopups();
+            ShowPopups(characterPresenters);
         }
         
-        private void ShowPopups()
+        private void ShowPopups(IReadOnlyList<CharacterPresenter> characterPresenters)
         {
-            for (int i = 0; i < CharacterPresenters.Count; i++)
-                ShowPopup(PopupPresenters[i], PopupModels[i]);
+            for (int i = 0; i < characterPresenters.Count; i++)
+                ShowPopup(characterPresenters[i]);
         }
 
-        public PopupView ShowPopup(PopupPresenter popupPresenter, PopupModel popupModel)
+        public PopupView ShowPopup(CharacterPresenter characterPresenter)
         {
             PopupView view = _viewPool.Get();
-            view.Construct(popupPresenter.CharacterPresenter, () => DestroyPopup(view));
+            view.Construct(characterPresenter, () => DestroyPopup(view));
             view.transform.SetParent(_contentContainer);
             
             _popupViews.Add(view);
-            _popupPresenters.TryAdd(view, popupPresenter);
-            _popupModels.TryAdd(view, popupModel);
             
             return view;
         }
@@ -56,14 +45,7 @@ namespace PM
         {
             HidePopup(view);
             
-            _menuPresenter.DestroyPresenter(_popupPresenters[view]);
-            _menuModel.DestroyModel(_popupModels[view]);
-            
-            if (_popupPresenters.ContainsKey(view))
-                _popupModels.Remove(view);
-            
-            if (_popupModels.ContainsKey(view))
-                _popupModels.Remove(view);
+            OnPopupDestroyed?.Invoke(view);
         }
         
         private void HidePopup(PopupView view)

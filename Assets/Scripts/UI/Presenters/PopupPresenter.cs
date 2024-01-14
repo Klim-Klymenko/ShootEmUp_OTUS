@@ -8,8 +8,6 @@
         private readonly PlayerLevelPresenter _playerLevelPresenter;
         private readonly CharacterInfoPresenter _characterInfoPresenter;
 
-        private PopupView _popupView;
-        
         public PopupPresenter(string[] valuesNames, UserInfo userInfo, PlayerLevel playerLevel, CharacterInfo characterInfo)
         {
             CharacterPresenter characterPresenter = new CharacterPresenter(valuesNames, userInfo, playerLevel, characterInfo);
