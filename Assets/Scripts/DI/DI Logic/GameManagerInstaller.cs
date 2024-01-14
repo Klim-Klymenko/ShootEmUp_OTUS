@@ -3,16 +3,16 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public sealed class GameManagerInstaller
+    internal sealed class GameManagerInstaller
     {
         private readonly GameManager _gameManager;
 
-        public GameManagerInstaller(GameManager gameManager)
+        internal GameManagerInstaller(GameManager gameManager)
         {
             _gameManager = gameManager;
         }
         
-        public void InstallListeners(IEnumerable<Installer> installers)
+        internal void InstallListeners(IEnumerable<Installer> installers)
         {
             foreach (var installer in installers)
                 _gameManager.AddGameListeners(installer.ProvideGameListeners());

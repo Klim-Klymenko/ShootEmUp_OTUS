@@ -21,7 +21,7 @@ namespace ShootEmUp
         public bool IsReached { get; private set; }
 
         [Inject]
-        private void Construct(EnemyService enemyService)
+        public void Construct(EnemyService enemyService)
         {
             _moveComponent = enemyService.MoveComponent;
             _transform = enemyService.Transform;

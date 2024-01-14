@@ -18,7 +18,7 @@ namespace ShootEmUp
         private WeaponComponent _weaponComponent;
 
         [Inject]
-        private void Construct(IBulletSpawner bulletSpawner, CharacterService characterService)
+        public void Construct(IBulletSpawner bulletSpawner, CharacterService characterService)
         {
             _bulletSpawner = bulletSpawner;
             _weaponComponent = characterService.WeaponComponent;

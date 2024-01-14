@@ -10,7 +10,7 @@ namespace ShootEmUp
         private MoveComponent _characterMoveComponent;
 
         [Inject]
-        private void Construct(CharacterService characterService)
+        public void Construct(CharacterService characterService)
         {
             _characterMoveComponent = characterService.MoveComponent;
         }

@@ -6,7 +6,7 @@ namespace ShootEmUp
 {
     public sealed class Injector
     {
-        public void Inject(object target, ServiceLocator serviceLocator)
+        internal void Inject(object target, ServiceLocator serviceLocator)
         {
             Type targetType = target.GetType();
             MethodInfo[] methods = targetType.GetMethods(BindingFlags.Instance | BindingFlags.Public |
@@ -18,7 +18,7 @@ namespace ShootEmUp
             } 
         }
         
-        public void Inject(object target, ServiceLocator serviceLocator, ServiceLocator parentServiceLocator)
+        internal void Inject(object target, ServiceLocator serviceLocator, ServiceLocator parentServiceLocator)
         {
             Type targetType = target.GetType();
             MethodInfo[] methods = targetType.GetMethods(BindingFlags.Instance | BindingFlags.Public |

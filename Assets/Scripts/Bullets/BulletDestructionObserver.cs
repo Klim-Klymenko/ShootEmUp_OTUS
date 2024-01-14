@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace ShootEmUp
 {
     public sealed class BulletDestructionObserver : IGameStartListener,
@@ -14,7 +12,7 @@ namespace ShootEmUp
         }
 
         [Inject]
-        private void Construct(IBulletUnspawner bulletUnspawner)
+        public void Construct(IBulletUnspawner bulletUnspawner)
         {
             _bulletUnspawner = bulletUnspawner;
         }

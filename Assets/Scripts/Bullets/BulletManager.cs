@@ -10,7 +10,7 @@ namespace ShootEmUp
         private BulletSpawner _bulletSpawner;
 
         [Inject]
-        private void Construct(LevelBounds levelBounds, BulletSpawner bulletSpawner)
+        public void Construct(LevelBounds levelBounds, BulletSpawner bulletSpawner)
         {
             _levelBounds = levelBounds;
             _bulletSpawner = bulletSpawner;

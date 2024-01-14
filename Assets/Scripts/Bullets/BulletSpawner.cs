@@ -23,7 +23,7 @@ namespace ShootEmUp
         private GameManager _gameManager;
 
         [Inject]
-        private void Construct(GameManager gameManager) 
+        public void Construct(GameManager gameManager) 
         {
             _gameManager = gameManager;
         }

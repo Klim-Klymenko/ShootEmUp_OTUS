@@ -38,7 +38,7 @@ namespace ShootEmUp
             if (entitiesAmount > _entities.Count)
                 throw new Exception("Not enough bullets in the pool");
             
-            List<T> entityToGet = new List<T>();
+            List<T> entityToGet = new();
 
             for (int i = _entities.Count - 1; entitiesAmount > 0; entitiesAmount--, i--)
             {

@@ -6,6 +6,7 @@ namespace ShootEmUp
     {
         public CohesionType CohesionType => _cohesionType;
 
-        [SerializeField] private CohesionType _cohesionType;
+        [SerializeField] 
+        private CohesionType _cohesionType;
     }
 }

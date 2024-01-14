@@ -5,11 +5,15 @@ namespace ShootEmUp
     [RequireComponent(typeof(Rigidbody2D))]
     public sealed class MoveComponent : MonoBehaviour
     {
-        [SerializeField] private Rigidbody2D _rigidbody2D;
-        [SerializeField] private Transform _transform;
+        [SerializeField]
+        private Rigidbody2D _rigidbody2D;
         
-        [SerializeField] private float _speed = 5.0f;
-
+        [SerializeField]
+        private Transform _transform;
+        
+        [SerializeField] 
+        private float _speed = 5.0f;
+        
         public Vector2 Position => _transform.position;
 
         private void OnValidate()

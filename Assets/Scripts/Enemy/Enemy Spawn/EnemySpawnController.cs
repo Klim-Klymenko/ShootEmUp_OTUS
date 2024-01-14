@@ -9,7 +9,7 @@
         private readonly EnemySpawnTimer _spawnTimer = new();
         
         [Inject]
-        private void Construct(GameManager gameManager, EnemySpawner enemySpawner)
+        public void Construct(GameManager gameManager, EnemySpawner enemySpawner)
         {
             _gameManager = gameManager;
             _enemySpawner = enemySpawner;

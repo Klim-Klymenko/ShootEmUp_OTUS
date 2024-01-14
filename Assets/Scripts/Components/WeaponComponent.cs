@@ -8,6 +8,7 @@ namespace ShootEmUp
 
         public Quaternion Rotation => _firePoint.rotation;
 
-        [SerializeField] private Transform _firePoint;
+        [SerializeField]
+        private Transform _firePoint;
     }
 }

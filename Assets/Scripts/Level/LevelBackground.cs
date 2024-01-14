@@ -5,12 +5,17 @@ namespace ShootEmUp
     [System.Serializable]
     public sealed class LevelBackground : IGameFixedUpdateListener
     {
-        [SerializeField] private float _endPositionY;
-        [SerializeField] private float _movingSpeedY;
+        [SerializeField]
+        private float _endPositionY;
+        
+        [SerializeField]
+        private float _movingSpeedY;
 
-        [SerializeField] private Vector3 _startingPosition;
+        [SerializeField]
+        private Vector3 _startingPosition;
 
-        [SerializeField] private Transform _transform;
+        [SerializeField]
+        private Transform _transform;
 
         void IGameFixedUpdateListener.OnFixedUpdate()
         {

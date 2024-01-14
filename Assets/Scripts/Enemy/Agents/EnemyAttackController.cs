@@ -21,7 +21,7 @@
         }
         
         [Inject]
-        private void Construct(IBulletSpawner bulletSpawner)
+        public void Construct(IBulletSpawner bulletSpawner)
         {
             _bulletSpawner = bulletSpawner;
         }

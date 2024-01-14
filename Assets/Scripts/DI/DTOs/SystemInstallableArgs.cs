@@ -1,6 +1,6 @@
 ﻿namespace ShootEmUp
 {
-    public struct SystemInstallablesArgs
+    internal struct SystemInstallableArgs
     {
         public DiContainer DiContainer;
         public GameManager GameManager;

@@ -15,7 +15,7 @@
         }
 
         [Inject]
-        private void Construct(EnemySpawner enemySpawner)
+        public void Construct(EnemySpawner enemySpawner)
         {
             _enemySpawner = enemySpawner;
         }

@@ -3,16 +3,16 @@ using System.Collections.Generic;
 
 namespace ShootEmUp
 {
-    public sealed class ServiceLocatorInstaller
+    internal sealed class ServiceLocatorInstaller
     {
         private readonly ServiceLocator _serviceLocator;
         
-        public ServiceLocatorInstaller(ServiceLocator serviceLocator)
+        internal ServiceLocatorInstaller(ServiceLocator serviceLocator)
         {
             _serviceLocator = serviceLocator;
         }
         
-        public void InstallServices(SystemInstallablesArgs args, IEnumerable<Installer> installers)
+        internal void InstallServices(SystemInstallableArgs args, IEnumerable<Installer> installers)
         {
             _serviceLocator.BindService(args.DiContainer);
             _serviceLocator.BindService(args.GameManager);
@@ -21,7 +21,7 @@ namespace ShootEmUp
                 BindServices(installer);
         }
         
-        public void InstallServices(DiContainer diContainer, IEnumerable<Installer> dependencyInstallers)
+        internal void InstallServices(DiContainer diContainer, IEnumerable<Installer> dependencyInstallers)
         {
             _serviceLocator.BindService(diContainer);
             
@@ -31,7 +31,7 @@ namespace ShootEmUp
         
         private void BindServices(Installer installer)
         {
-            foreach (var service in installer.ProvideServices())
+            foreach (object service in installer.ProvideServices())
             {
                 _serviceLocator.BindService(service);
 

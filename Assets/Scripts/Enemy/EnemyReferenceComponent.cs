@@ -14,7 +14,7 @@ namespace ShootEmUp
         private DiContainer _enemyDiContainer;
         
         [Inject]
-        private void Construct(DiContainer diContainer)
+        public void Construct(DiContainer diContainer)
         {
             _enemyDiContainer = diContainer;
         }

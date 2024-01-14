@@ -30,7 +30,7 @@ namespace ShootEmUp
         private EnemyPositionsGenerator _randomPositionGenerator;
 
         [Inject]
-        private void Construct(GameManager gameManager, EnemyPositionsGenerator enemyPositionsGenerator)
+        public void Construct(GameManager gameManager, EnemyPositionsGenerator enemyPositionsGenerator)
         {
             _gameManager = gameManager;
             _randomPositionGenerator = enemyPositionsGenerator;

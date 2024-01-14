@@ -1,6 +1,6 @@
 ﻿namespace ShootEmUp
 {
-    public sealed class SceneContext : GameContext
+    internal sealed class SceneContext : Context
     {
         private GameManagerInstaller _gameManagerInstaller;
         private readonly GameManager _gameManager = new();
@@ -9,9 +9,9 @@
         {
             InitializeDi();
             
-            _gameManagerInstaller = new(_gameManager);
+            _gameManagerInstaller = new GameManagerInstaller(_gameManager);
             
-            SystemInstallablesArgs args = new SystemInstallablesArgs
+            SystemInstallableArgs args = new SystemInstallableArgs
             {
                 DiContainer = DiContainer, GameManager = _gameManager
             };

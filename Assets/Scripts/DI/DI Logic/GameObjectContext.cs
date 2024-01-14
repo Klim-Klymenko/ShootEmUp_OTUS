@@ -2,7 +2,7 @@
 
 namespace ShootEmUp
 {
-    public sealed class GameObjectContext : GameContext
+    internal sealed class GameObjectContext : Context
     {
         private readonly ServiceLocator _serviceLocator = new();
         
@@ -13,7 +13,7 @@ namespace ShootEmUp
             return Task.CompletedTask;
         }
         
-        public async void Awake()
+        private async void Awake()
         {
             await InitializeServices();
 

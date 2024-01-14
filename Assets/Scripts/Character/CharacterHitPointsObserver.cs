@@ -7,7 +7,7 @@ namespace ShootEmUp
         private GameManager _gameManager;
 
         [Inject]
-        private void Construct(GameManager gameManager, CharacterService characterService)
+        public void Construct(GameManager gameManager, CharacterService characterService)
         {
             _gameManager = gameManager;
             _hitPointsComponent = characterService.HitPointsComponent;

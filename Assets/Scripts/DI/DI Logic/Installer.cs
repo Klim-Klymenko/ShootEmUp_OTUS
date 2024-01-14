@@ -7,7 +7,7 @@ namespace ShootEmUp
 {
     public abstract class Installer : MonoBehaviour
     {
-        public readonly List<Type> InterfacesType = new();
+        internal readonly List<Type> InterfacesType = new();
         
         public virtual IEnumerable<object> ProvideServices()
         {
@@ -57,18 +57,17 @@ namespace ShootEmUp
                                                      BindingFlags.NonPublic | BindingFlags.DeclaredOnly);
             for (int i = 0; i < fields.Length; i++)
             {
-                if (fields[i].IsDefined(typeof(ListenerAttribute)))
-                {
-                    object value = fields[i].GetValue(this);
+                if (!fields[i].IsDefined(typeof(ListenerAttribute))) continue;
+                
+                object value = fields[i].GetValue(this);
 
-                    if (value == null)
-                        throw new NullReferenceException($"Field {fields[i].Name} is null");
+                if (value == null)
+                    throw new NullReferenceException($"Field {fields[i].Name} is null");
 
-                    if (value is not IGameListener listener)
-                        throw new NullReferenceException($"Field {fields[i].Name} is not IGameListener");
+                if (value is not IGameListener listener)
+                    throw new NullReferenceException($"Field {fields[i].Name} is not IGameListener");
 
-                    yield return listener;
-                }
+                yield return listener;
             }
         }
     }

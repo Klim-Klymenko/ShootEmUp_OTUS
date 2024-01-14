@@ -9,7 +9,7 @@ namespace ShootEmUp
         private CharacterBulletShooter _bulletShooter;
         
         [Inject]
-        private void Construct(CharacterBulletShooter bulletShooter)
+        public void Construct(CharacterBulletShooter bulletShooter)
         {
             _bulletShooter = bulletShooter;
         }

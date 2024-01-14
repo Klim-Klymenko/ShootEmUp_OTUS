@@ -15,7 +15,7 @@ namespace ShootEmUp
         private GameResumePauseDecorator _resumePauseDecorator;
 
         [Inject]
-        private void Construct(GameResumePauseDecorator resumePauseDecorator)
+        public void Construct(GameResumePauseDecorator resumePauseDecorator)
         {
             _resumePauseDecorator = resumePauseDecorator;
         }

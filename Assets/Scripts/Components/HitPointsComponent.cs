@@ -7,7 +7,8 @@ namespace ShootEmUp
     {
         public event Action OnDeath;
         
-        [SerializeField] private int _hitPoints;
+        [SerializeField]
+        private int _hitPoints;
         
         public bool AnyHitPoints => _hitPoints > 0;
 
