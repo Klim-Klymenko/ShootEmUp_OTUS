@@ -62,7 +62,7 @@ namespace PM
         }
 
         [ContextMenu("Remove Last Popup")]
-        public void RemovePopup()
+        public void RemoveLastPopup()
         {
             MenuModel.DestroyLastModel();
             _menuPresenter.DestroyLastPresenter();

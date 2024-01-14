@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
 namespace PM
 {
@@ -35,9 +34,6 @@ namespace PM
             throw new Exception($"Stat {name} is not found!");
         }
 
-        public CharacterStat[] GetStats()
-        {
-            return _stats.ToArray();
-        }
+        public CharacterStat[] GetStats() => _stats.ToArray();
     }
 }

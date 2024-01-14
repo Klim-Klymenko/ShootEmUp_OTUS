@@ -40,7 +40,7 @@ namespace PM
 
         private void RemoveStatPresenter(CharacterStat characterStat)
         {
-            _popupView.RemoveValue(_characterInfo.GetStats()[^1].Name);
+            _popupView.RemoveValue(characterStat.Name);
             
             CharacterStatPresenter statPresenter = _characterStatPresenters[characterStat];
             
