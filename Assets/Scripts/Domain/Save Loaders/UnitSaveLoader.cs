@@ -4,18 +4,23 @@ using SaveSystem;
 namespace Domain
 {
     [UsedImplicitly]
-    internal sealed class UnitSaveLoader : SaveLoadMediator<UnitsFacade, UnitsData>
+    internal sealed class UnitSaveLoader : SaveLoadMediator<UnitsData>
     {
-        internal UnitSaveLoader(UnitsFacade unitsFacade, IGameRepository repository) : base(unitsFacade, repository) { }
-        
-        protected override UnitsData ConvertToData(UnitsFacade unitsFacade)
+        private readonly UnitsFacade _unitsFacade;
+
+        internal UnitSaveLoader(UnitsFacade unitsFacade, IGameRepository repository) : base(repository)
         {
-            return unitsFacade.GetUnitsData();
+            _unitsFacade = unitsFacade;
+        }
+        
+        protected override UnitsData ConvertToData()
+        {
+            return _unitsFacade.GetUnitsData();
         }
 
-        protected override void ApplyData(UnitsFacade unitsFacade, UnitsData data)
+        protected override void ApplyData(UnitsData data)
         {
-            unitsFacade.RespawnUnits(data);
+            _unitsFacade.RespawnUnits(data);
         }
     }
 }

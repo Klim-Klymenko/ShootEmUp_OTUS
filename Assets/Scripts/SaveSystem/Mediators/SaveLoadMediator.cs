@@ -2,32 +2,30 @@
 
 namespace SaveSystem
 {
-    public abstract class SaveLoadMediator<TService, TData> : ISaveLoader
+    public abstract class SaveLoadMediator<TData> : ISaveLoader
     {
-        private readonly TService _service;
         private readonly IGameRepository _repository;
         
-        protected SaveLoadMediator(TService service, IGameRepository repository)
+        protected SaveLoadMediator(IGameRepository repository)
         {
-            _service = service;
             _repository = repository;
         }
         
         void ISaveLoader.Save()
         {
-            TData data = ConvertToData(_service);
+            TData data = ConvertToData();
             _repository.SetData(data);
         }
 
         void ISaveLoader.Load()
         {
             if (_repository.TryGetData(out TData data))
-                ApplyData(_service, data); 
+                ApplyData(data); 
             else
                 throw new Exception($"Data of type {typeof(TData)} not found");
         }
         
-        protected abstract TData ConvertToData(TService service);
-        protected abstract void ApplyData(TService service, TData data);
+        protected abstract TData ConvertToData();
+        protected abstract void ApplyData(TData data);
     }
 }

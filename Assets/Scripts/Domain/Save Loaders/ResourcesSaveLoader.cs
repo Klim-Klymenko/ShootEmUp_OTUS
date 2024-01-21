@@ -6,16 +6,21 @@ using JetBrains.Annotations;
 namespace Domain
 {
     [UsedImplicitly]
-    internal sealed class ResourcesSaveLoader : SaveLoadMediator<IResourcesProvider, ResourcesData>
+    internal sealed class ResourcesSaveLoader : SaveLoadMediator<ResourcesData>
     {
-        internal ResourcesSaveLoader(IResourcesProvider service, IGameRepository repository) : base(service, repository) { }
+        private readonly IResourcesProvider _resourcesProvider;
 
-        protected override ResourcesData ConvertToData(IResourcesProvider resourcesProvider)
+        internal ResourcesSaveLoader(IResourcesProvider resourcesProvider, IGameRepository repository) : base(repository)
+        {
+            _resourcesProvider = resourcesProvider;
+        }
+
+        protected override ResourcesData ConvertToData()
         {
             List<int> resourcesAmount = new();
             List<string> resourcesIDs = new();
 
-            foreach (Resource resource in resourcesProvider.GetResources())
+            foreach (Resource resource in _resourcesProvider.GetResources())
             {
                 resourcesAmount.Add(resource.Amount);
                 resourcesIDs.Add(resource.ID);
@@ -28,9 +33,9 @@ namespace Domain
             };
         }
 
-        protected override void ApplyData(IResourcesProvider provider, ResourcesData data)
+        protected override void ApplyData(ResourcesData data)
         {
-            List<Resource> resources = new(provider.GetResources());
+            List<Resource> resources = new(_resourcesProvider.GetResources());
             
             for (int i = 0; i < resources.Count; i++)
             {
