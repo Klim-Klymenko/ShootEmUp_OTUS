@@ -1,30 +1,24 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using SaveSystem;
 using GameEngine;
+using JetBrains.Annotations;
 
 namespace Domain
 {
+    [UsedImplicitly]
     internal sealed class ResourcesSaveLoader : SaveLoadMediator<IResourcesProvider, ResourcesData>
     {
-        private readonly ResourceInstaller _resourceInstaller;
-        
-        internal ResourcesSaveLoader(IResourcesProvider service, ResourceInstaller resourceInstaller) : base(service)
-        {
-            _resourceInstaller = resourceInstaller;
-        }
+        internal ResourcesSaveLoader(IResourcesProvider service, IGameRepository repository) : base(service, repository) { }
 
-        internal override ResourcesData ConvertToData(IResourcesProvider resourcesProvider)
+        protected override ResourcesData ConvertToData(IResourcesProvider resourcesProvider)
         {
             List<int> resourcesAmount = new();
             List<string> resourcesIDs = new();
-            
-            List<Resource> resources = new(resourcesProvider.GetResources());
 
-            for (int i = 0; i < resources.Count; i++)
+            foreach (Resource resource in resourcesProvider.GetResources())
             {
-                resourcesAmount.Add(resources[i].Amount);
-                resourcesIDs.Add(resources[i].ID);
+                resourcesAmount.Add(resource.Amount);
+                resourcesIDs.Add(resource.ID);
             }
             
             return new ResourcesData
@@ -34,9 +28,17 @@ namespace Domain
             };
         }
 
-        internal override void ApplyData(ResourcesData data)
+        protected override void ApplyData(IResourcesProvider provider, ResourcesData data)
         {
-            _resourceInstaller.InstallResources(data.ResourcesAmount, data.ResourcesIDs);
+            List<Resource> resources = new(provider.GetResources());
+            
+            for (int i = 0; i < resources.Count; i++)
+            {
+                Resource resource = resources[i];
+                
+                resource.Amount = data.ResourcesAmount[i];
+                resource.ID = data.ResourcesIDs[i];
+            }   
         }
     }
 }

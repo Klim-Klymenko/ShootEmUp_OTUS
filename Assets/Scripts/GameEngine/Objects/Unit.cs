@@ -2,7 +2,6 @@ using UnityEngine;
 
 namespace GameEngine
 {
-    //Нельзя менять!
     public sealed class Unit : MonoBehaviour
     {
         public string Type => type;

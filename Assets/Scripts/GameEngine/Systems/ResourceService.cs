@@ -7,7 +7,6 @@ using Zenject;
 
 namespace GameEngine
 {
-    //Нельзя менять!
     [Serializable]
     internal sealed class ResourceService : IResourcesProvider
     {
@@ -22,9 +21,9 @@ namespace GameEngine
 
         IEnumerable<Resource> IResourcesProvider.GetResources()
         {
-            IEnumerable<Resource> resourcesToProvider = sceneResources.Values;
+            IEnumerable<Resource> resourcesToProvide = sceneResources.Values;
 
-            foreach (var resource in resourcesToProvider)
+            foreach (Resource resource in resourcesToProvide)
             {
                 if (resource == null) continue;
 

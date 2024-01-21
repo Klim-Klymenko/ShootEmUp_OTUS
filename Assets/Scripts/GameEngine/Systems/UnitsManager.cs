@@ -7,9 +7,8 @@ using Object = UnityEngine.Object;
 
 namespace GameEngine
 {
-    //Нельзя менять!
     [Serializable]
-    internal sealed class UnitManager : IUnitsProvider, IUnitSpawner, IUnitDestroyer
+    public sealed class UnitsManager
     {
         [SerializeField]
         private Transform container;
@@ -17,34 +16,31 @@ namespace GameEngine
         [ShowInInspector, ReadOnly]
         private HashSet<Unit> sceneUnits = new();
 
-        internal UnitManager() { }
-
-        internal UnitManager(Transform container) => this.container = container;
-
         [Inject]
-        internal void SetupUnits(IEnumerable<Unit> units) => sceneUnits = new HashSet<Unit>(units);
-
-        internal void SetContainer(Transform container) => this.container = container;
+        public void SetupUnits(IEnumerable<Unit> units)
+        {
+            sceneUnits = new HashSet<Unit>(units);
+        }
 
         [Button]
         public Unit SpawnUnit(Unit prefab, Vector3 position, Quaternion rotation)
         {
-            var unit = Object.Instantiate(prefab, position, rotation, container);
+            Unit unit = Object.Instantiate(prefab, position, rotation, container);
+            
             unit.gameObject.SetActive(true);
             sceneUnits.Add(unit);
+            
             return unit;
         }
 
         [Button]
-        internal void DestroyUnit(Unit unit)
+        public void DestroyUnit(Unit unit)
         {
             if (sceneUnits.Remove(unit))
-            {
                 Object.Destroy(unit.gameObject);
-            }
         }
 
-        void IUnitDestroyer.DestroyUnits()
+        public void DestroyUnits()
         {
             foreach (var unit in sceneUnits)
                 Object.Destroy(unit.gameObject);
@@ -52,7 +48,7 @@ namespace GameEngine
             sceneUnits.Clear();
         }
         
-        IEnumerable<Unit> IUnitsProvider.GetAllUnits()
+        public IEnumerable<Unit> GetAllUnits()
         {
             foreach (var unit in sceneUnits)
             {

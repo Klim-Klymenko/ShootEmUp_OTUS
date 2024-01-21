@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.IO;
 using IDZ_Digital.Extensions;
+using JetBrains.Annotations;
 using Unity.Plastic.Newtonsoft.Json;
 using UnityEngine;
 
 namespace SaveSystem
 {
+    [UsedImplicitly]
     internal sealed class Repository : IGameRepository
     {
         private Dictionary<Type, string> _storage = new();
@@ -26,12 +28,14 @@ namespace SaveSystem
             Type dataType = typeof(T);
             string serializedData = _storage[dataType];
             T deserializedData = JsonUtility.FromJson<T>(serializedData);
+            
             return deserializedData;
         }
 
         bool IGameRepository.TryGetData<T>(out T data)
         {
             Type dataType = typeof(T);
+            
             if (_storage.TryGetValue(dataType, out string serializedData))
             {
                 data = JsonUtility.FromJson<T>(serializedData);

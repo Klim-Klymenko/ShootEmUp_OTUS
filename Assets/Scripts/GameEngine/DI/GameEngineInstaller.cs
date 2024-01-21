@@ -1,4 +1,4 @@
-﻿using System.ComponentModel;
+﻿using SaveSystem;
 using UnityEngine;
 using Zenject;
 
@@ -7,53 +7,48 @@ namespace GameEngine
     internal sealed class GameEngineInstaller : MonoInstaller
     {
         [SerializeField]
-        private UnitManager _unitManager;
+        private UnitsManager _unitsManager;
         
         [SerializeField]
         private ResourceService _resourceService;
-        
+
         [SerializeField]
-        private SceneContext _sceneContext;
-        
-        private void Construct()
-        {
-            Container.Inject(_unitManager);
-            Container.Inject(_resourceService);
-        }
+        private UnitsCatalog _unitsCatalog;
         
         public override void InstallBindings()
         {
-            BindSavables();
+            BindObjects();
             BindManagers();
-            BindDataAppliers();
-            
-            SubscribeConstruct();
-        }
-        
-        private void OnDestroy()
-        {
-            UnsubscribeConstruct();
+            BindUnitsCatalog();
         }
 
-        private void BindSavables()
+        private void BindObjects()
         {
             Container.Bind<Unit>().FromComponentsInHierarchy().AsCached();
             Container.Bind<Resource>().FromComponentsInHierarchy().AsCached();
         }
-
-        private void BindDataAppliers()
-        {
-            Container.Bind<UnitSpawner>().AsSingle();
-            Container.Bind<ResourceInstaller>().AsSingle();
-        }
         
         private void BindManagers()
         {
-            Container.BindInterfacesTo<UnitManager>().FromInstance(_unitManager).AsCached();
-            Container.BindInterfacesTo<ResourceService>().FromInstance(_resourceService).AsCached();
+            Container.Bind<UnitsManager>().FromMethod(InjectUnitsManager).AsSingle();
+            Container.Bind<IResourcesProvider>().FromMethod(InjectResourceServiceProvider).AsCached();
         }
 
-        private void SubscribeConstruct() => _sceneContext.PostInstall += Construct;
-        private void UnsubscribeConstruct() => _sceneContext.PostInstall -= Construct;
+        private void BindUnitsCatalog()
+        {
+            Container.Bind<UnitsCatalog>().FromInstance(_unitsCatalog).AsSingle();
+        }
+        
+        private UnitsManager InjectUnitsManager()
+        {
+            Container.Inject(_unitsManager);
+            return _unitsManager;
+        }
+        
+        private IResourcesProvider InjectResourceServiceProvider()
+        {
+            Container.Inject(_resourceService);
+            return _resourceService;
+        }
     }
 }

@@ -1,15 +1,24 @@
-﻿using System.Collections.Generic;
-using GameEngine;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Domain
 {
-    [System.Serializable]
+    [Serializable]
     internal struct UnitsData
     {
-        public List<Unit> Units;
-        public List<Vector3> UnitsPositions;
-        public List<Quaternion> UnitsRotations;
-        public List<int> UnitsHitPoints;
+        [HideInInspector]
+        public List<string> Types;
+        
+        [HideInInspector]
+        public List<Vector3> Positions;
+        
+        [HideInInspector]
+        public List<Quaternion> Rotations;
+        
+        [HideInInspector]
+        public List<int> HitPoints;
+        
+        public int Count => Types.Count;
     }
 }

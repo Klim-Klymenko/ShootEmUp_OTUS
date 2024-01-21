@@ -626,8 +626,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a40cb307792c4a758f94721617c56869, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _unitManager:
+  _unitsManager:
     container: {fileID: 1263304700}
+  _unitsCatalog: {fileID: 11400000, guid: ca8400341fe04d945829b60b7ed083b6, type: 2}
   _sceneContext: {fileID: 1976093186}
 --- !u!1 &653492620
 GameObject:
@@ -786,7 +787,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa002a3319a844a39f1e008f206156a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _catalog: {fileID: 11400000, guid: ca8400341fe04d945829b60b7ed083b6, type: 2}
 --- !u!4 &867112002
 Transform:
   m_ObjectHideFlags: 0
@@ -1763,8 +1763,8 @@ MonoBehaviour:
   _scriptableObjectInstallers: []
   _monoInstallers:
   - {fileID: 2041330339}
-  - {fileID: 867112001}
   - {fileID: 615015558}
+  - {fileID: 867112001}
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:

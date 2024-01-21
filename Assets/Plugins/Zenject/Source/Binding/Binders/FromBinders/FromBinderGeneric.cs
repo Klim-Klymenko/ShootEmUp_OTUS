@@ -43,7 +43,7 @@ namespace Zenject
         {
             return FromMethodBase<TContract>(method);
         }
-
+        
         public ScopeConcreteIdArgConditionCopyNonLazyBinder FromMethodMultiple(Func<InjectContext, IEnumerable<TContract>> method)
         {
             BindingUtil.AssertIsDerivedFromTypes(typeof(TContract), AllParentTypes);
@@ -84,7 +84,7 @@ namespace Zenject
         {
             return FromInstanceBase(instance);
         }
-
+        
 #if !NOT_UNITY3D
 
         public ScopeConcreteIdArgConditionCopyNonLazyBinder FromComponentsInChildren(

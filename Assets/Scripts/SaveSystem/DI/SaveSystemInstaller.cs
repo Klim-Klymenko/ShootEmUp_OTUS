@@ -7,26 +7,11 @@ namespace SaveSystem
     {
         [SerializeField]
         private SaveLoadManager _saveLoadManager;
-        
-        [SerializeField]
-        private SceneContext _sceneContext;
-        
-        private void Construct()
-        {
-            Container.Inject(_saveLoadManager);
-        }
-
+       
         public override void InstallBindings()
         {
             BindManagers();
             BindRepository();
-            
-            SubscribeConstruct();
-        }
-        
-        private void OnDestroy()
-        {
-            UnsubscribeConstruct();
         }
         
         private void BindRepository()
@@ -36,10 +21,13 @@ namespace SaveSystem
 
         private void BindManagers()
         {
-            Container.Bind<SaveLoadManager>().FromInstance(_saveLoadManager).AsSingle();
+            Container.Bind<SaveLoadManager>().FromMethod(InjectSaveLoadManager).AsSingle().NonLazy();
         }
-        
-        private void SubscribeConstruct() => _sceneContext.PostInstall += Construct;
-        private void UnsubscribeConstruct() => _sceneContext.PostInstall -= Construct;
+
+        private SaveLoadManager InjectSaveLoadManager()
+        {
+            Container.Inject(_saveLoadManager);
+            return _saveLoadManager;
+        }
     }
 }

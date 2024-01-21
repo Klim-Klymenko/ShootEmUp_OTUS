@@ -2,7 +2,6 @@ using UnityEngine;
 
 namespace GameEngine
 {
-    //Нельзя менять!
     public sealed class Resource : MonoBehaviour
     {
         public string ID
