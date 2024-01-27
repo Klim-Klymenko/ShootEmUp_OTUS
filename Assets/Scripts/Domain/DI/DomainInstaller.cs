@@ -7,8 +7,6 @@ namespace Domain
         public override void InstallBindings()
         {
             BindSaveLoaders();
-            BindUnitsSpawner();
-            BindUnitDataConverter();
             BindUnitsFacade();
         }
 
@@ -16,16 +14,6 @@ namespace Domain
         {
             Container.BindInterfacesTo<UnitSaveLoader>().AsCached();
             Container.BindInterfacesTo<ResourcesSaveLoader>().AsCached();
-        }
-
-        private void BindUnitsSpawner()
-        {
-            Container.Bind<UnitsSpawner>().AsSingle();
-        }
-
-        private void BindUnitDataConverter()
-        {
-            Container.Bind<UnitsDataConverter>().AsSingle();
         }
 
         private void BindUnitsFacade()
