@@ -6,7 +6,7 @@ namespace GameSystem
     [UsedImplicitly]
     public sealed class PlayerLevel
     {
-        public event Action<int> OnLevelUp;
+        public event Action<int> OnLevelChanged;
         public event Action<int, int> OnExperienceChanged;
         
         public int CurrentLevel { get; private set; } = 1;
@@ -27,7 +27,7 @@ namespace GameSystem
             CurrentExperience = 0;
             CurrentLevel = 1;
             OnExperienceChanged?.Invoke(CurrentExperience, RequiredExperience);
-            OnLevelUp?.Invoke(CurrentLevel);
+            OnLevelChanged?.Invoke(CurrentLevel);
         }
         
         public void LevelUp()
@@ -36,7 +36,7 @@ namespace GameSystem
             {
                 CurrentExperience = 0;
                 CurrentLevel++;
-                OnLevelUp?.Invoke(CurrentLevel);
+                OnLevelChanged?.Invoke(CurrentLevel);
                 OnExperienceChanged?.Invoke(CurrentExperience, RequiredExperience);
             }
         }

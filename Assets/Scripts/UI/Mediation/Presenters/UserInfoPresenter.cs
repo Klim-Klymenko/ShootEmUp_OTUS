@@ -8,11 +8,11 @@ using UnityEngine;
 namespace PM
 {
     [UsedImplicitly]
-    internal sealed class UserInfoPresenter : ICharacterInfoPresenter, IDisposable
+    internal sealed class UserInfoPresenter : IUserInfoPresenter, IDisposable
     {
-        IReadOnlyReactiveProperty<string> ICharacterInfoPresenter.Name => _name;
-        IReadOnlyReactiveProperty<string> ICharacterInfoPresenter.Description => _description;
-        IReadOnlyReactiveProperty<Sprite> ICharacterInfoPresenter.Icon => _icon;
+        IReadOnlyReactiveProperty<string> IUserInfoPresenter.Name => _name;
+        IReadOnlyReactiveProperty<string> IUserInfoPresenter.Description => _description;
+        IReadOnlyReactiveProperty<Sprite> IUserInfoPresenter.Icon => _icon;
         
         private readonly ReactiveProperty<string> _name;
         private readonly ReactiveProperty<string> _description;

@@ -59,21 +59,24 @@ namespace PM
         private void InitializeValue(ICharacterStatPresenter statPresenter)
         {
             if (FirstEmptyStatTextIndex >= _valuesTexts.Length) return;
-            if (_valuesTexts[FirstEmptyStatTextIndex] == null) return;
             
-            _statTexts[statPresenter] = _valuesTexts[FirstEmptyStatTextIndex];
+            Text valueText = _valuesTexts[FirstEmptyStatTextIndex];
+            
+            if (valueText == null) return;
+            
+            _statTexts[statPresenter] = valueText;
             UpdateValue(statPresenter);
+
+            statPresenter.OnValueUpdated += UpdateValue;
             
             _lastDisplayedStatTextIndex = FirstEmptyStatTextIndex;
-            
-            statPresenter.OnValueUpdated += UpdateValue;
         }
 
         private void RemoveValue(ICharacterStatPresenter statPresenter)
         {
             if (!_statTexts.ContainsKey(statPresenter)) return;
 
-            _valuesTexts[_lastDisplayedStatTextIndex].text = string.Empty;
+            _statTexts[statPresenter].text = string.Empty;
             _statTexts.Remove(statPresenter);
 
             _lastDisplayedStatTextIndex--;

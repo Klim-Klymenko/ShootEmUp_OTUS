@@ -18,8 +18,9 @@ namespace PM
 
         CharacterView ISpawner<CharacterView>.Spawn()
         {
-            var characterView = _viewPool.Get();
+            CharacterView characterView = _viewPool.Get();
             characterView.transform.SetParent(_popupPanel);
+            
             return characterView;
         }
 

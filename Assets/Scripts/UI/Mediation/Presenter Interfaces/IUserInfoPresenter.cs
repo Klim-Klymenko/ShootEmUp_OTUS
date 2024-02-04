@@ -1,10 +1,9 @@
-﻿using System;
-using UniRx;
+﻿using UniRx;
 using UnityEngine;
 
 namespace PM
 {
-    public interface ICharacterInfoPresenter
+    public interface IUserInfoPresenter
     {
        IReadOnlyReactiveProperty<string> Name { get; }
        IReadOnlyReactiveProperty<string> Description { get; }

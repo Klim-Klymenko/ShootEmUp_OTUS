@@ -5,7 +5,7 @@ namespace PM
 {
     public interface IPlayerLevelPresenter
     {
-        Action OnClosed { get; }
+        Action OnHided { get; }
         
         IReadOnlyReactiveProperty<string> Experience { get; }
         IReadOnlyReactiveProperty<string> Level { get; }

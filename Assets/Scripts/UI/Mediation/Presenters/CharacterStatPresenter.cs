@@ -1,6 +1,5 @@
 ﻿using System;
 using GameSystem;
-using UniRx;
 
 namespace PM
 {

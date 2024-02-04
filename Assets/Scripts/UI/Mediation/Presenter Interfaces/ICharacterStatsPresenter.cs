@@ -8,6 +8,6 @@ namespace PM
         event Action<ICharacterStatPresenter> OnStatAdded; 
         event Action<ICharacterStatPresenter> OnStatRemoved;
         
-        List<ICharacterStatPresenter> InitialStatPresenters { get; }
+        IReadOnlyList<ICharacterStatPresenter> InitialStatPresenters { get; }
     }
 }

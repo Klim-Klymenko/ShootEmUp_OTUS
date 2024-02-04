@@ -28,6 +28,7 @@ namespace GameSystem
             }).AsSingle();
             
             Container.Bind<PlayerLevel>().AsSingle();
+            
             Container.Bind<CharacterStats>().FromMethod(() =>
             {
                 CharacterStats characterStats = new();

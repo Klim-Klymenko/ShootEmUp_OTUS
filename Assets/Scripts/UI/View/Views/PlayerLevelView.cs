@@ -37,7 +37,7 @@ namespace PM
 
         internal void Hide()
         {
-            _presenter.OnClosed?.Invoke();
+            _presenter.OnHided?.Invoke();
             
             _disposable.Clear();
 

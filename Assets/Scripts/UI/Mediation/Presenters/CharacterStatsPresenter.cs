@@ -10,8 +10,9 @@ namespace PM
     {
         public event Action<ICharacterStatPresenter> OnStatAdded;
         public event Action<ICharacterStatPresenter> OnStatRemoved;
+        IReadOnlyList<ICharacterStatPresenter> ICharacterStatsPresenter.InitialStatPresenters => _initialStatPresenters;
         
-        public List<ICharacterStatPresenter> InitialStatPresenters { get; } = new();
+        private readonly List<ICharacterStatPresenter> _initialStatPresenters = new();
 
         private readonly Dictionary<CharacterStat, CharacterStatPresenter> _statPresenters = new();
         
@@ -20,13 +21,13 @@ namespace PM
         internal CharacterStatsPresenter(CharacterStats characterStats)
         {
             _characterStats = characterStats;
-            
+          
             foreach (CharacterStat characterStat in _characterStats.GetStats())
             {
                 CharacterStatPresenter characterStatPresenter = new CharacterStatPresenter(characterStat);
 
                 if (_statPresenters.TryAdd(characterStat, characterStatPresenter))
-                    InitialStatPresenters.Add(characterStatPresenter);
+                    _initialStatPresenters.Add(characterStatPresenter);
             }
             
             _characterStats.OnStatAdded += CreateStatPresenter;

@@ -18,10 +18,10 @@ namespace PM
 
         private readonly CompositeDisposable _disposable = new();
         
-        private ICharacterInfoPresenter _presenter;
+        private IUserInfoPresenter _presenter;
         
         [Inject]
-        internal void Construct(ICharacterInfoPresenter presenter)
+        internal void Construct(IUserInfoPresenter presenter)
         {
             _presenter = presenter;
         }
@@ -37,9 +37,20 @@ namespace PM
         {
             _disposable.Clear();
         }
-        
-        private void UpdateName(string name) => _nameText.text = name;
-        private void UpdateDescription(string description) => _descriptionText.text = description;
-        private void UpdateAvatar(Sprite icon) => _avatar.sprite = icon;
+
+        private void UpdateName(string name)
+        {
+            _nameText.text = name;  
+        }
+
+        private void UpdateDescription(string description)
+        {
+            _descriptionText.text = description;
+        }
+
+        private void UpdateAvatar(Sprite icon)
+        {
+            _avatar.sprite = icon;
+        }
     }
 }

@@ -27,7 +27,7 @@ namespace PM
         
         private void BindPool()
         {
-            Common.IFactory<CharacterView> popupViewFactory = new CharacterViewFactory(_characterViewPrefab, _popupPanel, Container);
+            Common.IFactory<CharacterView> popupViewFactory = new CharacterViewFactory(_characterViewPrefab, Container);
             Container.Bind<Pool<CharacterView>>().AsSingle().WithArguments(popupViewFactory, _poolSize, _viewPoolContainer);
         }
 

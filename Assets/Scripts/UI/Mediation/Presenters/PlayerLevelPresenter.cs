@@ -8,7 +8,7 @@ namespace PM
     [UsedImplicitly]
     internal sealed class PlayerLevelPresenter : IPlayerLevelPresenter, IDisposable
     {
-       public Action OnClosed { get; }
+       public Action OnHided { get; }
        
        void IPlayerLevelPresenter.LevelUp() => _playerLevel.LevelUp();
        bool IPlayerLevelPresenter.CanLevelUp() => _playerLevel.CanLevelUp();
@@ -29,9 +29,9 @@ namespace PM
             _level = new ReactiveProperty<string>($"Level:{_playerLevel.CurrentLevel.ToString()}");
             
             _playerLevel.OnExperienceChanged += UpdateExperience;
-            _playerLevel.OnLevelUp += UpdateLevel;
+            _playerLevel.OnLevelChanged += UpdateLevel;
 
-            OnClosed += _playerLevel.ResetExperience;
+            OnHided += _playerLevel.ResetExperience;
         }
         
         private void UpdateExperience(int currentExperience, int requiredExperience)
@@ -47,7 +47,7 @@ namespace PM
         void IDisposable.Dispose()
         {
             _playerLevel.OnExperienceChanged -= UpdateExperience;
-            _playerLevel.OnLevelUp -= UpdateLevel;
+            _playerLevel.OnLevelChanged -= UpdateLevel;
         }
     }
 }
