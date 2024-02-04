@@ -2162,6 +2162,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8210276348621940807}
   - component: {fileID: 8020091219445436451}
+  - component: {fileID: 6658509441230182276}
+  - component: {fileID: 9081403162264936932}
+  - component: {fileID: 2884515083838229322}
   m_Layer: 0
   m_Name: Character Popup
   m_TagString: Untagged
@@ -2204,18 +2207,57 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 952b205371b84bee81d449af8cef46c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _closeButton: {fileID: 6519743608575021355}
+  _userInfoView: {fileID: 6658509441230182276}
+  _characterLevelView: {fileID: 9081403162264936932}
+  _characterStatsView: {fileID: 2884515083838229322}
+--- !u!114 &6658509441230182276
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8967419582829174255}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cf6eed9a483427197aa37522e24c8dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   _nameText: {fileID: 2395490603716512383}
   _descriptionText: {fileID: 5565960508883612845}
+  _avatar: {fileID: 2858052272907303207}
+--- !u!114 &9081403162264936932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8967419582829174255}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f906367093c4e6aaf86e777d7d3a416, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   _experienceText: {fileID: 7599073007470882089}
   _levelText: {fileID: 1861955860470887293}
+  _levelUpButton: {fileID: 4213028095668136986}
+--- !u!114 &2884515083838229322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8967419582829174255}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12b81530d4d94beb918c39c3ee6fb78f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   _valuesTexts:
   - {fileID: 5277938056399209021}
   - {fileID: 3186704932456004643}
   - {fileID: 5058269781513432486}
   - {fileID: 6428606599952281621}
-  _avatar: {fileID: 2858052272907303207}
-  _levelUpButton: {fileID: 4213028095668136986}
-  _closeButton: {fileID: 6519743608575021355}
 --- !u!1 &8981878877997055682
 GameObject:
   m_ObjectHideFlags: 0
