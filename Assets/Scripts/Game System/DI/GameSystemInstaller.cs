@@ -23,6 +23,10 @@ namespace GameSystem
                 userInfo.ChangeName(_characterConfig.Name);
                 userInfo.ChangeDescription(_characterConfig.Description);
                 userInfo.ChangeIcon(_characterConfig.Icon);
+                
+                userInfo.InitialName = _characterConfig.Name;
+                userInfo.InitialDescription = _characterConfig.Description;
+                userInfo.InitialIcon = _characterConfig.Icon;
 
                 return userInfo;
             }).AsSingle();

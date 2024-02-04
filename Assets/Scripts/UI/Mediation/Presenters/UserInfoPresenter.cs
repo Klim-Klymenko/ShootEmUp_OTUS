@@ -10,6 +10,8 @@ namespace PM
     [UsedImplicitly]
     internal sealed class UserInfoPresenter : IUserInfoPresenter, IDisposable
     {
+        public Action OnHided { get; }
+        
         IReadOnlyReactiveProperty<string> IUserInfoPresenter.Name => _name;
         IReadOnlyReactiveProperty<string> IUserInfoPresenter.Description => _description;
         IReadOnlyReactiveProperty<Sprite> IUserInfoPresenter.Icon => _icon;
@@ -31,6 +33,8 @@ namespace PM
             _userInfo.OnNameChanged += UpdateName;
             _userInfo.OnDescriptionChanged += UpdateDescription;
             _userInfo.OnIconChanged += UpdateAvatar;
+
+            OnHided += _userInfo.ResetValues;
         }
         
         private void UpdateName(string name)
