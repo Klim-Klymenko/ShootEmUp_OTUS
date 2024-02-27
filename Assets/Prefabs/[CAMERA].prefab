@@ -100,7 +100,8 @@ MonoBehaviour:
   _transform: {fileID: 6591767123407271719}
   _targetTransform: {fileID: 0}
   _target: {fileID: 0}
-  _followingSpeed:
-    value: 25
   _distanceToTarget:
     value: 5
+  _moveComponent:
+    _moveSpeed:
+      value: 25

@@ -5,12 +5,12 @@ namespace GameEngine
     public sealed class DeathMechanics
     {
         private readonly IAtomicObservable<int> _hitPoints;
-        private readonly IAtomicAction _deathEvent;
+        private readonly IAtomicAction _deathAction;
 
-        public DeathMechanics(IAtomicObservable<int> hitPoints, IAtomicAction deathEvent)
+        public DeathMechanics(IAtomicObservable<int> hitPoints, IAtomicAction deathAction)
         {
             _hitPoints = hitPoints;
-            _deathEvent = deathEvent;
+            _deathAction = deathAction;
         }
         
         public void OnEnable()
@@ -26,7 +26,7 @@ namespace GameEngine
         private void OnTakeDamage(int hitPoints)
         {
             if (hitPoints <= 0)
-                _deathEvent.Invoke();
+                _deathAction.Invoke();
         }
     }
 }

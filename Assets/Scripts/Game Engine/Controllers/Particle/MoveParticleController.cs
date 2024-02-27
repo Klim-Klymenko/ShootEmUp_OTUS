@@ -5,27 +5,28 @@ namespace GameEngine
 {
     public sealed class MoveParticleController
     {
-        private readonly IAtomicObservable _moveParticlePlayEvent;
-        private readonly IAtomicObservable _moveParticleStopEvent;
+        private readonly IAtomicObservable _moveParticlePlayObservable;
+        private readonly IAtomicObservable _moveParticleStopObservable;
         private readonly ParticleSystem _moveParticle;
 
-        public MoveParticleController(IAtomicObservable moveParticlePlayEvent, IAtomicObservable moveParticleStopEvent, ParticleSystem moveParticle)
+        public MoveParticleController(IAtomicObservable moveParticlePlayObservable,
+            IAtomicObservable moveParticleStopObservable, ParticleSystem moveParticle)
         {
-            _moveParticlePlayEvent = moveParticlePlayEvent;
-            _moveParticleStopEvent = moveParticleStopEvent;
+            _moveParticlePlayObservable = moveParticlePlayObservable;
+            _moveParticleStopObservable = moveParticleStopObservable;
             _moveParticle = moveParticle;
         }
         
         public void OnEnable()
         {
-            _moveParticlePlayEvent.Subscribe(OnMoveParticlePlay);
-            _moveParticleStopEvent.Subscribe(OnMoveParticleStop);
+            _moveParticlePlayObservable.Subscribe(OnMoveParticlePlay);
+            _moveParticleStopObservable.Subscribe(OnMoveParticleStop);
         }
 
         public void OnDisable()
         {
-            _moveParticlePlayEvent.Unsubscribe(OnMoveParticlePlay);
-            _moveParticleStopEvent.Unsubscribe(OnMoveParticleStop);
+            _moveParticlePlayObservable.Unsubscribe(OnMoveParticlePlay);
+            _moveParticleStopObservable.Unsubscribe(OnMoveParticleStop);
         }
         
         private void OnMoveParticlePlay()

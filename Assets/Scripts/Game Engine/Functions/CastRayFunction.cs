@@ -7,20 +7,18 @@ namespace GameEngine
     [Serializable]
     public sealed class CastRayFunction : IAtomicFunction<Vector3>
     {
-        private IAtomicValue<Vector3> _castPosition;
+        private IAtomicValue<Vector3> _positionToCast;
         private Camera _camera;
-        private Transform _transform;
 
-        public void Compose(IAtomicValue<Vector3> castPosition, Camera camera, Transform transform)
+        public void Compose(IAtomicValue<Vector3> positionToCast, Camera camera)
         {
-            _castPosition = castPosition;
+            _positionToCast = positionToCast;
             _camera = camera;
-            _transform = transform;
         }
 
         Vector3 IAtomicFunction<Vector3>.Invoke()
         {
-            Ray ray = _camera.ScreenPointToRay(_castPosition.Value);
+            Ray ray = _camera.ScreenPointToRay(_positionToCast.Value);
 
             return Physics.Raycast(ray, out RaycastHit hitInfo) ? hitInfo.point : default;
         }

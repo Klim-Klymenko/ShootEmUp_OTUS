@@ -1829,6 +1829,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1784866606303461008, guid: fa7851b6be19b5c43bd8c1a84a2c2716, type: 3}
+      propertyPath: _core._transform
+      value: 
+      objectReference: {fileID: 1285897192}
+    - target: {fileID: 1784866606303461008, guid: fa7851b6be19b5c43bd8c1a84a2c2716, type: 3}
       propertyPath: _core._moveComponent._camera
       value: 
       objectReference: {fileID: 963194227}
@@ -1837,12 +1841,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1285897193}
     - target: {fileID: 1784866606303461008, guid: fa7851b6be19b5c43bd8c1a84a2c2716, type: 3}
+      propertyPath: _core._raycastComponent._camera
+      value: 
+      objectReference: {fileID: 963194227}
+    - target: {fileID: 1784866606303461008, guid: fa7851b6be19b5c43bd8c1a84a2c2716, type: 3}
       propertyPath: _core._healthComponent._hitPoints
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1784866606303461008, guid: fa7851b6be19b5c43bd8c1a84a2c2716, type: 3}
       propertyPath: _core._moveComponent._moveSpeed.value
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1784866606303461008, guid: fa7851b6be19b5c43bd8c1a84a2c2716, type: 3}
+      propertyPath: _core._rotationComponent._rotationSpeed.value
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 2955661005023480085, guid: fa7851b6be19b5c43bd8c1a84a2c2716, type: 3}
       propertyPath: m_Enabled

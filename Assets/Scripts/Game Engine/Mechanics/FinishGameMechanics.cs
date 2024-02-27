@@ -5,25 +5,25 @@ namespace GameEngine
 {
     public sealed class FinishGameMechanics
     {
-        private readonly IAtomicObservable<int> _takeDamageEvent;
+        private readonly IAtomicObservable<int> _takeDamageObservable;
         private readonly IAtomicValue<bool> _finishGameCondition;
         private readonly GameCycleManager _gameCycleManager;
 
-        public FinishGameMechanics(IAtomicObservable<int> takeDamageEvent, IAtomicValue<bool> finishGameCondition, GameCycleManager gameCycleManager)
+        public FinishGameMechanics(IAtomicObservable<int> takeDamageObservable, IAtomicValue<bool> finishGameCondition, GameCycleManager gameCycleManager)
         {
-            _takeDamageEvent = takeDamageEvent;
+            _takeDamageObservable = takeDamageObservable;
             _finishGameCondition = finishGameCondition;
             _gameCycleManager = gameCycleManager;
         }
 
         public void OnEnable()
         {
-            _takeDamageEvent.Subscribe(FinishGame);
+            _takeDamageObservable.Subscribe(FinishGame);
         }
         
         public void OnDisable()
         {
-            _takeDamageEvent.Unsubscribe(FinishGame);
+            _takeDamageObservable.Unsubscribe(FinishGame);
         }
 
         private void FinishGame(int _)

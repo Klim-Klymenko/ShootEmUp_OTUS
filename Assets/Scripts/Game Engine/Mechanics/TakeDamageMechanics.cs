@@ -8,29 +8,29 @@ namespace GameEngine
         private const int MinHitPoints = 0;
 
         private readonly IAtomicVariable<int> _hitPoints;
-        private readonly IAtomicObservable<int> _takeDamageEvent;
-        private readonly IAtomicValue<bool> _isAlive;
+        private readonly IAtomicObservable<int> _takeDamageObservable;
+        private readonly IAtomicValue<bool> _aliveCondition;
 
-        public TakeDamageMechanics(IAtomicVariable<int> hitPoints, IAtomicObservable<int> takeDamageEvent, IAtomicValue<bool> isAlive)
+        public TakeDamageMechanics(IAtomicVariable<int> hitPoints, IAtomicObservable<int> takeDamageObservable, IAtomicValue<bool> aliveCondition)
         {
-            _takeDamageEvent = takeDamageEvent;
+            _takeDamageObservable = takeDamageObservable;
             _hitPoints = hitPoints;
-            _isAlive = isAlive;
+            _aliveCondition = aliveCondition;
         }
 
         public void OnEnable()
         {
-            _takeDamageEvent.Subscribe(TakeDamage);
+            _takeDamageObservable.Subscribe(TakeDamage);
         }
         
         public void OnDisable()
         {
-            _takeDamageEvent.Unsubscribe(TakeDamage); 
+            _takeDamageObservable.Unsubscribe(TakeDamage); 
         }
         
         private void TakeDamage(int damage)
         {
-            if (!_isAlive.Value) return;
+            if (!_aliveCondition.Value) return;
             
             _hitPoints.Value = Mathf.Max(MinHitPoints, _hitPoints.Value - damage);
         }

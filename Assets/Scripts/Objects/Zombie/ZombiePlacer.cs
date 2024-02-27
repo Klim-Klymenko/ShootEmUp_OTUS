@@ -34,7 +34,7 @@ namespace Objects
         {
             base.Compose();
             
-            IAtomicValue<bool> isAlive = _character.GetValue<bool>(ObjectAPI.IsAlive);
+            IAtomicValue<bool> isAlive = _character.GetValue<bool>(LiveableAPI.AliveCondition);
             
             _zombieSpawnAction.Compose(() => _spawner.Spawn());
             

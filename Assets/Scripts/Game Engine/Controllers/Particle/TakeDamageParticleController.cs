@@ -5,23 +5,23 @@ namespace GameEngine
 {
     public sealed class TakeDamageParticleController
     {
-        private readonly IAtomicObservable<int> _takeDamageEvent;
+        private readonly IAtomicObservable<int> _takeDamageObservable;
         private readonly ParticleSystem _damageParticle;
 
-        public TakeDamageParticleController(IAtomicObservable<int> takeDamageEvent, ParticleSystem damageParticle)
+        public TakeDamageParticleController(IAtomicObservable<int> takeDamageObservable, ParticleSystem damageParticle)
         {
-            _takeDamageEvent = takeDamageEvent;
+            _takeDamageObservable = takeDamageObservable;
             _damageParticle = damageParticle;
         }
         
         public void OnEnable()
         {
-            _takeDamageEvent.Subscribe(OnTakeDamage);
+            _takeDamageObservable.Subscribe(OnTakeDamage);
         }
         
         public void OnDisable()
         {
-            _takeDamageEvent.Unsubscribe(OnTakeDamage);
+            _takeDamageObservable.Unsubscribe(OnTakeDamage);
         }
 
         private void OnTakeDamage(int _)

@@ -20,7 +20,7 @@ namespace GameEngine
 
         public void OnDisable()
         {
-            if (!_agent.enabled) return;
+            if (_agent == null || !_agent.enabled) return;
             
             _agent.enabled = false;
         }

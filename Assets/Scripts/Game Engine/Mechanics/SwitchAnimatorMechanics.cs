@@ -20,7 +20,7 @@ namespace GameEngine
 
         public void OnDisable()
         {
-            if (!_animator.enabled) return;
+            if (_animator == null || !_animator.enabled) return;
             
             _animator.enabled = false;
         }

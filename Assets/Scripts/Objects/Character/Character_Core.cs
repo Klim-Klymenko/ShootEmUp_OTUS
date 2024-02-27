@@ -10,13 +10,22 @@ namespace Objects
     [Serializable]
     public sealed class Character_Core : IDisposable
     {
-        [Section]
         [SerializeField]
-        private HealthComponent _healthComponent;
+        private Transform _transform;
         
         [Section]
         [SerializeField]
+        private HealthComponent _healthComponent;
+
+        [SerializeField] 
+        private RaycastComponent _raycastComponent;
+
+        [Section]
+        [SerializeField]
         private MoveComponent _moveComponent;
+
+        [SerializeField]
+        private RotationComponent _rotationComponent;
 
         [Section]
         [SerializeField] 
@@ -27,19 +36,21 @@ namespace Objects
         
         private FinishGameComponent _finishGameComponent = new();
         
-        public IAtomicObservable<int> TakeDamageEvent => _healthComponent.TakeDamageEvent;
-        public IAtomicObservable DeathEvent => _healthComponent.DeathEvent;
-        public IAtomicObservable ShootEvent => _shootComponent.ShootEvent;
+        public IAtomicObservable<int> TakeDamageObservable => _healthComponent.TakeDamageObservable;
+        public IAtomicObservable DeathObservable => _healthComponent.DeathObservable;
+        public IAtomicObservable ShootObservable => _shootComponent.ShootObservable;
         public IAtomicValue<bool> MoveCondition => _moveComponent.MoveCondition;
-        public IAtomicValue<bool> IsAlive => _healthComponent.IsAlive;
+        public IAtomicValue<bool> AliveCondition => _healthComponent.AliveCondition;
         
         public void Compose(DiContainer diContainer)
         {
             _healthComponent.Compose();
-            _moveComponent.Compose(IsAlive);
-            _shootComponent.Compose(diContainer, IsAlive);
-            _replenishComponent.Compose(_shootComponent.Charges, IsAlive);
-            _finishGameComponent.Compose(diContainer, IsAlive, TakeDamageEvent);
+            _raycastComponent.Compose(new AtomicFunction<Vector3>(() => Input.mousePosition));
+            _moveComponent.Compose(_transform, AliveCondition);
+            _rotationComponent.Compose(_transform, AliveCondition, _raycastComponent.CastedPosition);
+            _shootComponent.Compose(diContainer, AliveCondition);
+            _replenishComponent.Compose(_shootComponent.Charges, AliveCondition);
+            _finishGameComponent.Compose(diContainer, AliveCondition, TakeDamageObservable);
         }
         
         public void OnEnable()
@@ -52,6 +63,7 @@ namespace Objects
         public void Update()
         {
             _moveComponent.Update();
+            _rotationComponent.Update();
             _replenishComponent.Update();
         }
         
@@ -66,6 +78,7 @@ namespace Objects
         {
             _healthComponent?.Dispose();
             _moveComponent?.Dispose();
+            _rotationComponent?.Dispose();
             _shootComponent?.Dispose();
             _replenishComponent?.Dispose();
         }

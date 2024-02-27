@@ -16,16 +16,19 @@ namespace GameEngine
         private float _stoppingDistance;
         
         [SerializeField]
-        [Get(ObjectAPI.AgentTargetTransform)]
+        [Get(AiAPI.AgentTargetTransform)]
         private AtomicVariable<Transform> _targetTransform;
         
         [SerializeField]
+        [HideInInspector]
         private AndExpression _followCondition;
         
         [SerializeField]
+        [HideInInspector]
         private AndExpression _moveCondition;
 
         [SerializeField]
+        [HideInInspector]
         private AtomicFunction<Vector3> _targetPosition;
         
         private SwitchNavMeshAgentMechanics _switchNavMeshAgentMechanics;

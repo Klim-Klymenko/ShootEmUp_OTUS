@@ -5,25 +5,25 @@ namespace GameEngine
 {
     public sealed class AttackSoundController
     {
-        private readonly IAtomicObservable _attackEvent;
+        private readonly IAtomicObservable _attackObservable;
         private readonly AudioSource _audioSource;
         private readonly AudioClip _attackClip;
 
-        public AttackSoundController(IAtomicObservable attackEvent, AudioSource audioSource, AudioClip attackClip)
+        public AttackSoundController(IAtomicObservable attackObservable, AudioSource audioSource, AudioClip attackClip)
         {
-            _attackEvent = attackEvent;
+            _attackObservable = attackObservable;
             _audioSource = audioSource;
             _attackClip = attackClip;
         }
         
         public void OnEnable()
         {
-            _attackEvent.Subscribe(OnShoot);
+            _attackObservable.Subscribe(OnShoot);
         }
         
         public void OnDisable()
         {
-            _attackEvent.Unsubscribe(OnShoot);
+            _attackObservable.Unsubscribe(OnShoot);
         }
 
         private void OnShoot()

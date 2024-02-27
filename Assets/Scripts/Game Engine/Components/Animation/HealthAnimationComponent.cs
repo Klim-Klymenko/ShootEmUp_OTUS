@@ -10,10 +10,10 @@ namespace GameEngine
         private TakeDamageAnimationController _takeDamageAnimationController;
         private DeathAnimationController _deathAnimationController;
         
-        public void Compose(IAtomicObservable<int> takeDamageEvent, IAtomicObservable deathEvent, Animator animator)
+        public void Compose(IAtomicObservable<int> takeDamageObservable, IAtomicObservable deathObservable, Animator animator)
         {
-            _takeDamageAnimationController = new TakeDamageAnimationController(takeDamageEvent, animator);
-            _deathAnimationController = new DeathAnimationController(deathEvent, animator);
+            _takeDamageAnimationController = new TakeDamageAnimationController(takeDamageObservable, animator);
+            _deathAnimationController = new DeathAnimationController(deathObservable, animator);
         }
         
         public void OnEnable()

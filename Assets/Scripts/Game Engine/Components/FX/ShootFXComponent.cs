@@ -16,10 +16,10 @@ namespace GameEngine
         private AttackSoundController _attackSoundController;
         private ShootParticleController _shootParticleController;
         
-        public void Compose(AudioSource audioSource, IAtomicObservable shootEvent)
+        public void Compose(AudioSource audioSource, IAtomicObservable shootObservable)
         {
-            _attackSoundController = new AttackSoundController(shootEvent, audioSource, _shootClip);
-            _shootParticleController = new ShootParticleController(shootEvent, _shootParticle);
+            _attackSoundController = new AttackSoundController(shootObservable, audioSource, _shootClip);
+            _shootParticleController = new ShootParticleController(shootObservable, _shootParticle);
         }
         
         public void OnEnable()

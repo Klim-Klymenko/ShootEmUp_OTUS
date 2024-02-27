@@ -59,6 +59,7 @@ namespace Objects
             _fx.OnDisable();
             
             _core.Dispose();
+            _fx.Dispose();
         }
     }
 }

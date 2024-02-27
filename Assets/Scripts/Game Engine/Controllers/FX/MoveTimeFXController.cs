@@ -7,16 +7,16 @@ namespace GameEngine
     public sealed class MoveTimeFXController
     {
         private readonly IAtomicValue<bool> _moveCondition;
-        private readonly IAtomicAction _playEvent;
-        private readonly IAtomicAction _stopEvent;
+        private readonly IAtomicAction _playAction;
+        private readonly IAtomicAction _stopAction;
         private readonly Countdown _countdown;
 
         public MoveTimeFXController(IAtomicValue<bool> moveCondition, IAtomicValue<float> duration,
-            IAtomicAction playEvent, IAtomicAction stopEvent)
+            IAtomicAction playAction, IAtomicAction stopAction)
         {
             _moveCondition = moveCondition;
-            _playEvent = playEvent;
-            _stopEvent = stopEvent;
+            _playAction = playAction;
+            _stopAction = stopAction;
             _countdown = new Countdown(duration.Value);
             
             _countdown.SetZero();
@@ -24,7 +24,7 @@ namespace GameEngine
 
         public void OnEnable()
         {
-            _playEvent?.Invoke();
+            _playAction?.Invoke();
         }
         
         public void Update()
@@ -35,12 +35,12 @@ namespace GameEngine
 
                 if (_countdown.IsPlaying()) return;
 
-                _playEvent?.Invoke();
+                _playAction?.Invoke();
                 _countdown.Reset();
             }
             else
             {
-                _stopEvent?.Invoke();
+                _stopAction?.Invoke();
                 _countdown.SetZero();
             }
         }

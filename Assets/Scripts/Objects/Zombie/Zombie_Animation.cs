@@ -10,7 +10,7 @@ namespace Objects
     public sealed class Zombie_Animation
     {
         [SerializeField]
-        [Get(ObjectAPI.SkinnedMeshRenderer)]
+        [Get(VisualAPI.SkinnedMeshRenderer)]
         private SkinnedMeshRenderer _skinnedMeshRenderer;
         
         [SerializeField]

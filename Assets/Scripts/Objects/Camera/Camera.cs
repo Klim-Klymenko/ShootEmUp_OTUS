@@ -18,30 +18,30 @@ namespace Objects
         [SerializeField]
         private AtomicObject _target;
         
-        [SerializeField] 
-        private AtomicValue<float> _followingSpeed;
-        
         [SerializeField]
         private AtomicValue<float> _distanceToTarget;
+        
+        [SerializeField]
+        private MoveComponent _moveComponent;
         
         private readonly AtomicVariable<Vector3> _direction = new();
         
         [SerializeField]
+        [HideInInspector]
         private AtomicFunction<Vector3> _targetPosition;
         
         private CalculateDirectionMechanics _calculateDirectionMechanics;
-        private MoveMechanics _moveMechanics;
         
         public override void Compose()
         {
             base.Compose();
 
-            IAtomicValue<bool> isMoving = _target.GetValue<bool>(ObjectAPI.IsMoving);
+            IAtomicValue<bool> aliveCondition = _target.GetValue<bool>(LiveableAPI.AliveCondition);
             
             _targetPosition.Compose(() => _targetTransform.position - Vector3.forward * _distanceToTarget.Value);
-            
+            _moveComponent.Compose(_transform, aliveCondition, _direction);
+
             _calculateDirectionMechanics = new CalculateDirectionMechanics(_direction, _targetPosition, _transform);
-            _moveMechanics = new MoveMechanics(_direction, _followingSpeed, isMoving, _transform);
         }
 
         void IStartGameListener.OnStart()
@@ -52,7 +52,7 @@ namespace Objects
         void ILateUpdateGameListener.OnLateUpdate()
         {
             _calculateDirectionMechanics.Update();
-            _moveMechanics.Update();
+            _moveComponent.Update();
         }
     }
 }

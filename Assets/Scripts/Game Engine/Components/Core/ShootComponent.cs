@@ -19,24 +19,27 @@ namespace GameEngine
         private AtomicVariable<int> _charges;
 
         [SerializeField] 
-        [Get(ObjectAPI.ShootingInterval)]
+        [Get(ShooterAPI.ShootingInterval)]
         private AtomicValue<float> _shootingInterval;
         
         [SerializeField]
+        [HideInInspector]
         private AndExpression _shootCondition;
         
         [SerializeField]
+        [HideInInspector]
         private AtomicAction _bulletSpawnAction;
 
         [SerializeField] 
-        [Get(ObjectAPI.ShootAction)]
+        [HideInInspector]
+        [Get(ShooterAPI.ShootAction)]
         private ShootAction _shootAction;
         
         private readonly AtomicEvent _shootEvent = new();
 
         public IAtomicVariable<int> Charges => _charges;
         public IAtomicValue<bool> ShootCondition => _shootCondition;
-        public IAtomicObservable ShootEvent => _shootEvent;
+        public IAtomicObservable ShootObservable => _shootEvent;
         
         public void Compose(DiContainer diContainer, IAtomicValue<bool> isAlive)
         {

@@ -27,13 +27,13 @@ namespace Objects
         public IAtomicValue<bool> MoveCondition => _agentComponent.MoveCondition;
         public IAtomicObservable AttackRequestEvent => _attackComponent.AttackRequestEvent;
         public IAtomicObservable AttackEvent => _attackComponent.AttackEvent;
-        public IAtomicObservable DeathEvent => _healthComponent.DeathEvent;
+        public IAtomicObservable DeathEvent => _healthComponent.DeathObservable;
         
         public void Compose()
         {
             _healthComponent.Compose();
-            _agentComponent.Compose(_healthComponent.IsAlive);
-            _attackComponent.Compose(_healthComponent.IsAlive, _transform);
+            _agentComponent.Compose(_healthComponent.AliveCondition);
+            _attackComponent.Compose(_healthComponent.AliveCondition, _transform);
         }
         
         public void OnEnable()

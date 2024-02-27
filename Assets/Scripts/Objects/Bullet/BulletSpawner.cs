@@ -32,7 +32,7 @@ namespace Objects
             
             bullet.Compose();
 
-            IAtomicObservable destroyEvent = bullet.GetObservable(ObjectAPI.DeathObservable);
+            IAtomicObservable destroyEvent = bullet.GetObservable(LiveableAPI.DeathObservable);
             
             destroyEvent.Subscribe(() => Despawn(bulletTransform));
             

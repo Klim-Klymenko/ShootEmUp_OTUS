@@ -7,23 +7,23 @@ namespace GameEngine
     {
         private static readonly int _attackTrigger = Animator.StringToHash("Attack");
         
-        private readonly IAtomicObservable _attackEvent;
+        private readonly IAtomicObservable _attackObservable;
         private readonly Animator _animator;
 
-        public AttackAnimationController(IAtomicObservable attackEvent, Animator animator)
+        public AttackAnimationController(IAtomicObservable attackObservable, Animator animator)
         {
-            _attackEvent = attackEvent;
+            _attackObservable = attackObservable;
             _animator = animator;
         }
         
         public void OnEnable()
         {
-            _attackEvent.Subscribe(OnShoot);
+            _attackObservable.Subscribe(OnShoot);
         }
         
         public void OnDisable()
         {
-            _attackEvent.Unsubscribe(OnShoot);
+            _attackObservable.Unsubscribe(OnShoot);
         }
 
         private void OnShoot()

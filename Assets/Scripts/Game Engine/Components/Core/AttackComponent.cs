@@ -11,11 +11,11 @@ namespace GameEngine
     public sealed class AttackComponent : IDisposable
     {
         [SerializeField]
-        [Get(ObjectAPI.AttackTarget)]
+        [Get(AttackerAPI.AttackTarget)]
         private AtomicVariable<AtomicObject> _target;
         
         [SerializeField]
-        [Get(ObjectAPI.AttackTargetTransform)]
+        [Get(AttackerAPI.AttackTargetTransform)]
         private AtomicVariable<Transform> _targetTransform;
         
         [SerializeField]
@@ -28,31 +28,36 @@ namespace GameEngine
         private AtomicValue<float> _attackInterval;
 
         [SerializeField]
+        [HideInInspector]
         private AtomicEvent _attackRequestEvent;
 
         [SerializeField]
-        [Get(ObjectAPI.AttackAction)]
+        [HideInInspector]
         private AtomicEvent _attackEvent;
 
         [SerializeField]
+        [HideInInspector]
         private AndExpression _attackCondition;
 
         [SerializeField]
-        private IsInAttackRangeFunction _isInAttackRangeFunction;
+        [HideInInspector]
+        private IsInAttackRangeFunction _isInAttackRange;
 
         private CooldownMechanics _cooldownMechanics;
         private AttackMechanics _attackMechanics;
 
         public IAtomicObservable AttackRequestEvent => _attackRequestEvent;
+        
+        [Get(AttackerAPI.AttackAction)]
         public IAtomicObservable AttackEvent => _attackEvent;
         
-        public void Compose(IAtomicValue<bool> isAlive, Transform transform)
+        public void Compose(IAtomicValue<bool> aliveCondition, Transform transform)
         {
-            _isInAttackRangeFunction.Compose(_attackRange, _targetTransform, transform);
+            _isInAttackRange.Compose(_attackRange, _targetTransform, transform);
             
-            _attackCondition.Append(isAlive);
+            _attackCondition.Append(aliveCondition);
             _attackCondition.Append(new AtomicFunction<bool>(() => _target.Value != null));
-            _attackCondition.Append(_isInAttackRangeFunction);
+            _attackCondition.Append(_isInAttackRange);
 
             _cooldownMechanics = new CooldownMechanics(_attackRequestEvent, _attackInterval, _attackCondition);
             _attackMechanics = new AttackMechanics(_attackEvent, _attackCondition, _damage, _target);

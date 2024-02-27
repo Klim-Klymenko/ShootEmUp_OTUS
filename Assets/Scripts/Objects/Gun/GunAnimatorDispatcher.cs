@@ -16,8 +16,8 @@ namespace Objects
         
         void IStartGameListener.OnStart()
         {
-            _switchOnEvent = _gun.Get<IAtomicAction>(GunAPI.SwitchOnEvent);
-            _switchOffEvent = _gun.Get<IAtomicAction>(GunAPI.SwitchOffEvent);
+            _switchOnEvent = _gun.Get<IAtomicAction>(SwitchableAPI.SwitchOnAction);
+            _switchOffEvent = _gun.Get<IAtomicAction>(SwitchableAPI.SwitchOffAction);
         }
 
         public void SwitchOnGun()

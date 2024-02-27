@@ -3,12 +3,12 @@ using Atomic.Extensions;
 
 namespace GameEngine
 {
-    public static class GunAPI
+    public static class SwitchableAPI
     {
         [Contract(typeof(IAtomicAction))] 
-        public const string SwitchOnEvent = nameof(SwitchOnEvent);
+        public const string SwitchOnAction = nameof(SwitchOnAction);
         
         [Contract(typeof(IAtomicAction))] 
-        public const string SwitchOffEvent = nameof(SwitchOffEvent);
+        public const string SwitchOffAction = nameof(SwitchOffAction);
     }
 }

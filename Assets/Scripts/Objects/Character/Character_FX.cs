@@ -7,7 +7,7 @@ using UnityEngine.Serialization;
 namespace Objects
 {
     [Serializable]
-    public sealed class Character_FX
+    public sealed class Character_FX : IDisposable
     {
         [SerializeField]
         private AudioSource _audioSource;
@@ -26,10 +26,10 @@ namespace Objects
         
         public void Compose(Character_Core core)
         {
-            IAtomicObservable<int> takeDamageEvent = core.TakeDamageEvent;
-            IAtomicObservable deathEvent = core.DeathEvent;
-            IAtomicObservable shootEvent = core.ShootEvent;
-            IAtomicValue<bool> takeDamageClipCondition = core.IsAlive;
+            IAtomicObservable<int> takeDamageEvent = core.TakeDamageObservable;
+            IAtomicObservable deathEvent = core.DeathObservable;
+            IAtomicObservable shootEvent = core.ShootObservable;
+            IAtomicValue<bool> takeDamageClipCondition = core.AliveCondition;
             IAtomicValue<bool> moveCondition = core.MoveCondition;
             
             _healthFXComponent.Compose(_audioSource, takeDamageEvent, deathEvent, takeDamageClipCondition);
@@ -54,6 +54,11 @@ namespace Objects
             _healthFXComponent.OnDisable();
             _shootFXComponent.OnDisable();
             _moveFXComponent.OnDisable();
+        }
+
+        public void Dispose()
+        {
+            _moveFXComponent?.Dispose();
         }
     }
 }

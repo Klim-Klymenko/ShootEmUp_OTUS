@@ -41,22 +41,22 @@ namespace Objects
             
             if (zombie.Is(ObjectTypes.Damageable))
             {
-                IAtomicObservable deathEvent = zombie.GetObservable(ObjectAPI.DeathObservable);
+                IAtomicObservable deathEvent = zombie.GetObservable(LiveableAPI.DeathObservable);
                 deathEvent.Subscribe(() => Despawn(zombie));
             }
             
             if (zombie.Is(ObjectTypes.NavMeshAgent))
             {
-                IAtomicVariable<Transform> agentTargetTransform = zombie.GetVariable<Transform>(ObjectAPI.AgentTargetTransform);
+                IAtomicVariable<Transform> agentTargetTransform = zombie.GetVariable<Transform>(AiAPI.AgentTargetTransform);
                 agentTargetTransform.Value = _characterTransform;
             }
 
             if (zombie.Is(ObjectTypes.Attacker))
             {
-                IAtomicVariable<AtomicObject> attackTarget = zombie.GetVariable<AtomicObject>(ObjectAPI.AttackTarget);
+                IAtomicVariable<AtomicObject> attackTarget = zombie.GetVariable<AtomicObject>(AttackerAPI.AttackTarget);
                 attackTarget.Value = _character;
                 
-                IAtomicVariable<Transform> attackTargetTransform = zombie.GetVariable<Transform>(ObjectAPI.AttackTargetTransform);
+                IAtomicVariable<Transform> attackTargetTransform = zombie.GetVariable<Transform>(AttackerAPI.AttackTargetTransform);
                 attackTargetTransform.Value = _characterTransform;
             }
             
@@ -70,7 +70,7 @@ namespace Objects
         
         public async void Despawn(Zombie zombie)
         {
-            SkinnedMeshRenderer meshRenderer = zombie.Get<SkinnedMeshRenderer>(ObjectAPI.SkinnedMeshRenderer);
+            SkinnedMeshRenderer meshRenderer = zombie.Get<SkinnedMeshRenderer>(VisualAPI.SkinnedMeshRenderer);
             
             if (meshRenderer.enabled)
                 meshRenderer.enabled = false;
@@ -79,6 +79,8 @@ namespace Objects
             _gameCycleManager.RemoveListener(zombie);
 
             await Task.Delay((int) (_deathClipLength * MilliSecondsInSecond));
+            
+            if (zombie == null) return;
             
             _pool.Put(zombie);
         }

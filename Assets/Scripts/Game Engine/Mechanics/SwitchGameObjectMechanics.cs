@@ -6,26 +6,26 @@ namespace GameEngine
     public sealed class SwitchGameObjectMechanics
     {
         private readonly GameObject _switchable;
-        private readonly IAtomicObservable _switchOnEvent;
-        private readonly IAtomicObservable _switchOffEvent;
+        private readonly IAtomicObservable _switchOnObservable;
+        private readonly IAtomicObservable _switchOffObservable;
 
-        public SwitchGameObjectMechanics(GameObject switchable, IAtomicObservable switchOnEvent, IAtomicObservable switchOffEvent)
+        public SwitchGameObjectMechanics(GameObject switchable, IAtomicObservable switchOnObservable, IAtomicObservable switchOffObservable)
         {
             _switchable = switchable;
-            _switchOnEvent = switchOnEvent;
-            _switchOffEvent = switchOffEvent;
+            _switchOnObservable = switchOnObservable;
+            _switchOffObservable = switchOffObservable;
         }
         
         public void OnEnable()
         {
-            _switchOnEvent.Subscribe(SwitchOn);
-            _switchOffEvent.Subscribe(SwitchOff);
+            _switchOnObservable.Subscribe(SwitchOn);
+            _switchOffObservable.Subscribe(SwitchOff);
         }
         
         public void OnDisable()
         {
-            _switchOnEvent.Unsubscribe(SwitchOn);
-            _switchOffEvent.Unsubscribe(SwitchOff);
+            _switchOnObservable.Unsubscribe(SwitchOn);
+            _switchOffObservable.Unsubscribe(SwitchOff);
         }
         
         private void SwitchOn()

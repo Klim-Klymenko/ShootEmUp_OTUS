@@ -20,14 +20,14 @@ namespace GameEngine
         {
             if (_character.Is(ObjectTypes.Movable))
             {
-                IAtomicVariable<Vector3> moveDirection = _character.GetVariable<Vector3>(ObjectAPI.MoveDirection);
+                IAtomicVariable<Vector3> moveDirection = _character.GetVariable<Vector3>(MovableAPI.MoveDirection);
                 _moveInputController = new MoveInputController(moveDirection);
             }
             
             if (_character.Is(ObjectTypes.Striker))
             {
-                IAtomicAction shootAction = _character.GetAction(ObjectAPI.ShootAction);
-                IAtomicValue<float> shootingInterval = _character.GetValue<float>(ObjectAPI.ShootingInterval);
+                IAtomicAction shootAction = _character.GetAction(ShooterAPI.ShootAction);
+                IAtomicValue<float> shootingInterval = _character.GetValue<float>(ShooterAPI.ShootingInterval);
                 _shootInputController = new ShootInputController(shootAction, shootingInterval);
             }
         }

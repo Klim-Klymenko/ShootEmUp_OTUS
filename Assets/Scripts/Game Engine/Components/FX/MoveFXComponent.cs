@@ -1,12 +1,11 @@
 ﻿using System;
 using Atomic.Elements;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace GameEngine
 {
     [Serializable]
-    public sealed class MoveFXComponent
+    public sealed class MoveFXComponent : IDisposable
     {
         [SerializeField]
         private AudioClip _moveClip;
@@ -58,6 +57,14 @@ namespace GameEngine
             _moveSoundController.OnDisable();
             
             _moveParticleController.OnDisable();
+        }
+
+        public void Dispose()
+        {
+            _moveClipPlayEvent?.Dispose();
+            _moveClipStopEvent?.Dispose();
+            _moveParticlePlayEvent?.Dispose();
+            _moveParticleStopEvent?.Dispose();
         }
     }
 }

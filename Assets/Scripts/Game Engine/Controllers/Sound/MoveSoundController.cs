@@ -5,15 +5,16 @@ namespace GameEngine
 {
     public sealed class MoveSoundController
     {
-        private readonly IAtomicObservable _moveClipPlayEvent;
-        private readonly IAtomicObservable _moveClipStopEvent;
+        private readonly IAtomicObservable _moveClipPlayObservable;
+        private readonly IAtomicObservable _moveClipStopObservable;
         private readonly AudioSource _audioSource;
         private readonly AudioClip _moveClip;
 
-        public MoveSoundController(IAtomicObservable moveClipPlayEvent, IAtomicObservable moveClipStopEvent, AudioSource audioSource, AudioClip moveClip)
+        public MoveSoundController(IAtomicObservable moveClipPlayObservable,
+            IAtomicObservable moveClipStopObservable, AudioSource audioSource, AudioClip moveClip)
         {
-            _moveClipPlayEvent = moveClipPlayEvent;
-            _moveClipStopEvent = moveClipStopEvent;
+            _moveClipPlayObservable = moveClipPlayObservable;
+            _moveClipStopObservable = moveClipStopObservable;
             _audioSource = audioSource;
             _moveClip = moveClip;
         }
@@ -22,14 +23,14 @@ namespace GameEngine
         {
             _audioSource.clip = _moveClip;
             
-            _moveClipPlayEvent.Subscribe(OnMoveClipPlay);
-            _moveClipStopEvent.Subscribe(OnMoveClipStop);
+            _moveClipPlayObservable.Subscribe(OnMoveClipPlay);
+            _moveClipStopObservable.Subscribe(OnMoveClipStop);
         }
 
         public void OnDisable()
         {
-            _moveClipPlayEvent.Unsubscribe(OnMoveClipPlay);
-            _moveClipStopEvent.Unsubscribe(OnMoveClipStop);
+            _moveClipPlayObservable.Unsubscribe(OnMoveClipPlay);
+            _moveClipStopObservable.Unsubscribe(OnMoveClipStop);
         }
         
         private void OnMoveClipPlay()

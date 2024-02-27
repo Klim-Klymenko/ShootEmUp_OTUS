@@ -12,7 +12,7 @@ namespace Objects
 
         public void Attack()
         {
-            _zombie.GetAction(ObjectAPI.AttackAction)?.Invoke();
+            _zombie.GetAction(AttackerAPI.AttackAction)?.Invoke();
         }
     }
 }

@@ -7,23 +7,23 @@ namespace GameEngine
     {
         private static readonly int _takeDamageTrigger = Animator.StringToHash("Take Damage");
         
-        private readonly IAtomicObservable<int> _takeDamageEvent;
+        private readonly IAtomicObservable<int> _takeDamageObservable;
         private readonly Animator _animator;
 
-        public TakeDamageAnimationController(IAtomicObservable<int> takeDamageEvent, Animator animator)
+        public TakeDamageAnimationController(IAtomicObservable<int> takeDamageObservable, Animator animator)
         {
-            _takeDamageEvent = takeDamageEvent;
+            _takeDamageObservable = takeDamageObservable;
             _animator = animator;
         }
 
         public void OnEnable()
         {
-            _takeDamageEvent.Subscribe(OnTakeDamage);
+            _takeDamageObservable.Subscribe(OnTakeDamage);
         }
         
         public void OnDisable()
         {
-            _takeDamageEvent.Unsubscribe(OnTakeDamage);
+            _takeDamageObservable.Unsubscribe(OnTakeDamage);
         }
         
         private void OnTakeDamage(int _)

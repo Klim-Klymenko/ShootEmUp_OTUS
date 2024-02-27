@@ -15,22 +15,20 @@ namespace Objects
 
         [SerializeField] 
         private AtomicVariable<AtomicObject> _target;
-        
-        [SerializeField]
-        private AtomicValue<float> _speed;
 
         [SerializeField]
         private AtomicValue<int> _damage;
-        
-        private AtomicValue<Vector3> _direction;
-        
+
         [SerializeField]
-        [Get(ObjectAPI.DeathObservable)]
+        private MoveComponent _moveComponent;
+
+        [SerializeField]
+        [HideInInspector]
+        [Get(LiveableAPI.DeathObservable)]
         private AtomicEvent _attackEvent;
         
-        private readonly AtomicVariable<bool> _isAlive = new(true);
+        private readonly AtomicVariable<bool> _aliveCondition = new(true);
         
-        private MoveMechanics _moveMechanics;
         private AttackMechanics _attackMechanics;
 
         private bool _composed;
@@ -39,14 +37,14 @@ namespace Objects
         {
             base.Compose();
             
-            _isAlive.Value = true;
+            AtomicVariable<Vector3> direction = new(_transform.forward);
+            _moveComponent.Compose(_transform, _aliveCondition, direction);
             
-            _direction = new AtomicValue<Vector3>(_transform.forward);
-            _moveMechanics = new MoveMechanics(_direction, _speed, _isAlive, _transform);
-            _attackMechanics = new AttackMechanics(_attackEvent, _isAlive, _damage, _target);
+            _attackMechanics = new AttackMechanics(_attackEvent, _aliveCondition, _damage, _target);
             
             _attackMechanics.OnEnable();
-            
+
+            _aliveCondition.Value = true;
             _composed = true;
         }
 
@@ -54,12 +52,14 @@ namespace Objects
         {
             if (!_composed) return;
            
-            _moveMechanics.Update();
+            _moveComponent.Update();
         }
 
         public void OnCollisionEnter(Collision other)
         {
             if (!_composed) return;
+            
+            //TODO: probably refactor this
             
             if (!other.gameObject.TryGetComponent(out AtomicObject atomicObject)) return;
 
@@ -73,7 +73,7 @@ namespace Objects
         {
             if (!_composed) return;
             
-            _isAlive.Value = false;
+            _aliveCondition.Value = false;
             
             _attackMechanics.OnDisable();
             Dispose();
@@ -83,7 +83,7 @@ namespace Objects
         {
             _target?.Dispose();
             _attackEvent?.Dispose();
-            _isAlive?.Dispose();
+            _aliveCondition?.Dispose();
         }
 
         void IDisposable.Dispose()

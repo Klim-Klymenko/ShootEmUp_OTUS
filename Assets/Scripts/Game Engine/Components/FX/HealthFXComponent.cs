@@ -21,13 +21,13 @@ namespace GameEngine
 
         private TakeDamageParticleController _takeDamageParticleController;
         
-        public void Compose(AudioSource audioSource, IAtomicObservable<int> takeDamageEvent, 
-            IAtomicObservable deathEvent, IAtomicValue<bool> takeDamageClipCondition)
+        public void Compose(AudioSource audioSource, IAtomicObservable<int> takeDamageObservable, 
+            IAtomicObservable deathObservable, IAtomicValue<bool> takeDamageClipCondition)
         {
-            _takeDamageSoundController = new TakeDamageSoundController(takeDamageEvent, takeDamageClipCondition, audioSource, _takeDamageClip);
-            _deathSoundController = new DeathSoundController(deathEvent, audioSource, _deathClip);
+            _takeDamageSoundController = new TakeDamageSoundController(takeDamageObservable, takeDamageClipCondition, audioSource, _takeDamageClip);
+            _deathSoundController = new DeathSoundController(deathObservable, audioSource, _deathClip);
             
-            _takeDamageParticleController = new TakeDamageParticleController(takeDamageEvent, _damageParticle);
+            _takeDamageParticleController = new TakeDamageParticleController(takeDamageObservable, _damageParticle);
         }
 
         public void OnEnable()

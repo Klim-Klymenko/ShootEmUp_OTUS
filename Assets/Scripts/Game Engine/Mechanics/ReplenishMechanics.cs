@@ -4,23 +4,23 @@ namespace GameEngine
 {
     public sealed class ReplenishMechanics
     {
-        private readonly IAtomicObservable _replenishEvent;
+        private readonly IAtomicObservable _replenishObservable;
         private readonly IAtomicVariable<int> _charges;
 
-        public ReplenishMechanics(IAtomicObservable replenishEvent, IAtomicVariable<int> charges)
+        public ReplenishMechanics(IAtomicObservable replenishObservable, IAtomicVariable<int> charges)
         {
-            _replenishEvent = replenishEvent;
+            _replenishObservable = replenishObservable;
             _charges = charges;
         }
         
         public void OnEnable()
         {
-            _replenishEvent.Subscribe(OnReplenish);
+            _replenishObservable.Subscribe(OnReplenish);
         }
         
         public void OnDisable()
         {
-            _replenishEvent.Unsubscribe(OnReplenish);
+            _replenishObservable.Unsubscribe(OnReplenish);
         }
 
         private void OnReplenish()

@@ -19,10 +19,10 @@ namespace Objects
         
         public void Compose(Character_Core core)
         {
-            _healthAnimationComponent.Compose(core.TakeDamageEvent, core.DeathEvent, _animator);
+            _healthAnimationComponent.Compose(core.TakeDamageObservable, core.DeathObservable, _animator);
             
             _moveAnimationController = new MoveAnimationController(core.MoveCondition, _animator);
-            _attackAnimationController = new AttackAnimationController(core.ShootEvent, _animator);
+            _attackAnimationController = new AttackAnimationController(core.ShootObservable, _animator);
         }
         
         public void OnEnable()

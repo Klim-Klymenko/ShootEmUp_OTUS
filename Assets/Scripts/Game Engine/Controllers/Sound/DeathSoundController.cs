@@ -5,25 +5,25 @@ namespace GameEngine
 {
     public sealed class DeathSoundController
     {
-        private readonly IAtomicObservable _deathEvent;
+        private readonly IAtomicObservable _deathObservable;
         private readonly AudioSource _audioSource;
         private readonly AudioClip _deathClip;
 
-        public DeathSoundController(IAtomicObservable deathEvent, AudioSource audioSource, AudioClip deathClip)
+        public DeathSoundController(IAtomicObservable deathObservable, AudioSource audioSource, AudioClip deathClip)
         {
-            _deathEvent = deathEvent;
+            _deathObservable = deathObservable;
             _audioSource = audioSource;
             _deathClip = deathClip;
         }
 
         public void OnEnable()
         {
-            _deathEvent.Subscribe(OnDeath);
+            _deathObservable.Subscribe(OnDeath);
         }
         
         public void OnDisable()
         {
-            _deathEvent.Unsubscribe(OnDeath);
+            _deathObservable.Unsubscribe(OnDeath);
         }
 
         private void OnDeath()

@@ -2,6 +2,7 @@
 using Atomic.Elements;
 using Atomic.Objects;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace GameEngine
 {
@@ -12,35 +13,36 @@ namespace GameEngine
         [SerializeField]
         private int _hitPoints;
 
-        [Get(ObjectAPI.HitPoints)] 
+        [Get(LiveableAPI.HitPoints)] 
         private AtomicVariable<int> _currentHitPoints;
         
-        [Get(ObjectAPI.TakeDamageAction)]
+        [Get(LiveableAPI.TakeDamageAction)]
         private readonly AtomicEvent<int> _takeDamageEvent = new();
         
         private readonly AtomicEvent _deathEvent = new();
         
         [SerializeField]
-        private AtomicFunction<bool> _isAlive;
+        [HideInInspector]
+        private AtomicFunction<bool> _aliveCondition;
         
         private TakeDamageMechanics _takeDamageMechanics;
         private DeathMechanics _deathMechanics;
         
-        [Get(ObjectAPI.IsAlive)]
-        public IAtomicValue<bool> IsAlive => _isAlive;
+        [Get(LiveableAPI.AliveCondition)]
+        public IAtomicValue<bool> AliveCondition => _aliveCondition;
         
-        public IAtomicObservable<int> TakeDamageEvent => _takeDamageEvent;
+        public IAtomicObservable<int> TakeDamageObservable => _takeDamageEvent;
         
-        [Get(ObjectAPI.DeathObservable)]
-        public IAtomicObservable DeathEvent => _deathEvent;
+        [Get(LiveableAPI.DeathObservable)]
+        public IAtomicObservable DeathObservable => _deathEvent;
         
         public void Compose()
         {
             _currentHitPoints = new AtomicVariable<int>(_hitPoints);
             
-            _isAlive.Compose(() => _currentHitPoints.Value > 0);
+            _aliveCondition.Compose(() => _currentHitPoints.Value > 0);
             
-            _takeDamageMechanics = new TakeDamageMechanics(_currentHitPoints, _takeDamageEvent, _isAlive);
+            _takeDamageMechanics = new TakeDamageMechanics(_currentHitPoints, _takeDamageEvent, _aliveCondition);
             _deathMechanics = new DeathMechanics(_currentHitPoints, _deathEvent);
         }
         
