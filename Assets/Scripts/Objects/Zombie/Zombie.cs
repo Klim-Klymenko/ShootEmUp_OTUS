@@ -6,8 +6,12 @@ using UnityEngine;
 namespace Objects
 {
     [Is(ObjectTypes.Zombie)]
-    public sealed class Zombie : AtomicObject, IUpdateGameListener, IFinishGameListener
+    internal sealed class Zombie : AtomicObject, IUpdateGameListener, IFinishGameListener
     {
+        [SerializeField]
+        [Get(ZombieAPI.ZombieAnimatorDispatcher)]
+        private ZombieAnimatorDispatcher _zombieAnimatorDispatcher;
+        
         [Section]
         [SerializeField]
         private Zombie_Core _core;

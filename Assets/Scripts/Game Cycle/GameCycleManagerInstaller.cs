@@ -5,18 +5,18 @@ using UnityEngine;
 namespace GameCycle
 {
     [UsedImplicitly]
-    public sealed class GameCycleManagerInstaller
+    internal sealed class GameCycleManagerInstaller
     {
         private readonly GameCycleManager _gameCycleManager;
         private readonly List<IGameListener> _gameListeners;
         
-        public GameCycleManagerInstaller(GameCycleManager gameCycleManager, List<IGameListener> gameListeners)
+        internal GameCycleManagerInstaller(GameCycleManager gameCycleManager, List<IGameListener> gameListeners)
         {
             _gameCycleManager = gameCycleManager;
             _gameListeners = gameListeners;
         }
 
-        public void InstallListeners()
+        internal void InstallListeners()
         {
             InstallSystemListeners();
             InstallSceneListeners();

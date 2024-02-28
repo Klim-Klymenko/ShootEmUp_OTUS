@@ -4,23 +4,23 @@ namespace GameEngine
 {
     public sealed class DeathMechanics
     {
-        private readonly IAtomicObservable<int> _hitPoints;
+        private readonly IAtomicObservable<int> _takeDamageObservable;
         private readonly IAtomicAction _deathAction;
 
-        public DeathMechanics(IAtomicObservable<int> hitPoints, IAtomicAction deathAction)
+        public DeathMechanics(IAtomicObservable<int> takeDamageObservable, IAtomicAction deathAction)
         {
-            _hitPoints = hitPoints;
+            _takeDamageObservable = takeDamageObservable;
             _deathAction = deathAction;
         }
         
         public void OnEnable()
         {
-            _hitPoints.Subscribe(OnTakeDamage);
+            _takeDamageObservable.Subscribe(OnTakeDamage);
         }
         
         public void OnDisable()
         {
-            _hitPoints.Unsubscribe(OnTakeDamage);
+            _takeDamageObservable.Unsubscribe(OnTakeDamage);
         }
         
         private void OnTakeDamage(int hitPoints)

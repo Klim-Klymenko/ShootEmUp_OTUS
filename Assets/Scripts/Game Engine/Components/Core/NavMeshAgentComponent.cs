@@ -12,20 +12,14 @@ namespace GameEngine
     {
         [SerializeField] 
         private NavMeshAgent _agent;
-
         private float _stoppingDistance;
         
         [SerializeField]
         [Get(AiAPI.AgentTargetTransform)]
         private AtomicVariable<Transform> _targetTransform;
         
-        [SerializeField]
-        [HideInInspector]
-        private AndExpression _followCondition;
-        
-        [SerializeField]
-        [HideInInspector]
-        private AndExpression _moveCondition;
+        private AndExpression _followCondition = new();
+        private AndExpression _moveCondition = new();
 
         [SerializeField]
         [HideInInspector]

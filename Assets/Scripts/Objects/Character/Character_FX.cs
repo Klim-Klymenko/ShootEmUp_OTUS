@@ -2,12 +2,11 @@
 using Atomic.Elements;
 using GameEngine;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Objects
 {
     [Serializable]
-    public sealed class Character_FX : IDisposable
+    internal sealed class Character_FX : IDisposable
     {
         [SerializeField]
         private AudioSource _audioSource;
@@ -19,12 +18,12 @@ namespace Objects
         private HealthFXComponent _healthFXComponent;
 
         [SerializeField] 
-        private ShootFXComponent _shootFXComponent;
+        private AttackFXComponent _attackFXComponent;
 
         [SerializeField] 
         private MoveFXComponent _moveFXComponent;
         
-        public void Compose(Character_Core core)
+        internal void Compose(Character_Core core)
         {
             IAtomicObservable<int> takeDamageEvent = core.TakeDamageObservable;
             IAtomicObservable deathEvent = core.DeathObservable;
@@ -33,26 +32,26 @@ namespace Objects
             IAtomicValue<bool> moveCondition = core.MoveCondition;
             
             _healthFXComponent.Compose(_audioSource, takeDamageEvent, deathEvent, takeDamageClipCondition);
-            _shootFXComponent.Compose(_audioSource, shootEvent);
+            _attackFXComponent.Compose(_audioSource, shootEvent);
             _moveFXComponent.Compose(_moveAudioSource, moveCondition);
         }
         
-        public void OnEnable()
+        internal void OnEnable()
         {
             _healthFXComponent.OnEnable();
-            _shootFXComponent.OnEnable();
+            _attackFXComponent.OnEnable();
             _moveFXComponent.OnEnable();
         }
 
-        public void Update()
+        internal void Update()
         {
             _moveFXComponent.Update();
         }
         
-        public void OnDisable()
+        internal void OnDisable()
         {
             _healthFXComponent.OnDisable();
-            _shootFXComponent.OnDisable();
+            _attackFXComponent.OnDisable();
             _moveFXComponent.OnDisable();
         }
 

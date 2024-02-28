@@ -12,9 +12,7 @@ namespace GameEngine
         
         private readonly AtomicVariable<Vector3> _rotationDirection = new();
         
-        [SerializeField]
-        [HideInInspector]
-        private AndExpression _rotationCondition;
+        private AndExpression _rotationCondition = new();
         
         private CalculateDirectionMechanics _calculateDirectionMechanics;
         private RotateMechanics _rotateMechanics;

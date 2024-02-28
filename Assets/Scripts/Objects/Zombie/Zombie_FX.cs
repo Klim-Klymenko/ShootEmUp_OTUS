@@ -1,12 +1,13 @@
 ﻿using System;
 using Atomic.Elements;
+using Atomic.Objects;
 using GameEngine;
 using UnityEngine;
 
 namespace Objects
 {
     [Serializable]
-    public sealed class Zombie_FX
+    internal sealed class Zombie_FX
     {
         [SerializeField]
         private AudioSource _audioSource;
@@ -29,13 +30,13 @@ namespace Objects
             _deathSoundController = new DeathSoundController(deathEvent, _audioSource, _deathClip);
         }
 
-        public void OnEnable()
+        internal void OnEnable()
         {
             _attackSoundController.OnEnable();
             _deathSoundController.OnEnable();
         }
         
-        public void OnDisable()
+        internal void OnDisable()
         {
             _attackSoundController.OnDisable();
             _deathSoundController.OnDisable();

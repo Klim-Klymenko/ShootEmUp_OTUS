@@ -1,4 +1,5 @@
-﻿using Atomic.Elements;
+﻿using System;
+using Atomic.Elements;
 using Atomic.Extensions;
 using Atomic.Objects;
 using GameCycle;
@@ -7,7 +8,7 @@ using UnityEngine;
 
 namespace Objects
 {
-    public sealed class Camera : AtomicObject, IStartGameListener, ILateUpdateGameListener
+    internal sealed class Camera : AtomicObject, IStartGameListener, ILateUpdateGameListener, IFinishGameListener
     {
         [SerializeField]
         private Transform _transform;
@@ -53,6 +54,12 @@ namespace Objects
         {
             _calculateDirectionMechanics.Update();
             _moveComponent.Update();
+        }
+
+        public void OnFinish()
+        {
+            _moveComponent?.Dispose();
+            _direction?.Dispose();
         }
     }
 }

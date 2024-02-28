@@ -6,13 +6,13 @@ namespace GameEngine
     public sealed class FinishGameMechanics
     {
         private readonly IAtomicObservable<int> _takeDamageObservable;
-        private readonly IAtomicValue<bool> _finishGameCondition;
+        private readonly IAtomicValue<bool> _aliveCondition;
         private readonly GameCycleManager _gameCycleManager;
 
-        public FinishGameMechanics(IAtomicObservable<int> takeDamageObservable, IAtomicValue<bool> finishGameCondition, GameCycleManager gameCycleManager)
+        public FinishGameMechanics(IAtomicObservable<int> takeDamageObservable, IAtomicValue<bool> aliveCondition, GameCycleManager gameCycleManager)
         {
             _takeDamageObservable = takeDamageObservable;
-            _finishGameCondition = finishGameCondition;
+            _aliveCondition = aliveCondition;
             _gameCycleManager = gameCycleManager;
         }
 
@@ -28,7 +28,7 @@ namespace GameEngine
 
         private void FinishGame(int _)
         {
-            if (_finishGameCondition.Value) return;
+            if (_aliveCondition.Value) return;
             
             _gameCycleManager.OnDestroy();
         }

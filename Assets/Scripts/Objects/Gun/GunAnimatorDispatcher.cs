@@ -6,7 +6,7 @@ using GameEngine;
 
 namespace Objects
 {
-    public sealed class GunAnimatorDispatcher : MonoBehaviour, IStartGameListener
+    internal sealed class GunAnimatorDispatcher : MonoBehaviour, IStartGameListener
     {
         [SerializeField]
         private AtomicObject _gun;
@@ -20,12 +20,12 @@ namespace Objects
             _switchOffEvent = _gun.Get<IAtomicAction>(SwitchableAPI.SwitchOffAction);
         }
 
-        public void SwitchOnGun()
+        internal void SwitchOnGun()
         {
             _switchOnEvent?.Invoke();
         }
         
-        public void SwitchOffGun()
+        internal void SwitchOffGun()
         {
             _switchOffEvent?.Invoke();
         }

@@ -4,31 +4,34 @@ using Atomic.Objects;
 using GameCycle;
 using GameEngine;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Objects
 {
-    public sealed class Bullet : AtomicObject, IDisposable, IUpdateGameListener, IFinishGameListener
+    internal sealed class Bullet : AtomicObject, IDisposable, IUpdateGameListener, IFinishGameListener
     {
         [SerializeField]
         private Transform _transform;
-
-        [SerializeField] 
-        private AtomicVariable<AtomicObject> _target;
-
+        
         [SerializeField]
         private AtomicValue<int> _damage;
 
+        private readonly AtomicEvent<AtomicObject> _attackEvent = new();
+        
+        [Get(LiveableAPI.DeathObservable)]
+        private readonly AtomicEvent _deathEvent = new();
+        
+        private readonly AtomicVariable<bool> _aliveCondition = new(true);
+
+        private AtomicVariable<Vector3> _moveDirection;
+        
         [SerializeField]
         private MoveComponent _moveComponent;
 
-        [SerializeField]
-        [HideInInspector]
-        [Get(LiveableAPI.DeathObservable)]
-        private AtomicEvent _attackEvent;
+        [SerializeField] 
+        [HideInInspector] 
+        private BulletTakeDamageCondition _bulletTakeDamageCondition;
         
-        private readonly AtomicVariable<bool> _aliveCondition = new(true);
-        
+        private PassTargetMechanics _passTargetMechanics;
         private AttackMechanics _attackMechanics;
 
         private bool _composed;
@@ -37,11 +40,13 @@ namespace Objects
         {
             base.Compose();
             
-            AtomicVariable<Vector3> direction = new(_transform.forward);
-            _moveComponent.Compose(_transform, _aliveCondition, direction);
+           _moveDirection = new AtomicVariable<Vector3>(_transform.forward);
             
-            _attackMechanics = new AttackMechanics(_attackEvent, _aliveCondition, _damage, _target);
+            _moveComponent.Compose(_transform, _aliveCondition, _moveDirection);
             
+            _attackMechanics = new AttackMechanics(_attackEvent, _aliveCondition, _damage);
+            _passTargetMechanics = new PassTargetMechanics(_bulletTakeDamageCondition, _attackEvent);
+
             _attackMechanics.OnEnable();
 
             _aliveCondition.Value = true;
@@ -55,40 +60,29 @@ namespace Objects
             _moveComponent.Update();
         }
 
-        public void OnCollisionEnter(Collision other)
+        internal void OnCollisionEnter(Collision other)
         {
             if (!_composed) return;
             
-            //TODO: probably refactor this
-            
-            if (!other.gameObject.TryGetComponent(out AtomicObject atomicObject)) return;
-
-            if (!atomicObject.Is(ObjectTypes.Damageable) || !atomicObject.Is(ObjectTypes.Zombie)) return;
-            
-            _target.Value = atomicObject;
-            _attackEvent?.Invoke();
+           _passTargetMechanics.OnCollisionEnter(other);
+           _deathEvent?.Invoke();
+           _aliveCondition.Value = false;
         }
 
         public void OnFinish()
         {
             if (!_composed) return;
-            
-            _aliveCondition.Value = false;
-            
+
             _attackMechanics.OnDisable();
             Dispose();
         }
 
-        private void Dispose()
+        public void Dispose()
         {
-            _target?.Dispose();
             _attackEvent?.Dispose();
+            _deathEvent?.Dispose();
             _aliveCondition?.Dispose();
-        }
-
-        void IDisposable.Dispose()
-        {
-            Dispose();
+            _moveDirection?.Dispose();
         }
     }
 }

@@ -15,9 +15,9 @@ namespace GameEngine
         private CooldownMechanics _cooldownMechanics;
         private ReplenishMechanics _replenishMechanics;
 
-        public void Compose(IAtomicVariable<int> charges, IAtomicValue<bool> replenishCondition)
+        public void Compose(IAtomicVariable<int> charges, IAtomicValue<bool> aliveCondition)
         {
-            _cooldownMechanics = new CooldownMechanics(_replenishEvent, _replenishInterval, replenishCondition);
+            _cooldownMechanics = new CooldownMechanics(_replenishEvent, _replenishInterval, aliveCondition);
             _replenishMechanics = new ReplenishMechanics(_replenishEvent, charges);
         }
         

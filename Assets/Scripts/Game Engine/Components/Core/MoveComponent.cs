@@ -15,9 +15,7 @@ namespace GameEngine
         [Get(MovableAPI.MoveDirection)]
         private AtomicVariable<Vector3> _moveDirection = new();
         
-        [SerializeField]
-        [HideInInspector]
-        private AndExpression _moveCondition;
+        private readonly AndExpression _moveCondition = new();
         
         private MoveMechanics _moveMechanics;
         

@@ -9,13 +9,13 @@ using UnityEngine;
 namespace Objects
 {
     [UsedImplicitly]
-    public sealed class BulletSpawner : ISpawner<Transform>
+    internal sealed class BulletSpawner : ISpawner<Transform>
     {
         private readonly Pool<Bullet> _pool;
         private readonly GameCycleManager _gameCycleManager;
         private readonly Transform _firePoint;
         
-        public BulletSpawner(Pool<Bullet> pool, GameCycleManager gameCycleManager, Transform firePoint)
+        internal BulletSpawner(Pool<Bullet> pool, GameCycleManager gameCycleManager, Transform firePoint)
         {
             _pool = pool;
             _gameCycleManager = gameCycleManager;
@@ -33,7 +33,7 @@ namespace Objects
             bullet.Compose();
 
             IAtomicObservable destroyEvent = bullet.GetObservable(LiveableAPI.DeathObservable);
-            
+           
             destroyEvent.Subscribe(() => Despawn(bulletTransform));
             
             if (!_gameCycleManager.ContainsListener(bullet))

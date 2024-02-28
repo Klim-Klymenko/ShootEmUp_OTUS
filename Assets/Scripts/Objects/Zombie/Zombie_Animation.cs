@@ -7,7 +7,7 @@ using UnityEngine;
 namespace Objects
 {
     [Serializable]
-    public sealed class Zombie_Animation
+    internal sealed class Zombie_Animation
     {
         [SerializeField]
         [Get(VisualAPI.SkinnedMeshRenderer)]
@@ -32,19 +32,19 @@ namespace Objects
             _attackAnimationController = new AttackAnimationController(attackRequestEvent, _animator);
         }
 
-        public void OnEnable()
+        internal void OnEnable()
         {
             _switchSkinnedMeshRendererMechanics.OnEnable();
             _switchAnimatorMechanics.OnEnable();
             _attackAnimationController.OnEnable();
         }
 
-        public void Update()
+        internal void Update()
         {
             _moveAnimationController.Update();
         }
 
-        public void OnDisable()
+        internal void OnDisable()
         {
             _attackAnimationController.OnDisable();
             _switchAnimatorMechanics.OnDisable();

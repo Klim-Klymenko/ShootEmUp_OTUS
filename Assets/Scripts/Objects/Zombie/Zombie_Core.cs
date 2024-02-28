@@ -7,7 +7,7 @@ using UnityEngine;
 namespace Objects
 {
     [Serializable]
-    public sealed class Zombie_Core : IDisposable
+    internal sealed class Zombie_Core : IDisposable
     {
         [SerializeField]
         private Transform _transform;
@@ -24,32 +24,32 @@ namespace Objects
         [SerializeField] 
         private AttackComponent _attackComponent;
         
-        public IAtomicValue<bool> MoveCondition => _agentComponent.MoveCondition;
-        public IAtomicObservable AttackRequestEvent => _attackComponent.AttackRequestEvent;
-        public IAtomicObservable AttackEvent => _attackComponent.AttackEvent;
-        public IAtomicObservable DeathEvent => _healthComponent.DeathObservable;
+        internal IAtomicValue<bool> MoveCondition => _agentComponent.MoveCondition;
+        internal IAtomicObservable AttackRequestEvent => _attackComponent.AttackRequestEvent;
+        internal IAtomicObservable AttackEvent => _attackComponent.AttackEvent;
+        internal IAtomicObservable DeathEvent => _healthComponent.DeathObservable;
         
-        public void Compose()
+        internal void Compose()
         {
             _healthComponent.Compose();
             _agentComponent.Compose(_healthComponent.AliveCondition);
             _attackComponent.Compose(_healthComponent.AliveCondition, _transform);
         }
         
-        public void OnEnable()
+        internal void OnEnable()
         {
             _healthComponent.OnEnable();
             _attackComponent.OnEnable();
             _agentComponent.OnEnable();
         }
         
-        public void Update()
+        internal void Update()
         {
             _agentComponent.Update();
             _attackComponent.Update();
         }
 
-        public void OnDisable()
+        internal void OnDisable()
         {
             _healthComponent.OnDisable();
             _attackComponent.OnDisable();

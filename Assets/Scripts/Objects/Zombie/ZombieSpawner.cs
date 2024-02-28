@@ -11,7 +11,7 @@ using UnityEngine;
 namespace Objects
 {
     [UsedImplicitly]
-    public sealed class ZombieSpawner : ISpawner<Zombie>
+    internal sealed class ZombieSpawner : ISpawner<Zombie>
     {
         private const int MilliSecondsInSecond = 1000;
         
@@ -22,7 +22,7 @@ namespace Objects
         private readonly AtomicObject _character;
         private readonly float _deathClipLength;
 
-        public ZombieSpawner(Pool<Zombie> pool, GameCycleManager gameCycleManager, PositionGenerator positionGenerator,
+        internal ZombieSpawner(Pool<Zombie> pool, GameCycleManager gameCycleManager, PositionGenerator positionGenerator,
             Transform characterTransform, AtomicObject character, float deathClipLength)
         {
             _pool = pool;
@@ -53,8 +53,8 @@ namespace Objects
 
             if (zombie.Is(ObjectTypes.Attacker))
             {
-                IAtomicVariable<AtomicObject> attackTarget = zombie.GetVariable<AtomicObject>(AttackerAPI.AttackTarget);
-                attackTarget.Value = _character;
+                ZombieAnimatorDispatcher animatorDispatcher = zombie.Get<ZombieAnimatorDispatcher>(ZombieAPI.ZombieAnimatorDispatcher);
+                animatorDispatcher.Target = _character;
                 
                 IAtomicVariable<Transform> attackTargetTransform = zombie.GetVariable<Transform>(AttackerAPI.AttackTargetTransform);
                 attackTargetTransform.Value = _characterTransform;

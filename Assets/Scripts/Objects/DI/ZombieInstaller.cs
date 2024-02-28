@@ -2,12 +2,11 @@
 using Atomic.Objects;
 using Common;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Zenject;
 
 namespace Objects
 {
-    public sealed class ZombieInstaller : MonoInstaller
+    internal sealed class ZombieInstaller : MonoInstaller
     {
         [SerializeField]
         private int _reservationAmount;
@@ -34,7 +33,7 @@ namespace Objects
         {
             BindPool();
             BindPositionGenerator();
-            BindFactory();
+            BindSpawner();
         }
         
         private void BindPool()
@@ -47,7 +46,7 @@ namespace Objects
             Container.Bind<PositionGenerator>().AsSingle().WithArguments(_spawnPoints);
         }
         
-        private void BindFactory()
+        private void BindSpawner()
         {
             Container.Bind<ISpawner<Zombie>>().To<ZombieSpawner>().AsSingle().WithArguments(_characterTransform, _character, _deathClip.length);
         }

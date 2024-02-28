@@ -11,6 +11,7 @@ namespace GameEngine
         private Camera _camera;
         
         [SerializeField]
+        [HideInInspector]
         private CastRayFunction _castedPosition;
 
         public IAtomicValue<Vector3> CastedPosition => _castedPosition;

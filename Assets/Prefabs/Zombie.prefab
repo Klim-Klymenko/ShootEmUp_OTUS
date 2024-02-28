@@ -177,6 +177,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 435b667f47ea400292a632d4f52df387, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _zombieAnimatorDispatcher: {fileID: 8525931999691707209}
   _core:
     _transform: {fileID: 5449536008106518553}
     _healthComponent:
@@ -186,8 +187,6 @@ MonoBehaviour:
       _targetTransform:
         value: {fileID: 0}
     _attackComponent:
-      _target:
-        value: {fileID: 0}
       _targetTransform:
         value: {fileID: 0}
       _attackRange:

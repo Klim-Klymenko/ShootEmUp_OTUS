@@ -7,8 +7,7 @@ using GameCycle;
 
 namespace GameEngine
 {
-    [Serializable]
-    public sealed class GameSystem : IStartGameListener, IUpdateGameListener
+    public sealed class GameSystem : MonoBehaviour, IStartGameListener, IUpdateGameListener
     {
         [SerializeField]
         private AtomicObject _character;

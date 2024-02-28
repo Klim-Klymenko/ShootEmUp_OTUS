@@ -9,7 +9,7 @@ using Zenject;
 
 namespace Objects
 {
-    public sealed class ZombiePlacer : AtomicObject, IStartGameListener, IUpdateGameListener
+    internal sealed class ZombiePlacer : AtomicObject, IStartGameListener, IUpdateGameListener
     {
         [SerializeField]
         private AtomicObject _character;
@@ -25,7 +25,7 @@ namespace Objects
         private CooldownMechanics _cooldownMechanics;
         
         [Inject]
-        public void Construct(ISpawner<Zombie> spawner)
+        internal void Construct(ISpawner<Zombie> spawner)
         {
             _spawner = spawner;
         }

@@ -3,7 +3,7 @@ using Zenject;
 
 namespace GameCycle
 {
-    public sealed class GameCycleInstaller : MonoInstaller
+    internal sealed class GameCycleInstaller : MonoInstaller
     {
         [SerializeField]
         private SceneContext _sceneContext;

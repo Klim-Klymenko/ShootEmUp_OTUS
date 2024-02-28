@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Objects
 {
     [Serializable]
-    public sealed class Character_Animation
+    internal sealed class Character_Animation
     {
         [SerializeField]
         private Animator _animator;
@@ -17,7 +17,7 @@ namespace Objects
         
         private AttackAnimationController _attackAnimationController;
         
-        public void Compose(Character_Core core)
+        internal void Compose(Character_Core core)
         {
             _healthAnimationComponent.Compose(core.TakeDamageObservable, core.DeathObservable, _animator);
             
@@ -25,18 +25,18 @@ namespace Objects
             _attackAnimationController = new AttackAnimationController(core.ShootObservable, _animator);
         }
         
-        public void OnEnable()
+        internal void OnEnable()
         {
             _healthAnimationComponent.OnEnable();
             _attackAnimationController.OnEnable();
         }
 
-        public void Update()
+        internal void Update()
         {
             _moveAnimationController.Update();
         }
         
-        public void OnDisable()
+        internal void OnDisable()
         {
             _healthAnimationComponent.OnDisable();
             _attackAnimationController.OnDisable();

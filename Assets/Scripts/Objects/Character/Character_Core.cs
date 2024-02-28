@@ -8,7 +8,7 @@ using Zenject;
 namespace Objects
 {
     [Serializable]
-    public sealed class Character_Core : IDisposable
+    internal sealed class Character_Core : IDisposable
     {
         [SerializeField]
         private Transform _transform;
@@ -36,13 +36,13 @@ namespace Objects
         
         private FinishGameComponent _finishGameComponent = new();
         
-        public IAtomicObservable<int> TakeDamageObservable => _healthComponent.TakeDamageObservable;
-        public IAtomicObservable DeathObservable => _healthComponent.DeathObservable;
-        public IAtomicObservable ShootObservable => _shootComponent.ShootObservable;
-        public IAtomicValue<bool> MoveCondition => _moveComponent.MoveCondition;
-        public IAtomicValue<bool> AliveCondition => _healthComponent.AliveCondition;
+        internal IAtomicObservable<int> TakeDamageObservable => _healthComponent.TakeDamageObservable;
+        internal IAtomicObservable DeathObservable => _healthComponent.DeathObservable;
+        internal IAtomicObservable ShootObservable => _shootComponent.ShootObservable;
+        internal IAtomicValue<bool> MoveCondition => _moveComponent.MoveCondition;
+        internal IAtomicValue<bool> AliveCondition => _healthComponent.AliveCondition;
         
-        public void Compose(DiContainer diContainer)
+        internal void Compose(DiContainer diContainer)
         {
             _healthComponent.Compose();
             _raycastComponent.Compose(new AtomicFunction<Vector3>(() => Input.mousePosition));
@@ -53,21 +53,21 @@ namespace Objects
             _finishGameComponent.Compose(diContainer, AliveCondition, TakeDamageObservable);
         }
         
-        public void OnEnable()
+        internal void OnEnable()
         {
             _healthComponent.OnEnable();
             _finishGameComponent.OnEnable();
             _replenishComponent.OnEnable();
         }
         
-        public void Update()
+        internal void Update()
         {
             _moveComponent.Update();
             _rotationComponent.Update();
             _replenishComponent.Update();
         }
         
-        public void OnDisable()
+        internal void OnDisable()
         {
             _healthComponent.OnDisable();
             _finishGameComponent.OnDisable();

@@ -1,12 +1,11 @@
-﻿using System;
-using Atomic.Elements;
+﻿using Atomic.Elements;
 using Atomic.Objects;
 using GameCycle;
 using GameEngine;
 
 namespace Objects
 {
-    public sealed class Gun : AtomicObject, IInitializeGameListener, IFinishGameListener, IDisposable
+    internal sealed class Gun : AtomicObject, IInitializeGameListener, IFinishGameListener
     {
         [Get(SwitchableAPI.SwitchOnAction)]
         private AtomicEvent _switchOnEvent = new();
@@ -31,12 +30,9 @@ namespace Objects
 
         void IFinishGameListener.OnFinish()
         {
+            _switchOffEvent?.Invoke();
             _switchGameObjectMechanics.OnDisable();
-            Dispose();
-        }
-
-        public void Dispose()
-        {
+            
             _switchOnEvent?.Dispose();
             _switchOffEvent?.Dispose();
         }

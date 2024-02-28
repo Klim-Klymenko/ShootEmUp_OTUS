@@ -4,7 +4,7 @@ using Zenject;
 
 namespace Objects
 {
-    public sealed class BulletInstaller : MonoInstaller
+    internal sealed class BulletInstaller : MonoInstaller
     {
         [SerializeField]
         private int _reservationAmount;
@@ -23,7 +23,6 @@ namespace Objects
             BindPool();
             BindFactory();
         }
-        
         
         private void BindPool()
         {

@@ -10,11 +10,11 @@ namespace GameEngine
     {
        private FinishGameMechanics _finishGameMechanics;
         
-        public void Compose(DiContainer diContainer, IAtomicValue<bool> isAlive, IAtomicObservable<int> takeDamageEvent) 
+        public void Compose(DiContainer diContainer, IAtomicValue<bool> aliveCondition, IAtomicObservable<int> takeDamageEvent) 
         {
             GameCycleManager gameCycleManager = diContainer.Resolve<GameCycleManager>();
             
-            _finishGameMechanics = new FinishGameMechanics(takeDamageEvent, isAlive, gameCycleManager);
+            _finishGameMechanics = new FinishGameMechanics(takeDamageEvent, aliveCondition, gameCycleManager);
         }
 
         public void OnEnable()

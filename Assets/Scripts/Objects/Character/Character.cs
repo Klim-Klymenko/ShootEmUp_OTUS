@@ -7,7 +7,7 @@ using Zenject;
 namespace Objects
 {
     [Is(ObjectTypes.Character)]
-    public sealed class Character : AtomicObject, IInitializeGameListener, IUpdateGameListener, IFinishGameListener
+    internal sealed class Character : AtomicObject, IInitializeGameListener, IUpdateGameListener, IFinishGameListener
     {
         [Section]
         [SerializeField]
@@ -22,7 +22,7 @@ namespace Objects
         private DiContainer _diContainer;
         
         [Inject]
-        public void Construct(DiContainer diContainer)
+        internal void Construct(DiContainer diContainer)
         {
             _diContainer = diContainer;
         }

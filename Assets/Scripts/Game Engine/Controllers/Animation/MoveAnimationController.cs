@@ -5,7 +5,7 @@ namespace GameEngine
 {
     public sealed class MoveAnimationController
     {
-        private static readonly int _moveTrigger = Animator.StringToHash("Speed");
+        private static readonly int _moveInteger = Animator.StringToHash("Speed");
         private const int IdleSpeed = 0;
         private const int RunSpeed = 1;
 
@@ -26,9 +26,9 @@ namespace GameEngine
         private void OnMove()
         {
             if (_moveCondition.Value)
-                _animator.SetInteger(_moveTrigger, RunSpeed);
+                _animator.SetInteger(_moveInteger, RunSpeed);
             else
-                _animator.SetInteger(_moveTrigger, IdleSpeed);
+                _animator.SetInteger(_moveInteger, IdleSpeed);
         }
     }
 }

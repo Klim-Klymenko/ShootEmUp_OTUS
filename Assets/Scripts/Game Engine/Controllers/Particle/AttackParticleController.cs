@@ -1,20 +1,17 @@
 ﻿using Atomic.Elements;
-using Atomic.Objects;
 using UnityEngine;
 
 namespace GameEngine
 {
-    public sealed class AttackSoundController
+    public sealed class AttackParticleController
     {
         private readonly IAtomicObservable _attackObservable;
-        private readonly AudioSource _audioSource;
-        private readonly AudioClip _attackClip;
+        private readonly ParticleSystem _attackParticle;
 
-        public AttackSoundController(IAtomicObservable attackObservable, AudioSource audioSource, AudioClip attackClip)
+        public AttackParticleController(IAtomicObservable attackObservable, ParticleSystem attackParticle)
         {
             _attackObservable = attackObservable;
-            _audioSource = audioSource;
-            _attackClip = attackClip;
+            _attackParticle = attackParticle;
         }
         
         public void OnEnable()
@@ -29,7 +26,7 @@ namespace GameEngine
 
         private void OnAttack()
         {
-            _audioSource.PlayOneShot(_attackClip);
+            _attackParticle.Play(withChildren: true);
         }
     }
 }

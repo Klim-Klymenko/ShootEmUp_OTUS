@@ -5,14 +5,16 @@ using UnityEngine;
 
 namespace Objects
 {
-    public sealed class ZombieAnimatorDispatcher : MonoBehaviour
+    internal sealed class ZombieAnimatorDispatcher : MonoBehaviour
     {
+        internal AtomicObject Target { private get; set; }
+        
         [SerializeField]
         private AtomicObject _zombie;
 
-        public void Attack()
+        internal void Attack()
         {
-            _zombie.GetAction(AttackerAPI.AttackAction)?.Invoke();
+            _zombie.GetAction<AtomicObject>(AttackerAPI.AttackAction)?.Invoke(Target);
         }
     }
 }

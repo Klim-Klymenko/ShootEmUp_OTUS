@@ -3,7 +3,7 @@ using Atomic.Extensions;
 
 namespace GameEngine
 {
-    public class ShooterAPI
+    public static class ShooterAPI
     {
         [Contract(typeof(IAtomicAction))]
         public const string ShootAction = nameof(ShootAction);
