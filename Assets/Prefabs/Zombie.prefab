@@ -186,15 +186,17 @@ MonoBehaviour:
       _agent: {fileID: 3937118797289774649}
       _targetTransform:
         value: {fileID: 0}
-    _attackComponent:
+    _cooldownAttackComponent:
       _targetTransform:
         value: {fileID: 0}
       _attackRange:
         value: 2.25
-      _damage:
-        value: 1
-      _attackInterval:
-        value: 1
+      _cooldownComponent:
+        _cooldownInterval:
+          value: 1
+      _attackComponent:
+        _damage:
+          value: 1
   _animation:
     _skinnedMeshRenderer: {fileID: 4137581936853608516}
     _animator: {fileID: 64731421}

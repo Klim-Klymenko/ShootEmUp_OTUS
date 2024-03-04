@@ -7,17 +7,16 @@ namespace GameEngine
     [Serializable]
     public sealed class ReplenishComponent : IDisposable
     {
-        [SerializeField]
-        private AtomicValue<float> _replenishInterval;
-        
         private readonly AtomicEvent _replenishEvent = new();
+
+        [SerializeField] 
+        private CooldownComponent _cooldownComponent;
         
-        private CooldownMechanics _cooldownMechanics;
         private ReplenishMechanics _replenishMechanics;
 
         public void Compose(IAtomicVariable<int> charges, IAtomicValue<bool> aliveCondition)
         {
-            _cooldownMechanics = new CooldownMechanics(_replenishEvent, _replenishInterval, aliveCondition);
+            _cooldownComponent.Compose(_replenishEvent, aliveCondition);
             _replenishMechanics = new ReplenishMechanics(_replenishEvent, charges);
         }
         
@@ -28,7 +27,7 @@ namespace GameEngine
         
         public void Update()
         {
-            _cooldownMechanics.Update();
+            _cooldownComponent.Update();
         }
         
         public void OnDisable()

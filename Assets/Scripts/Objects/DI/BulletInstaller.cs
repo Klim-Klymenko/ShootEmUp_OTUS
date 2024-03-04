@@ -21,7 +21,7 @@ namespace Objects
         public override void InstallBindings()
         {
             BindPool();
-            BindFactory();
+            BindSpawner();
         }
         
         private void BindPool()
@@ -29,9 +29,9 @@ namespace Objects
             Container.Bind<Pool<Bullet>>().AsSingle().WithArguments(_reservationAmount, _prefab, _poolContainer);
         }
         
-        private void BindFactory()
+        private void BindSpawner()
         {
-            Container.Bind<ISpawner<Transform>>().To<BulletSpawner>().AsSingle().WithArguments(_firePoint);
+            Container.BindInterfacesTo<BulletSpawner>().AsSingle().WithArguments(_firePoint);
         }
     }
 }

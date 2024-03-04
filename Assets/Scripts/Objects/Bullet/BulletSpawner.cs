@@ -1,4 +1,5 @@
-﻿using Atomic.Elements;
+﻿using System.Collections.Generic;
+using Atomic.Elements;
 using Atomic.Extensions;
 using Common;
 using GameCycle;
@@ -9,8 +10,10 @@ using UnityEngine;
 namespace Objects
 {
     [UsedImplicitly]
-    internal sealed class BulletSpawner : ISpawner<Transform>
+    internal sealed class BulletSpawner : ISpawner<Transform>, IFinishGameListener
     {
+        private readonly List<Bullet> _activeBullets = new();
+        
         private readonly Pool<Bullet> _pool;
         private readonly GameCycleManager _gameCycleManager;
         private readonly Transform _firePoint;
@@ -39,6 +42,8 @@ namespace Objects
             if (!_gameCycleManager.ContainsListener(bullet))
                 _gameCycleManager.AddListener(bullet);
             
+            _activeBullets.Add(bullet);
+            
             return bulletTransform;
         }
 
@@ -48,8 +53,17 @@ namespace Objects
             
             bullet.OnFinish();
             _gameCycleManager.RemoveListener(bullet);
-            
+
+            _activeBullets.Remove(bullet);
             _pool.Put(bullet);
+        }
+
+        void IFinishGameListener.OnFinish()
+        {
+            for (int i = 0; i < _activeBullets.Count; i++)
+                Despawn(_activeBullets[i].transform);
+            
+            _activeBullets.Clear();
         }
     }
 }

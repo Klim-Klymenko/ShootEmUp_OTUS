@@ -12,9 +12,6 @@ namespace Objects
         [SerializeField]
         private Transform _transform;
         
-        [SerializeField]
-        private AtomicValue<int> _damage;
-
         private readonly AtomicEvent<AtomicObject> _attackEvent = new();
         
         [Get(LiveableAPI.DeathObservable)]
@@ -23,16 +20,18 @@ namespace Objects
         private readonly AtomicVariable<bool> _aliveCondition = new(true);
 
         private AtomicVariable<Vector3> _moveDirection;
-        
-        [SerializeField]
-        private MoveComponent _moveComponent;
 
         [SerializeField] 
         [HideInInspector] 
         private BulletTakeDamageCondition _bulletTakeDamageCondition;
+
+        [SerializeField]
+        private MoveComponent _moveComponent;
+
+        [SerializeField]
+        private AttackComponent _attackComponent;
         
         private PassTargetMechanics _passTargetMechanics;
-        private AttackMechanics _attackMechanics;
 
         private bool _composed;
         
@@ -44,10 +43,10 @@ namespace Objects
             
             _moveComponent.Compose(_transform, _aliveCondition, _moveDirection);
             
-            _attackMechanics = new AttackMechanics(_attackEvent, _aliveCondition, _damage);
+            _attackComponent.Compose(_attackEvent, _aliveCondition);
             _passTargetMechanics = new PassTargetMechanics(_bulletTakeDamageCondition, _attackEvent);
 
-            _attackMechanics.OnEnable();
+            _attackComponent.OnEnable();
 
             _aliveCondition.Value = true;
             _composed = true;
@@ -73,7 +72,7 @@ namespace Objects
         {
             if (!_composed) return;
 
-            _attackMechanics.OnDisable();
+            _attackComponent.OnDisable();
             Dispose();
         }
 

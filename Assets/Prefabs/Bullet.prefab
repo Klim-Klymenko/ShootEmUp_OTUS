@@ -53,6 +53,9 @@ MonoBehaviour:
   _moveComponent:
     _moveSpeed:
       value: 50
+  _attackComponent:
+    _damage:
+      value: 1
 --- !u!136 &3187432010508526354
 CapsuleCollider:
   m_ObjectHideFlags: 0

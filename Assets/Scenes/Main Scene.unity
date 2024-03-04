@@ -1048,8 +1048,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _character: {fileID: 450889536}
-  _spawnInterval:
-    value: 2
+  _cooldownComponent:
+    _cooldownInterval:
+      value: 2
 --- !u!20 &963194227 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 6591767123407271712, guid: a827c3468c3ba0e4dac37dcbc1cb46dc, type: 3}
@@ -1914,6 +1915,10 @@ PrefabInstance:
       propertyPath: _core._rotationComponent._rotationSpeed.value
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 5392180394236863841, guid: fa7851b6be19b5c43bd8c1a84a2c2716, type: 3}
+      propertyPath: _core._replenishComponent._cooldownComponent._cooldownInterval.value
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7052479428711214791, guid: fa7851b6be19b5c43bd8c1a84a2c2716, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -1968,7 +1973,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7356253757342935370, guid: fa7851b6be19b5c43bd8c1a84a2c2716, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7374021867096461134, guid: fa7851b6be19b5c43bd8c1a84a2c2716, type: 3}
       propertyPath: m_RootOrder

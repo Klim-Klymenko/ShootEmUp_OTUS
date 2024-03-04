@@ -5,61 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="67470072-6fe3-4ca4-bf93-551580db429c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Game Engine/Functions/BulletTakeDamageCondition.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Game Engine/Functions/BulletTakeDamageCondition.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Game Engine/Mechanics/PassTargetMechanics.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Game Engine/Mechanics/PassTargetMechanics.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Objects/Zombie/ZombieAPI.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Objects/Zombie/ZombieAPI.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Game Engine/Components/Core/CooldownAttackComponent.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Game Engine/Components/Core/CooldownAttackComponent.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Game Engine/Components/Core/CooldownComponent.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Game Engine/Components/Core/CooldownComponent.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Homework_OTUS/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Homework_OTUS/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Sirenix/Sirenix/Odin Inspector/Config/Editor/InspectorConfig.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/Sirenix/Sirenix/Odin Inspector/Config/Editor/InspectorConfig.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Sirenix/Sirenix/Odin Inspector/Config/Editor/InspectorConfig.asset.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/Sirenix/Sirenix/Odin Inspector/Config/Editor/InspectorConfig.asset.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Bullet.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Bullet.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Character.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Character.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Zombie.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Zombie.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Main Scene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Main Scene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Common/Pool.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Common/Pool.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/DI/GameCycleInstaller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/DI/GameCycleInstaller.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/GameCycleManagerInstaller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game Cycle/GameCycleManagerInstaller.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Engine/APIs/AttackerAPI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game Engine/APIs/AttackerAPI.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Engine/APIs/ShooterAPI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game Engine/APIs/ShooterAPI.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Engine/Actions/AttackMechanics.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game Engine/Actions/AttackMechanics.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Engine/Components/Core/AttackComponent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game Engine/Components/Core/AttackComponent.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Engine/Components/Core/FinishGameComponent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game Engine/Components/Core/FinishGameComponent.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Engine/Components/Core/HealthComponent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game Engine/Components/Core/HealthComponent.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Engine/Components/Core/MoveComponent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game Engine/Components/Core/MoveComponent.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Engine/Components/Core/NavMeshAgentComponent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game Engine/Components/Core/NavMeshAgentComponent.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Engine/Components/Core/RaycastComponent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game Engine/Components/Core/RaycastComponent.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Engine/Components/Core/AttackComponent.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game Engine/Components/Core/AttackComponent.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Engine/Components/Core/ReplenishComponent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game Engine/Components/Core/ReplenishComponent.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Engine/Components/Core/RotationComponent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game Engine/Components/Core/RotationComponent.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Engine/Components/Core/ShootComponent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game Engine/Components/Core/ShootComponent.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Engine/Components/FX/ShootFXComponent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game Engine/Components/FX/AttackFXComponent.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Engine/Components/FX/ShootFXComponent.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game Engine/Components/FX/AttackFXComponent.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Engine/Controllers/Animation/MoveAnimationController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game Engine/Controllers/Animation/MoveAnimationController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Engine/Controllers/Particle/ShootParticleController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game Engine/Controllers/Particle/AttackParticleController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Engine/Controllers/Particle/ShootParticleController.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game Engine/Controllers/Particle/AttackParticleController.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Engine/Controllers/Sound/AttackSoundController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game Engine/Controllers/Sound/AttackSoundController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Engine/Game System/GameSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game Engine/Game System/GameSystem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Engine/Game System/GameSystemInstaller.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Engine/Game System/GameSystemInstaller.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Engine/Mechanics/DeathMechanics.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game Engine/Mechanics/DeathMechanics.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game Engine/Mechanics/FinishGameMechanics.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game Engine/Mechanics/FinishGameMechanics.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Objects/Bullet/Bullet.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Objects/Bullet/Bullet.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Objects/Bullet/BulletSpawner.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Objects/Bullet/BulletSpawner.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Objects/Camera/Camera.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Objects/Camera/Camera.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Objects/Character/Character.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Objects/Character/Character.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Objects/Character/Character_Animation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Objects/Character/Character_Animation.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Objects/Character/Character_Core.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Objects/Character/Character_Core.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Objects/Character/Character_FX.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Objects/Character/Character_FX.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Objects/DI/BulletInstaller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Objects/DI/BulletInstaller.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Objects/DI/ZombieInstaller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Objects/DI/ZombieInstaller.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Objects/Gun/Gun.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Objects/Gun/Gun.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Objects/Gun/GunAnimatorDispatcher.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Objects/Gun/GunAnimatorDispatcher.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Objects/Zombie/Zombie.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Objects/Zombie/Zombie.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Objects/Zombie/ZombieAnimatorDispatcher.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Objects/Zombie/ZombieAnimatorDispatcher.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Objects/Zombie/ZombiePlacer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Objects/Zombie/ZombiePlacer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Objects/Zombie/ZombieSpawner.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Objects/Zombie/ZombieSpawner.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Objects/Zombie/Zombie_Animation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Objects/Zombie/Zombie_Animation.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Objects/Zombie/Zombie_Core.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Objects/Zombie/Zombie_Core.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Objects/Zombie/Zombie_FX.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Objects/Zombie/Zombie_FX.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/Packages/com.unity.testtools.codecoverage/Settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/Packages/com.unity.testtools.codecoverage/Settings.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -161,6 +125,7 @@
       <workItem from="1708856599086" duration="34916000" />
       <workItem from="1708968600420" duration="23032000" />
       <workItem from="1709060645834" duration="18125000" />
+      <workItem from="1709540652695" duration="2109000" />
     </task>
     <servers />
   </component>

@@ -398,9 +398,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _core:
-    _transform: {fileID: 0}
+    _transform: {fileID: 7052479428711214791}
     _healthComponent:
-      _hitPoints: 0
+      _hitPoints: 5
     _raycastComponent:
       _camera: {fileID: 0}
     _moveComponent:
@@ -408,7 +408,7 @@ MonoBehaviour:
         value: 5
     _rotationComponent:
       _rotationSpeed:
-        value: 0
+        value: 20
     _shootComponent:
       _firePoint: {fileID: 3202847342246058590}
       _charges:
@@ -416,8 +416,9 @@ MonoBehaviour:
       _shootingInterval:
         value: 0.5
     _replenishComponent:
-      _replenishInterval:
-        value: 2
+      _cooldownComponent:
+        _cooldownInterval:
+          value: 2
   _animation:
     _animator: {fileID: 125547646}
   _fx:
@@ -428,8 +429,8 @@ MonoBehaviour:
       _deathClip: {fileID: 8300000, guid: 325d602ae3685f148b64cfc62bbfee7a, type: 3}
       _damageParticle: {fileID: 7160757875473398899}
     _attackFXComponent:
-      _attackClip: {fileID: 0}
-      _attackParticle: {fileID: 0}
+      _attackClip: {fileID: 8300000, guid: 9e66438152e27fa45a81833a3afd7d43, type: 3}
+      _attackParticle: {fileID: 2751185152353070559}
     _moveFXComponent:
       _moveClip: {fileID: 8300000, guid: 8b538abbfbed3fd43ba25a4c09e30ddc, type: 3}
       _moveParticle: {fileID: 1956438815333898656}
@@ -571,6 +572,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7a543c702a713c24496a16fcf89ca14b, type: 3}
+--- !u!198 &2751185152353070559 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 4232088303048159159, guid: 7a543c702a713c24496a16fcf89ca14b, type: 3}
+  m_PrefabInstance: {fileID: 2059633434720993896}
+  m_PrefabAsset: {fileID: 0}
 --- !u!23 &4593798389930510270 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 2546006008648549846, guid: 7a543c702a713c24496a16fcf89ca14b, type: 3}

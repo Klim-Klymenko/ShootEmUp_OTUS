@@ -3,6 +3,7 @@ using Atomic.Elements;
 using Atomic.Objects;
 using GameEngine;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Objects
 {
@@ -19,40 +20,40 @@ namespace Objects
         [Section]
         [SerializeField]
         private NavMeshAgentComponent _agentComponent;
-
+        
         [Section]
         [SerializeField] 
-        private AttackComponent _attackComponent;
+        private CooldownAttackComponent _cooldownAttackComponent;
         
         internal IAtomicValue<bool> MoveCondition => _agentComponent.MoveCondition;
-        internal IAtomicObservable AttackRequestEvent => _attackComponent.AttackRequestEvent;
-        internal IAtomicObservable AttackEvent => _attackComponent.AttackEvent;
+        internal IAtomicObservable AttackRequestEvent => _cooldownAttackComponent.AttackRequestEvent;
+        internal IAtomicObservable AttackEvent => _cooldownAttackComponent.AttackEvent;
         internal IAtomicObservable DeathEvent => _healthComponent.DeathObservable;
         
         internal void Compose()
         {
             _healthComponent.Compose();
             _agentComponent.Compose(_healthComponent.AliveCondition);
-            _attackComponent.Compose(_healthComponent.AliveCondition, _transform);
+            _cooldownAttackComponent.Compose(_healthComponent.AliveCondition, _transform);
         }
         
         internal void OnEnable()
         {
             _healthComponent.OnEnable();
-            _attackComponent.OnEnable();
+            _cooldownAttackComponent.OnEnable();
             _agentComponent.OnEnable();
         }
         
         internal void Update()
         {
             _agentComponent.Update();
-            _attackComponent.Update();
+            _cooldownAttackComponent.Update();
         }
 
         internal void OnDisable()
         {
             _healthComponent.OnDisable();
-            _attackComponent.OnDisable();
+            _cooldownAttackComponent.OnDisable();
             _agentComponent.OnDisable();
         }
         
@@ -60,7 +61,7 @@ namespace Objects
         {
             _healthComponent?.Dispose();
             _agentComponent?.Dispose();
-            _attackComponent?.Dispose();
+            _cooldownAttackComponent?.Dispose();
         }
     }
 }

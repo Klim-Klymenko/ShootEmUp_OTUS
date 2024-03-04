@@ -15,14 +15,12 @@ namespace Objects
         private AtomicObject _character;
         
         [SerializeField]
-        private AtomicValue<float> _spawnInterval;
-        
-        [SerializeField]
         private AtomicAction _zombieSpawnAction;
 
         private ISpawner<Zombie> _spawner;
-        
-        private CooldownMechanics _cooldownMechanics;
+
+        [SerializeField]
+        private CooldownComponent _cooldownComponent;
         
         [Inject]
         internal void Construct(ISpawner<Zombie> spawner)
@@ -38,7 +36,7 @@ namespace Objects
             
             _zombieSpawnAction.Compose(() => _spawner.Spawn());
             
-            _cooldownMechanics = new CooldownMechanics(_zombieSpawnAction, _spawnInterval, isAlive);
+            _cooldownComponent.Compose(_zombieSpawnAction, isAlive);
         }
 
         void IStartGameListener.OnStart()
@@ -48,7 +46,7 @@ namespace Objects
         
         void IUpdateGameListener.OnUpdate()
         {
-            _cooldownMechanics.Update();
+            _cooldownComponent.Update();
         }
     }
 }
