@@ -14,7 +14,7 @@ namespace Objects
 
         internal void Attack()
         {
-            _zombie.GetAction<AtomicObject>(AttackerAPI.AttackAction)?.Invoke(Target);
+            _zombie.InvokeAction(AttackerAPI.AttackAction, Target);
         }
     }
 }

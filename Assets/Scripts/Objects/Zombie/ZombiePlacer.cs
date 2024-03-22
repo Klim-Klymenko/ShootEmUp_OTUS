@@ -9,19 +9,19 @@ using Zenject;
 
 namespace Objects
 {
-    internal sealed class ZombiePlacer : AtomicObject, IStartGameListener, IUpdateGameListener
+    internal sealed class ZombiePlacer : AtomicObject, IStartGameListener, IUpdateGameListener, IFinishGameListener
     {
         [SerializeField]
-        private AtomicObject _character;
-        
-        [SerializeField]
+        [HideInInspector]
         private AtomicAction _zombieSpawnAction;
-
-        private ISpawner<Zombie> _spawner;
+        
+        private readonly AtomicVariable<bool> _aliveCondition = new();
 
         [SerializeField]
         private CooldownComponent _cooldownComponent;
-        
+
+        private ISpawner<Zombie> _spawner;
+
         [Inject]
         internal void Construct(ISpawner<Zombie> spawner)
         {
@@ -31,12 +31,16 @@ namespace Objects
         public override void Compose()
         {
             base.Compose();
-            
-            IAtomicValue<bool> isAlive = _character.GetValue<bool>(LiveableAPI.AliveCondition);
+
+            _aliveCondition.Value = true;
             
             _zombieSpawnAction.Compose(() => _spawner.Spawn());
-            
-            _cooldownComponent.Compose(_zombieSpawnAction, isAlive);
+
+            _cooldownComponent.Let(it =>
+            {
+                it.Compose(_zombieSpawnAction);
+                it.CoolDownCondition.Append(_aliveCondition);
+            });
         }
 
         void IStartGameListener.OnStart()
@@ -47,6 +51,11 @@ namespace Objects
         void IUpdateGameListener.OnUpdate()
         {
             _cooldownComponent.Update();
+        }
+
+        void IFinishGameListener.OnFinish()
+        {
+            _aliveCondition.Value = false;
         }
     }
 }

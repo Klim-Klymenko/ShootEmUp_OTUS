@@ -12,14 +12,15 @@ namespace GameEngine
     {
         [SerializeField] 
         private NavMeshAgent _agent;
+        
         private float _stoppingDistance;
         
         [SerializeField]
         [Get(AiAPI.AgentTargetTransform)]
         private AtomicVariable<Transform> _targetTransform;
         
-        private AndExpression _followCondition = new();
-        private AndExpression _moveCondition = new();
+        private readonly AndExpression _followCondition = new();
+        private readonly AndExpression _moveCondition = new();
 
         [SerializeField]
         [HideInInspector]
@@ -28,13 +29,12 @@ namespace GameEngine
         private SwitchNavMeshAgentMechanics _switchNavMeshAgentMechanics;
         private AgentFollowMechanics _agentFollowMechanics;
         
-        public IAtomicValue<bool> MoveCondition => _moveCondition;
+        public IAtomicExpression<bool> MoveCondition => _moveCondition;
         
-        public void Compose(IAtomicValue<bool> isAlive)
+        public void Compose()
         {
             _stoppingDistance = _agent.stoppingDistance;
-            
-            _followCondition.Append(isAlive);
+                
             _followCondition.Append(new AtomicFunction<bool>(() => _targetTransform.Value != null));
             _followCondition.Append(new AtomicFunction<bool>(() => _agent.isOnNavMesh));
             

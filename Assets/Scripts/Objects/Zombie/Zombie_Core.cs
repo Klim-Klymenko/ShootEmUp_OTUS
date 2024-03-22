@@ -1,9 +1,9 @@
 ﻿using System;
 using Atomic.Elements;
+using Atomic.Extensions;
 using Atomic.Objects;
 using GameEngine;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Objects
 {
@@ -16,16 +16,12 @@ namespace Objects
         [Section]
         [SerializeField] 
         private HealthComponent _healthComponent;
-
-        [Section]
-        [SerializeField]
-        private NavMeshAgentComponent _agentComponent;
         
         [Section]
         [SerializeField] 
         private CooldownAttackComponent _cooldownAttackComponent;
         
-        internal IAtomicValue<bool> MoveCondition => _agentComponent.MoveCondition;
+        internal IAtomicValue<bool> AliveCondition => _healthComponent.AliveCondition;
         internal IAtomicObservable AttackRequestEvent => _cooldownAttackComponent.AttackRequestEvent;
         internal IAtomicObservable AttackEvent => _cooldownAttackComponent.AttackEvent;
         internal IAtomicObservable DeathEvent => _healthComponent.DeathObservable;
@@ -33,20 +29,22 @@ namespace Objects
         internal void Compose()
         {
             _healthComponent.Compose();
-            _agentComponent.Compose(_healthComponent.AliveCondition);
-            _cooldownAttackComponent.Compose(_healthComponent.AliveCondition, _transform);
+
+            _cooldownAttackComponent.Let(it =>
+            {
+                it.Compose(_transform);
+                it.AttackCondition.Append(AliveCondition);
+            });
         }
         
         internal void OnEnable()
         {
             _healthComponent.OnEnable();
             _cooldownAttackComponent.OnEnable();
-            _agentComponent.OnEnable();
         }
         
         internal void Update()
         {
-            _agentComponent.Update();
             _cooldownAttackComponent.Update();
         }
 
@@ -54,13 +52,11 @@ namespace Objects
         {
             _healthComponent.OnDisable();
             _cooldownAttackComponent.OnDisable();
-            _agentComponent.OnDisable();
         }
         
         public void Dispose()
         {
             _healthComponent?.Dispose();
-            _agentComponent?.Dispose();
             _cooldownAttackComponent?.Dispose();
         }
     }

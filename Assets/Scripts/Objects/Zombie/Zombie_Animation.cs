@@ -21,9 +21,9 @@ namespace Objects
         private AttackAnimationController _attackAnimationController;
         private SwitchAnimatorMechanics _switchAnimatorMechanics;
         
-        public void Compose(Zombie_Core core)
+        public void Compose(Zombie_Core core, Zombie_AI ai)
         {
-            IAtomicValue<bool> moveCondition = core.MoveCondition;
+            IAtomicValue<bool> moveCondition = ai.MoveCondition;
             IAtomicObservable attackRequestEvent = core.AttackRequestEvent;
 
             _switchSkinnedMeshRendererMechanics = new SwitchSkinnedMeshRendererMechanics(_skinnedMeshRenderer);

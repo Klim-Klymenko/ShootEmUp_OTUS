@@ -1,5 +1,6 @@
 ﻿using System;
 using Atomic.Elements;
+using Atomic.Extensions;
 using Atomic.Objects;
 using UnityEngine;
 
@@ -22,10 +23,7 @@ namespace GameEngine
         private readonly AtomicEvent<AtomicObject> _attackEvent = new();
         
         private readonly AtomicEvent _attackEventNonArgs = new();
-        
-        [SerializeField]
-        [HideInInspector]
-        private AndExpression _attackCondition;
+        private readonly AndExpression _attackCondition = new();
 
         [SerializeField]
         [HideInInspector]
@@ -37,21 +35,30 @@ namespace GameEngine
         [SerializeField]
         private AttackComponent _attackComponent;
 
+        public IAtomicExpression<bool> AttackCondition => _attackCondition;
         public IAtomicObservable AttackRequestEvent => _attackRequestEvent;
         public IAtomicObservable AttackEvent => _attackEventNonArgs;
         
-        public void Compose(IAtomicValue<bool> aliveCondition, Transform transform)
+        public void Compose(Transform transform)
         {
             _isInAttackRange.Compose(_attackRange, _targetTransform, transform);
             
-            _attackCondition.Append(aliveCondition);
             _attackCondition.Append(new AtomicFunction<bool>(() => _targetTransform.Value != null));
             _attackCondition.Append(_isInAttackRange);
 
             _attackEvent.Subscribe(_ => _attackEventNonArgs?.Invoke());
+
+            _cooldownComponent.Let(it =>
+            {
+                it.Compose(_attackRequestEvent);
+                it.CoolDownCondition.Append(_attackCondition);
+            });
             
-            _cooldownComponent.Compose(_attackRequestEvent, _attackCondition);
-            _attackComponent.Compose(_attackEvent, _attackCondition);
+            _attackComponent.Let(it =>
+            {
+                it.Compose(_attackEvent);
+                it.AttackCondition.Append(_attackCondition);
+            });
         }
 
         public void OnEnable()

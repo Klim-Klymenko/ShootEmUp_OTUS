@@ -9,7 +9,7 @@ namespace GameEngine
         [Contract(typeof(IAtomicVariable<Vector3>))]
         public const string MoveDirection = nameof(MoveDirection); 
         
-        [Contract(typeof(IAtomicValue<bool>))]
+        [Contract(typeof(IAtomicExpression<bool>))]
         public const string MoveCondition = nameof(MoveCondition);
     }
 }

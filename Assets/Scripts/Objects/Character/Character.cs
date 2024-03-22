@@ -2,6 +2,7 @@ using Atomic.Objects;
 using GameCycle;
 using GameEngine;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Zenject;
 
 namespace Objects
@@ -15,29 +16,25 @@ namespace Objects
         
         [SerializeField]
         private Character_Animation _animation;
-        
-        [SerializeField]
-        private Character_FX _fx;
 
-        private DiContainer _diContainer;
-        
-        [Inject]
-        internal void Construct(DiContainer diContainer)
-        {
-            _diContainer = diContainer;
-        }
+        [SerializeField]
+        private Character_Audio _audio;
+
+        [SerializeField] 
+        private Character_Particle _particle;
         
         public override void Compose()
         {
             base.Compose();
             
-            _core.Compose(_diContainer);
+            _core.Compose();
             _animation.Compose(_core);
-            _fx.Compose(_core);
+            _audio.Compose(_core);
+            _particle.Compose(_core);
             
             _core.OnEnable();
             _animation.OnEnable();
-            _fx.OnEnable();
+            _audio.OnEnable();
         }
 
         void IInitializeGameListener.OnInitialize()
@@ -49,17 +46,19 @@ namespace Objects
         {
             _core.Update();
             _animation.Update();
-            _fx.Update();
+            _audio.Update();
+            _particle.Update();
         }
 
         void IFinishGameListener.OnFinish()
         {
             _core.OnDisable();
             _animation.OnDisable();
-            _fx.OnDisable();
+            _audio.OnDisable();
             
             _core.Dispose();
-            _fx.Dispose();
+            _audio.Dispose();
+            _particle.Dispose();
         }
     }
 }

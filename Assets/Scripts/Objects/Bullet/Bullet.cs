@@ -1,5 +1,6 @@
 ﻿using System;
 using Atomic.Elements;
+using Atomic.Extensions;
 using Atomic.Objects;
 using GameCycle;
 using GameEngine;
@@ -17,13 +18,8 @@ namespace Objects
         [Get(LiveableAPI.DeathObservable)]
         private readonly AtomicEvent _deathEvent = new();
         
-        private readonly AtomicVariable<bool> _aliveCondition = new(true);
-
-        private AtomicVariable<Vector3> _moveDirection;
-
-        [SerializeField] 
-        [HideInInspector] 
-        private BulletTakeDamageCondition _bulletTakeDamageCondition;
+        private readonly AtomicVariable<bool> _aliveCondition = new();
+        private readonly BulletTakeDamageCondition _bulletTakeDamageCondition = new();
 
         [SerializeField]
         private MoveComponent _moveComponent;
@@ -31,7 +27,7 @@ namespace Objects
         [SerializeField]
         private AttackComponent _attackComponent;
         
-        private PassTargetMechanics _passTargetMechanics;
+        private PassOnTargetMechanics _passOnTargetMechanics;
 
         private bool _composed;
         
@@ -39,12 +35,21 @@ namespace Objects
         {
             base.Compose();
             
-           _moveDirection = new AtomicVariable<Vector3>(_transform.forward);
-            
-            _moveComponent.Compose(_transform, _aliveCondition, _moveDirection);
-            
-            _attackComponent.Compose(_attackEvent, _aliveCondition);
-            _passTargetMechanics = new PassTargetMechanics(_bulletTakeDamageCondition, _attackEvent);
+           AtomicVariable<Vector3> moveDirection = new(_transform.forward);
+
+           _moveComponent.Let(it =>
+           {
+               it.Compose(_transform, moveDirection);
+               it.MoveCondition.Append(_aliveCondition);
+           });
+
+           _attackComponent.Let(it =>
+           {
+               it.Compose(_attackEvent);
+               it.AttackCondition.Append(_aliveCondition);
+           });
+           
+            _passOnTargetMechanics = new PassOnTargetMechanics(_bulletTakeDamageCondition, _attackEvent);
 
             _attackComponent.OnEnable();
 
@@ -59,11 +64,11 @@ namespace Objects
             _moveComponent.Update();
         }
 
-        internal void OnCollisionEnter(Collision other)
+        private void OnCollisionEnter(Collision other)
         {
             if (!_composed) return;
             
-           _passTargetMechanics.OnCollisionEnter(other);
+           _passOnTargetMechanics.OnCollisionEnter(other);
            _deathEvent?.Invoke();
            _aliveCondition.Value = false;
         }
@@ -71,7 +76,7 @@ namespace Objects
         public void OnFinish()
         {
             if (!_composed) return;
-
+            
             _attackComponent.OnDisable();
             Dispose();
         }
@@ -80,8 +85,6 @@ namespace Objects
         {
             _attackEvent?.Dispose();
             _deathEvent?.Dispose();
-            _aliveCondition?.Dispose();
-            _moveDirection?.Dispose();
         }
     }
 }

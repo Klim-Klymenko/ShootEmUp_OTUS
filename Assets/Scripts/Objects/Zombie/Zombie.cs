@@ -18,10 +18,14 @@ namespace Objects
         
         [Section]
         [SerializeField]
+        private Zombie_AI _ai;
+        
+        [Section]
+        [SerializeField]
         private Zombie_Animation _animation;
         
         [SerializeField]
-        private Zombie_FX _fx;
+        private Zombie_Audio _audio;
 
         private bool _composed;
         
@@ -30,12 +34,14 @@ namespace Objects
             base.Compose();
 
             _core.Compose();
-            _animation.Compose(_core);
-            _fx.Compose(_core);
+            _ai.Compose(_core);
+            _animation.Compose(_core, _ai);
+            _audio.Compose(_core);
             
             _core.OnEnable();
+            _ai.OnEnable();
             _animation.OnEnable();
-            _fx.OnEnable();
+            _audio.OnEnable();
 
             _composed = true;
         }
@@ -45,6 +51,7 @@ namespace Objects
             if (!_composed) return;
             
             _core.Update();
+            _ai.Update();
             _animation.Update();
         }
 
@@ -53,10 +60,12 @@ namespace Objects
             if (!_composed) return;
             
             _core.OnDisable();
+            _ai.OnDisable();
             _animation.OnDisable();
-            _fx.OnDisable();
+            _audio.OnDisable();
             
             _core?.Dispose();
+            _ai?.Dispose();
         }
     }
 }

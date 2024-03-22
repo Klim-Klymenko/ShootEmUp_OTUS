@@ -31,7 +31,7 @@ namespace Objects
         
         private void BindSpawner()
         {
-            Container.BindInterfacesTo<BulletSpawner>().AsSingle().WithArguments(_firePoint);
+            Container.BindInterfacesTo<BulletManager>().AsSingle().WithArguments(_firePoint);
         }
     }
 }

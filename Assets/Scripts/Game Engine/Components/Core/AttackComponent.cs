@@ -11,11 +11,15 @@ namespace GameEngine
         [SerializeField]
         private AtomicValue<int> _damage;
         
+        private readonly AndExpression _attackCondition = new();
+        
         private AttackMechanics _attackMechanics;
+        
+        public IAtomicExpression<bool> AttackCondition => _attackCondition;
 
-        public void Compose(IAtomicObservable<AtomicObject> attackObservable, IAtomicValue<bool> attackCondition)
+        public void Compose(IAtomicObservable<AtomicObject> attackObservable)
         {
-            _attackMechanics = new AttackMechanics(attackObservable, attackCondition, _damage);
+            _attackMechanics = new AttackMechanics(attackObservable, _attackCondition, _damage);
         }
 
         public void OnEnable()

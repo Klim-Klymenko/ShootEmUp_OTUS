@@ -5,9 +5,6 @@ namespace GameEngine
 {
     public static class LiveableAPI
     {
-        [Contract(typeof(IAtomicValue<bool>))]
-        public const string AliveCondition = nameof(AliveCondition);
-        
         [Contract(typeof(IAtomicValue<int>))]
         public const string HitPoints = nameof(HitPoints);
         

@@ -9,18 +9,16 @@ namespace GameEngine
     {
         [SerializeField]
         private AtomicValue<float> _cooldownInterval;
-
-        private IAtomicAction _timeOverAction;
-        private IAtomicValue<bool> _cooldownCondition;
+        
+        private readonly AndExpression _cooldownCondition = new();
 
         private CooldownMechanics _cooldownMechanics;
         
-        public void Compose(IAtomicAction timeOverAction, IAtomicValue<bool> cooldownCondition)
+        public IAtomicExpression<bool> CoolDownCondition => _cooldownCondition;
+        
+        public void Compose(IAtomicAction timeOverAction)
         {
-            _timeOverAction = timeOverAction;
-            _cooldownCondition = cooldownCondition;
-
-            _cooldownMechanics = new CooldownMechanics(timeOverAction, _cooldownInterval, cooldownCondition);
+            _cooldownMechanics = new CooldownMechanics(timeOverAction, _cooldownInterval, _cooldownCondition);
         }
 
         public void Update()

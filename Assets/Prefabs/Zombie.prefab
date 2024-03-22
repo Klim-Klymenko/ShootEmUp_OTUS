@@ -182,10 +182,6 @@ MonoBehaviour:
     _transform: {fileID: 5449536008106518553}
     _healthComponent:
       _hitPoints: 1
-    _agentComponent:
-      _agent: {fileID: 3937118797289774649}
-      _targetTransform:
-        value: {fileID: 0}
     _cooldownAttackComponent:
       _targetTransform:
         value: {fileID: 0}
@@ -197,10 +193,15 @@ MonoBehaviour:
       _attackComponent:
         _damage:
           value: 1
+  _ai:
+    _agentComponent:
+      _agent: {fileID: 3937118797289774649}
+      _targetTransform:
+        value: {fileID: 0}
   _animation:
     _skinnedMeshRenderer: {fileID: 4137581936853608516}
     _animator: {fileID: 64731421}
-  _fx:
+  _audio:
     _audioSource: {fileID: 368871296891383859}
     _attackClip: {fileID: 8300000, guid: 03ad0c380f625f0429e16a479b2f70ab, type: 3}
     _deathClip: {fileID: 8300000, guid: 1a54c930d948d0c4d8cddf2fc6939826, type: 3}

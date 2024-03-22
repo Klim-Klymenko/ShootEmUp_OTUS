@@ -20,14 +20,13 @@ namespace GameEngine
         private MoveMechanics _moveMechanics;
         
         [Get(MovableAPI.MoveCondition)]
-        public IAtomicValue<bool> MoveCondition => _moveCondition;
+        public IAtomicExpression<bool> MoveCondition => _moveCondition;
         
-        public void Compose(Transform transform, IAtomicValue<bool> aliveCondition, AtomicVariable<Vector3> direction = null)
+        public void Compose(Transform transform, AtomicVariable<Vector3> direction = null)
         {
             if (direction != null)
                 _moveDirection = direction;
             
-            _moveCondition.Append(aliveCondition);
             _moveCondition.Append(new AtomicFunction<bool>(() => _moveDirection.Value != Vector3.zero));
             
             _moveMechanics = new MoveMechanics(_moveDirection, _moveSpeed, _moveCondition, transform);

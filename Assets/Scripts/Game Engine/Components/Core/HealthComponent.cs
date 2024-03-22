@@ -1,5 +1,6 @@
 ﻿using System;
 using Atomic.Elements;
+using Atomic.Extensions;
 using Atomic.Objects;
 using UnityEngine;
 
@@ -20,14 +21,11 @@ namespace GameEngine
         
         private readonly AtomicEvent _deathEvent = new();
         
-        [SerializeField]
-        [HideInInspector]
-        private AtomicFunction<bool> _aliveCondition;
+        private readonly AtomicFunction<bool> _aliveCondition = new();
         
         private TakeDamageMechanics _takeDamageMechanics;
         private DeathMechanics _deathMechanics;
         
-        [Get(LiveableAPI.AliveCondition)]
         public IAtomicValue<bool> AliveCondition => _aliveCondition;
         
         public IAtomicObservable<int> TakeDamageObservable => _takeDamageEvent;
@@ -37,7 +35,7 @@ namespace GameEngine
         
         public void Compose()
         {
-            _currentHitPoints = new AtomicVariable<int>(_hitPoints);
+            _currentHitPoints = _hitPoints.AsVariable();
             
             _aliveCondition.Compose(() => _currentHitPoints.Value > 0);
             

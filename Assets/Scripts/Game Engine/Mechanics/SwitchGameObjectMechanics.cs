@@ -30,12 +30,14 @@ namespace GameEngine
         
         private void SwitchOn()
         {
-            _switchable.SetActive(true);
+            if (_switchable != null) 
+                _switchable.SetActive(true);
         }
         
         private void SwitchOff()
         {
-            _switchable.SetActive(false);
+            if (_switchable != null) 
+                _switchable.SetActive(false);
         }
     }
 }

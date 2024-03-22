@@ -1,4 +1,5 @@
 ﻿using Atomic.Elements;
+using Atomic.Extensions;
 using Atomic.Objects;
 using UnityEngine;
 using GameCycle;
@@ -16,8 +17,8 @@ namespace Objects
         
         void IStartGameListener.OnStart()
         {
-            _switchOnEvent = _gun.Get<IAtomicAction>(SwitchableAPI.SwitchOnAction);
-            _switchOffEvent = _gun.Get<IAtomicAction>(SwitchableAPI.SwitchOffAction);
+            _switchOnEvent = _gun.GetAction(SwitchableAPI.SwitchOnAction);
+            _switchOffEvent = _gun.GetAction(SwitchableAPI.SwitchOffAction);
         }
 
         internal void SwitchOnGun()

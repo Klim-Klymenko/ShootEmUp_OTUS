@@ -1,5 +1,6 @@
 ﻿using System;
 using Atomic.Elements;
+using Atomic.Objects;
 using UnityEngine;
 
 namespace GameEngine
@@ -10,25 +11,24 @@ namespace GameEngine
         [SerializeField]
         private AtomicValue<float> _rotationSpeed;
         
+        [Get(RotatableAPI.RotateDirection)]
         private readonly AtomicVariable<Vector3> _rotationDirection = new();
         
-        private AndExpression _rotationCondition = new();
+        private readonly AndExpression _rotationCondition = new();
         
-        private CalculateDirectionMechanics _calculateDirectionMechanics;
         private RotateMechanics _rotateMechanics;
 
-        public void Compose(Transform transform, IAtomicValue<bool> aliveCondition, IAtomicValue<Vector3> positionToRotate)
+        public IAtomicExpression<bool> RotationCondition => _rotationCondition;
+
+        public void Compose(Transform transform)
         {
-            _rotationCondition.Append(aliveCondition);
             _rotationCondition.Append(new AtomicFunction<bool>(() => _rotationDirection.Value != Vector3.zero));
             
-            _calculateDirectionMechanics = new CalculateDirectionMechanics(_rotationDirection, positionToRotate, transform);
             _rotateMechanics = new RotateMechanics(_rotationDirection, _rotationSpeed, _rotationCondition, transform);
         }
 
         public void Update()
         {
-            _calculateDirectionMechanics.Update();
             _rotateMechanics.Update();
         }
 

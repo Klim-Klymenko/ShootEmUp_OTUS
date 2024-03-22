@@ -1,4 +1,5 @@
 ﻿using System;
+using Atomic.Elements;
 using GameEngine;
 using UnityEngine;
 
@@ -9,25 +10,27 @@ namespace Objects
     {
         [SerializeField]
         private Animator _animator;
-
-        [SerializeField] 
-        private HealthAnimationComponent _healthAnimationComponent;
-
-        private MoveAnimationController _moveAnimationController;
         
+        private TakeDamageAnimationController _takeDamageAnimationController;
+        private DeathAnimationController _deathAnimationController;
+        private MoveAnimationController _moveAnimationController;
         private AttackAnimationController _attackAnimationController;
         
         internal void Compose(Character_Core core)
         {
-            _healthAnimationComponent.Compose(core.TakeDamageObservable, core.DeathObservable, _animator);
+            IAtomicObservable<int> takeDamageObservable = core.TakeDamageObservable;
+            IAtomicObservable deathObservable = core.DeathObservable;
             
+            _takeDamageAnimationController = new TakeDamageAnimationController(takeDamageObservable, _animator);
+            _deathAnimationController = new DeathAnimationController(deathObservable, _animator);
             _moveAnimationController = new MoveAnimationController(core.MoveCondition, _animator);
             _attackAnimationController = new AttackAnimationController(core.ShootObservable, _animator);
         }
         
         internal void OnEnable()
         {
-            _healthAnimationComponent.OnEnable();
+            _takeDamageAnimationController.OnEnable();
+            _deathAnimationController.OnEnable();
             _attackAnimationController.OnEnable();
         }
 
@@ -38,7 +41,8 @@ namespace Objects
         
         internal void OnDisable()
         {
-            _healthAnimationComponent.OnDisable();
+            _takeDamageAnimationController.OnDisable();
+            _deathAnimationController.OnDisable();
             _attackAnimationController.OnDisable();
         }
     }

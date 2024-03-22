@@ -23,8 +23,7 @@ namespace GameEngine
         private AtomicValue<float> _shootingInterval;
         
         private readonly AtomicEvent _shootEvent = new();
-        
-        private AndExpression _shootCondition = new();
+        private readonly AndExpression _shootCondition = new();
         
         [SerializeField]
         [HideInInspector]
@@ -37,14 +36,12 @@ namespace GameEngine
 
         public IAtomicVariable<int> Charges => _charges;
         public IAtomicObservable ShootObservable => _shootEvent;
-        public IAtomicValue<bool> ShootCondition => _shootCondition;
+        public IAtomicExpression<bool> ShootCondition => _shootCondition;
 
-        public void Compose(DiContainer diContainer, IAtomicValue<bool> aliveCondition)
+        public void Compose(ISpawner<Transform> bulletSpawner)
         {
-            ISpawner<Transform> bulletSpawner = diContainer.Resolve<ISpawner<Transform>>();
             _bulletSpawnAction.Compose(() => bulletSpawner.Spawn());
-
-            _shootCondition.Append(aliveCondition);
+            
             _shootCondition.Append(new AtomicFunction<bool>(() => _charges.Value > 0));
 
             _shootAction.Compose(_charges, _bulletSpawnAction, _shootEvent, _shootCondition);
