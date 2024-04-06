@@ -1,10 +1,13 @@
 using Common;
-using EcsEngine.World;
+using EcsEngine.Components.Tags;
+using EcsEngine.Extensions;
+using EcsEngine.Systems;
 using GameCycle;
 using JetBrains.Annotations;
 using Leopotam.EcsLite.UnityEditor;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
+using Debug = UnityEngine.Debug;
 
 namespace EcsEngine
 { 
@@ -15,11 +18,15 @@ namespace EcsEngine
         private EcsWorld _eventsWorld;
         private IEcsSystems _systems;
 
+        private readonly EntityManager _entityManager;
         private readonly ServiceLocator _serviceLocator;
-        
-        public EcsStartup(ServiceLocator serviceLocator)
+        private readonly EcsEntityBuilder _entityBuilder;
+
+        internal EcsStartup(EntityManager entityManager, ServiceLocator serviceLocator, EcsEntityBuilder entityBuilder)
         {
+            _entityManager = entityManager;
             _serviceLocator = serviceLocator;
+            _entityBuilder = entityBuilder;
         }
         
         void IInitializeGameListener.OnInitialize()
@@ -31,18 +38,35 @@ namespace EcsEngine
             AddSystems();
             AddExtraWorlds();
             AddInjections();
+            
+            _entityBuilder.Construct(_eventsWorld);
+            _entityManager.Initialize(_gameObjectsWorld);
         }
 
         private void AddSystems()
         {
             _systems
+                .Add(new TargetControlSystem())
+                
+                .Add(new ClosestTargetSearchSystem())
+                .Add(new AttackControlSystem())
+                .Add(new AttackRequestSystem())
+                .Add(new TimerSystem())
+                .Add(new TargetDirectionCalculationSystem())
+                .Add(new MovementSystem())
+                .Add(new RotationSystem())
+                
+                .Add(new TransformSynchronizationSystem())
+                .Add(new MovementAnimationSystem())
+                .Add(new AttackAnimationSystem())
+                
                 .Add(new EcsWorldDebugSystem())
-                .Add(new EcsWorldDebugSystem(WorldsAPI.EventsWorld));
+                .Add(new EcsWorldDebugSystem(EcsWorldsAPI.EventsWorld));
         }
 
         private void AddExtraWorlds()
         {
-            _systems.AddWorld(_eventsWorld, WorldsAPI.EventsWorld);
+            _systems.AddWorld(_eventsWorld, EcsWorldsAPI.EventsWorld);
         }
 
         private void AddInjections()
@@ -64,7 +88,7 @@ namespace EcsEngine
         {
             if (_systems != null) 
             {
-                _systems.Destroy ();
+                _systems.Destroy();
                 _systems = null;
             }
             

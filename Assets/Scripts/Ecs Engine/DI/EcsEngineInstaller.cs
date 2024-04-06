@@ -3,7 +3,7 @@ using GameCycle;
 using UnityEngine;
 using Zenject;
 
-namespace EcsEngine
+namespace EcsEngine.Extensions
 {
     internal sealed class EcsEngineInstaller : MonoInstaller, IFinishGameListener
     {
@@ -15,7 +15,7 @@ namespace EcsEngine
         
         public override void InstallBindings()
         {
-            BindSelf();
+            BindSceneEntities();
             BindServiceLocator();
             BindEntityManager();
             BindEcsStartup();
@@ -27,10 +27,10 @@ namespace EcsEngine
         {
             _sceneContext.PostResolve -= InstallServiceLocatorDependencies;
         }
-
-        private void BindSelf()
+        
+        private void BindSceneEntities()
         {
-            Container.BindInterfacesTo<EcsEngineInstaller>().FromInstance(this).AsSingle();
+            Container.Bind<Entity>().FromComponentsInHierarchy().AsCached();
         }
         
         private void BindServiceLocator()
@@ -41,7 +41,7 @@ namespace EcsEngine
         
         private void BindEntityManager()
         {
-            Container.BindInterfacesTo<EntityManager>().AsSingle()
+            Container.Bind<EntityManager>().AsSingle()
                 .OnInstantiated<EntityManager>((_, it) => _entityManager = it);
         }
         

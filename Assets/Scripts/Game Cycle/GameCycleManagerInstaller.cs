@@ -1,18 +1,21 @@
-﻿using UnityEngine;
+﻿using JetBrains.Annotations;
+using UnityEngine;
 
 namespace GameCycle
 {
+    [UsedImplicitly]
     internal sealed class GameCycleManagerInstaller
     {
         private readonly GameCycleManager _gameCycleManager;
         private readonly IGameListener[] _gameListeners;
 
-        public GameCycleManagerInstaller(GameCycleManager gameCycleManager)
+        internal GameCycleManagerInstaller(GameCycleManager gameCycleManager, IGameListener[] gameListeners)
         {
             _gameCycleManager = gameCycleManager;
+            _gameListeners = gameListeners;
         }
 
-        public void InstallListeners()
+        internal void InstallListeners()
         {
             InstallSceneListeners();
             InstallPlainListeners();
@@ -33,6 +36,7 @@ namespace GameCycle
         {
             for (int i = 0; i < _gameListeners.Length; i++)
                 _gameCycleManager.AddListener(_gameListeners[i]);
+                
         }
     }
 }

@@ -43,7 +43,7 @@ namespace GameCycle
         public void OnDestroy()
         {
             if (GameState == GameState.Finished) return;
-            
+
             for (int i = 0; i < _finishListeners.Count; i++)
                 _finishListeners[i].OnFinish();
             
@@ -53,6 +53,7 @@ namespace GameCycle
         public void AddListener(IGameListener listener)
         {
             if (listener is IInitializeGameListener initializeListener)
+            {
                 if (!_initializeListeners.Contains(initializeListener))
                 {
                     _initializeListeners.Add(initializeListener);
@@ -60,8 +61,10 @@ namespace GameCycle
                     if (GameState is GameState.Initialized or GameState.Active)
                         initializeListener.OnInitialize();
                 }
+            }
             
             if (listener is IStartGameListener startListener)
+            {
                 if (!_startListeners.Contains(startListener))
                 {
                     _startListeners.Add(startListener);
@@ -69,14 +72,19 @@ namespace GameCycle
                     if (GameState == GameState.Active)
                         startListener.OnStart();
                 }
-            
+            }
+
             if (listener is IUpdateGameListener updateListener)
+            {
                 if (!_updateListeners.Contains(updateListener))
-                    _updateListeners.Add(updateListener);
-            
+                    _updateListeners.Add(updateListener); 
+            }
+
             if (listener is IFinishGameListener finishListener)
+            {
                 if (!_finishListeners.Contains(finishListener))
-                    _finishListeners.Add(finishListener);
+                    _finishListeners.Add(finishListener); 
+            }
         }
 
         public void RemoveListener(IGameListener listener)
@@ -92,6 +100,10 @@ namespace GameCycle
             if (listener is IUpdateGameListener updateListener)
                 if (_updateListeners.Contains(updateListener))
                     _updateListeners.Remove(updateListener);
+            
+            if (listener is IFinishGameListener finishListener)
+                if (_finishListeners.Contains(finishListener))
+                    _finishListeners.Remove(finishListener);
         }
     }
 }

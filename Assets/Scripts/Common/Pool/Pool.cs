@@ -1,23 +1,27 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using JetBrains.Annotations;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace Common
 {
     [UsedImplicitly]
-    public sealed class Pool<T> where T : MonoBehaviour
+    public sealed class Pool 
     {
-        private readonly List<T> _objects;
-        
+        private readonly List<MonoBehaviour> _objects;
+
         private readonly int _reservationAmount;
-        private readonly T _prefab;
+        private readonly MonoBehaviour _prefab;
         private readonly Vector3 _spawnPosition;
         private readonly Quaternion _spawnRotation;
         private readonly Transform _parent;
-        
-        public Pool(int reservationAmount, T prefab, Transform parent)
+
+        public Type PrefabType { get; }
+
+        public Pool(int reservationAmount, MonoBehaviour prefab, Transform parent)
         {
-            _objects = new List<T>(reservationAmount);
+            _objects = new List<MonoBehaviour>(reservationAmount);
             
             _reservationAmount = reservationAmount;
             _prefab = prefab;
@@ -25,70 +29,46 @@ namespace Common
             _spawnRotation = Quaternion.identity;
             _parent = parent;
             
+            PrefabType = prefab.GetType();
+            
             Reserve();
         }
-        
+
         private void Reserve()
         {
             for (int i = 0; i < _reservationAmount; i++)
             {
-                T obj = Object.Instantiate(_prefab, _spawnPosition, _spawnRotation, _parent);
+                MonoBehaviour obj = Object.Instantiate(_prefab, _spawnPosition, _spawnRotation, _parent);
             
                 _objects.Add(obj);
-                SetActive(obj, false);
+                obj.gameObject.SetActive(false);
             }
         }
 
-        public T Get()
+        public MonoBehaviour Get()
         {
-            T obj = _objects.Count > 0 ? _objects[^1] : Object.Instantiate(_prefab, _spawnPosition, _spawnRotation, _parent);
+            MonoBehaviour obj = _objects.Count > 0 ? _objects[^1] : Object.Instantiate(_prefab, _spawnPosition, _spawnRotation, _parent);
             
-            SetActive(obj, true);
+            obj.gameObject.SetActive(true);
             _objects.Remove(obj);
             
             return obj;
         }
 
-        public void Put(T obj)
+        public void Put(MonoBehaviour obj)
         {
-            SetActive(obj, false);
-            SetParent(obj);
+            obj.gameObject.SetActive(false);
+            SetParent(obj.transform);
             
             _objects.Add(obj);
         }
         
-        private void SetActive(T obj, bool value)
+        private void SetParent(Transform transform)
         {
-            if (obj is MonoBehaviour monoBehaviour)
-                monoBehaviour.gameObject.SetActive(value);
+            if (_parent == null) return;
                 
-            else if (obj is GameObject gameObject)
-                gameObject.SetActive(value);
-            
-            else if (obj is Transform transform)
-                transform.gameObject.SetActive(value);
-        }
-
-        private void SetParent(T obj)
-        {
-            if (obj is MonoBehaviour monoBehaviour)
-                InstallParent(monoBehaviour.transform);
-            
-            else if (obj is GameObject gameObject)
-                InstallParent(gameObject.transform);
-            
-            else if (obj is Transform transform)
-                InstallParent(transform);
-            
-            return;
-
-            void InstallParent(Transform transform)
-            {
-                if (_parent == null) return;
-                
-                if (transform.parent != _parent) 
-                    transform.SetParent(_parent);
-            }
-        }
+            if (transform.parent != _parent) 
+                transform.SetParent(_parent);
+        }    
     }
 }
