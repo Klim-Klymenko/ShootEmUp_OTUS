@@ -30,7 +30,7 @@ namespace Objects.Swordsman
         private Attack _attack;
         
         [SerializeField]
-        private UnitState _unitState;
+        private MoveState _moveState;
       
         [SerializeField]
         private CurrentWeapon _weapon;
@@ -46,7 +46,7 @@ namespace Objects.Swordsman
                 .AddComponent(new Position { Value = _transform.position })
                 .AddComponent(_teamAffiliation)
                 .AddComponent(_attack)
-                .AddComponent(_unitState)
+                .AddComponent(_moveState)
                 .AddComponent(new Attackable())
                 .AddComponent(new Target())
                 .AddComponent(_weapon);

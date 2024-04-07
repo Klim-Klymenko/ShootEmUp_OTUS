@@ -1,13 +1,16 @@
 using Common;
+using EcsEngine.Components.Events;
 using EcsEngine.Components.Tags;
 using EcsEngine.Extensions;
 using EcsEngine.Systems;
+using EcsEngine.Systems.Sound;
+using EcsEngine.Systems.View.Particle;
 using GameCycle;
 using JetBrains.Annotations;
 using Leopotam.EcsLite.UnityEditor;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
-using Debug = UnityEngine.Debug;
+using Leopotam.EcsLite.ExtendedSystems;
 
 namespace EcsEngine
 { 
@@ -34,9 +37,9 @@ namespace EcsEngine
             _gameObjectsWorld = new EcsWorld();
             _eventsWorld = new EcsWorld();
             _systems = new EcsSystems(_gameObjectsWorld);
-            
-            AddSystems();
+
             AddExtraWorlds();
+            AddSystems();
             AddInjections();
             
             _entityBuilder.Construct(_eventsWorld);
@@ -46,22 +49,36 @@ namespace EcsEngine
         private void AddSystems()
         {
             _systems
-                .Add(new TargetControlSystem())
-                
+                .Add(new ActiveTargetTrackSystem())
+
                 .Add(new ClosestTargetSearchSystem())
-                .Add(new AttackControlSystem())
-                .Add(new AttackRequestSystem())
+                .Add(new AttackTrackSystem())
+                .Add(new CooldownAttackControlSystem())
                 .Add(new TimerSystem())
                 .Add(new TargetDirectionCalculationSystem())
+                .Add(new MoveStateControlSystem())
                 .Add(new MovementSystem())
                 .Add(new RotationSystem())
-                
+
+                .Add(new AttackEventSystem())
+                .Add(new DealDamageRequestSystem())
+                .Add(new DeathTrackSystem())
+                .Add(new DeathRequestSystem())
+                .Add(new DeadDestructionSystem())
+
                 .Add(new TransformSynchronizationSystem())
+
                 .Add(new MovementAnimationSystem())
                 .Add(new AttackAnimationSystem())
-                
+                .Add(new AttackSoundSystem())
+                .Add(new AttackParticleSystem())
+
                 .Add(new EcsWorldDebugSystem())
-                .Add(new EcsWorldDebugSystem(EcsWorldsAPI.EventsWorld));
+                .Add(new EcsWorldDebugSystem(EcsWorldsAPI.EventsWorld))
+
+                .DelHere<AttackEvent>()
+                .DelHere<DeathEvent>()
+                .OneFrame<DealDamageEvent>(EcsWorldsAPI.EventsWorld);
         }
 
         private void AddExtraWorlds()

@@ -41,6 +41,14 @@ namespace EcsEngine.Extensions
         {
             return Unpack(out int _);
         }
+        
+        public bool HasComponent<T>() where T : struct
+        {
+            if (!Unpack(out int entityId))
+                throw new InvalidDataException("Failed to unpack entity");
+            
+            return _world.GetPool<T>().Has(entityId);
+        }
 
         public bool Unpack(out int entityId)
         {
