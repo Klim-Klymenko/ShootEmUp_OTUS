@@ -2,7 +2,6 @@
 using EcsEngine.Components.Tags;
 using EcsEngine.Extensions;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Objects.Swordsman
 {

@@ -5,6 +5,7 @@ using EcsEngine.Extensions;
 using EcsEngine.Systems;
 using EcsEngine.Systems.Sound;
 using EcsEngine.Systems.View.Particle;
+using ECSLite.Extensions.Events;
 using GameCycle;
 using JetBrains.Annotations;
 using Leopotam.EcsLite.UnityEditor;
