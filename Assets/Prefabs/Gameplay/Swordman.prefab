@@ -1,5 +1,37 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3602400473249756013
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7429160311965808460}
+  m_Layer: 0
+  m_Name: <Partice>
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7429160311965808460
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3602400473249756013}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.5, z: 0.4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7906830424652367556}
+  m_Father: {fileID: 8692576747330127514}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6361089437588726031
 GameObject:
   m_ObjectHideFlags: 0
@@ -173,6 +205,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a1ffff65c3b4c58bc58c96b625e51a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _name: <Sword>
   _entityInstallers:
   - {fileID: 8338430246829718880}
 --- !u!114 &8338430246829718880
@@ -195,6 +228,10 @@ MonoBehaviour:
     <Value>k__BackingField: 2
   _weaponType:
     <Value>k__BackingField: 0
+  _spawn:
+    <Prefab>k__BackingField: {fileID: 0}
+    <FirePoint>k__BackingField: {fileID: 0}
+    <Parent>k__BackingField: {fileID: 0}
   _audioSource:
     <Value>k__BackingField: {fileID: 6069033681498753261}
   _attackClip:
@@ -237,6 +274,7 @@ Transform:
   - {fileID: 8692576747530105463}
   - {fileID: 4622199388291067665}
   - {fileID: 2687699894576037958}
+  - {fileID: 7429160311965808460}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
@@ -252,6 +290,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a1ffff65c3b4c58bc58c96b625e51a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _name: Swordman
   _entityInstallers:
   - {fileID: 2751691781053188257}
   - {fileID: 454001655637695776}
@@ -279,9 +318,8 @@ MonoBehaviour:
     <Value>k__BackingField: 2
   _teamAffiliation:
     <Value>k__BackingField: 0
-  _attack:
-    <Interval>k__BackingField: 2
-    <Range>k__BackingField: 3
+  _attackRange:
+    <Value>k__BackingField: 3
   _moveState:
     Value: 1
   _weapon:
@@ -313,6 +351,11 @@ MonoBehaviour:
       _animationName: Take Damage
   _audioSource:
     <Value>k__BackingField: {fileID: 6069033681498753261}
+  _takeDamageClip:
+    <Value>k__BackingField: {fileID: 8300000, guid: 80b1313dc59709e4591e7700b3974be8,
+      type: 3}
+  _takeDamageParticle:
+    <Value>k__BackingField: {fileID: 7906830424652367558}
 --- !u!136 &4365896013292188636
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -327,6 +370,87 @@ CapsuleCollider:
   m_Height: 3.2772768
   m_Direction: 1
   m_Center: {x: -0.00965476, y: 1.6151155, z: 2.618012e-17}
+--- !u!1001 &3699895201114397584
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 7429160311965808460}
+    m_Modifications:
+    - target: {fileID: 6837061768053742932, guid: c041548ad5f52014d8ae27de23cf2764,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6837061768053742932, guid: c041548ad5f52014d8ae27de23cf2764,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6837061768053742932, guid: c041548ad5f52014d8ae27de23cf2764,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6837061768053742932, guid: c041548ad5f52014d8ae27de23cf2764,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6837061768053742932, guid: c041548ad5f52014d8ae27de23cf2764,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 6837061768053742932, guid: c041548ad5f52014d8ae27de23cf2764,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 6837061768053742932, guid: c041548ad5f52014d8ae27de23cf2764,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6837061768053742932, guid: c041548ad5f52014d8ae27de23cf2764,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6837061768053742932, guid: c041548ad5f52014d8ae27de23cf2764,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90.00001
+      objectReference: {fileID: 0}
+    - target: {fileID: 6837061768053742932, guid: c041548ad5f52014d8ae27de23cf2764,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6837061768053742932, guid: c041548ad5f52014d8ae27de23cf2764,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6837061768053742933, guid: c041548ad5f52014d8ae27de23cf2764,
+        type: 3}
+      propertyPath: m_Name
+      value: FX_Blood
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c041548ad5f52014d8ae27de23cf2764, type: 3}
+--- !u!4 &7906830424652367556 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6837061768053742932, guid: c041548ad5f52014d8ae27de23cf2764,
+    type: 3}
+  m_PrefabInstance: {fileID: 3699895201114397584}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &7906830424652367558 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 6837061768053742934, guid: c041548ad5f52014d8ae27de23cf2764,
+    type: 3}
+  m_PrefabInstance: {fileID: 3699895201114397584}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5409582570660650738
 PrefabInstance:
   m_ObjectHideFlags: 0

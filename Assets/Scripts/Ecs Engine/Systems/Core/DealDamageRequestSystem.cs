@@ -2,6 +2,7 @@
 using EcsEngine.Components;
 using EcsEngine.Components.Events;
 using EcsEngine.Components.Requests;
+using EcsEngine.Data;
 using EcsEngine.Extensions;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
@@ -14,11 +15,12 @@ namespace EcsEngine.Systems
         private readonly EcsFilterInject<Inc<DealDamageRequest, Source, Target>> _filter = EcsWorldsAPI.EventsWorld;
         private readonly EcsPoolInject<DealDamageEvent> _dealDamageEventPoolInject = EcsWorldsAPI.EventsWorld;
         private readonly EcsWorldInject _eventsWorld = EcsWorldsAPI.EventsWorld;
+        
         private readonly EcsWorldInject _gameObjectsWorld;
         private readonly EcsPoolInject<Health> _healthPoolInject;
         private readonly EcsPoolInject<Damage> _damagePoolInject;
         private readonly EcsPoolInject<CurrentWeapon> _weaponPoolInject;
-        
+
         private EcsPool<Source> _sourcePool;
         private EcsPool<Target> _targetPool;
         

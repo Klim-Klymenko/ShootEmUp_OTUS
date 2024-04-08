@@ -9,18 +9,18 @@ namespace EcsEngine.Systems
 {
     public sealed class AttackTrackSystem : IEcsPreInitSystem, IEcsRunSystem
     {
-        private readonly EcsFilterInject<Inc<Attack, Position, Target>, Exc<Inactive>> _filter;
+        private readonly EcsFilterInject<Inc<AttackRange, Position, Target>, Exc<Inactive>> _filter;
         private readonly EcsPoolInject<AttackEnabled> _attackEnabledPoolInject;
         private readonly EcsWorldInject _gameObjectsWorld;
 
-        private EcsPool<Attack> _attackPool;
+        private EcsPool<AttackRange> _attackRangePool;
         private EcsPool<Position> _positionPool;
         private EcsPool<Target> _targetPool;
         private EcsPool<AttackEnabled> _attackEnabledPool;
 
         void IEcsPreInitSystem.PreInit(IEcsSystems systems)
         {
-            _attackPool = _filter.Pools.Inc1;
+            _attackRangePool = _filter.Pools.Inc1;
             _positionPool = _filter.Pools.Inc2;
             _targetPool = _filter.Pools.Inc3;
             _attackEnabledPool = _attackEnabledPoolInject.Value;
@@ -30,7 +30,7 @@ namespace EcsEngine.Systems
         {
             foreach (int entityId in _filter.Value)
             {
-                float attackRange = _attackPool.Get(entityId).Range;
+                float attackRange = _attackRangePool.Get(entityId).Value;
                 Vector3 position = _positionPool.Get(entityId).Value;
                 EcsPackedEntity targetEntity = _targetPool.Get(entityId).Value; 
                     

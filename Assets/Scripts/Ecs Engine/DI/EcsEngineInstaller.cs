@@ -15,7 +15,6 @@ namespace EcsEngine.Extensions
         
         public override void InstallBindings()
         {
-            BindSceneEntities();
             BindServiceLocator();
             BindEntityManager();
             BindEcsStartup();
@@ -26,11 +25,6 @@ namespace EcsEngine.Extensions
         void IFinishGameListener.OnFinish()
         {
             _sceneContext.PostResolve -= InstallServiceLocatorDependencies;
-        }
-        
-        private void BindSceneEntities()
-        {
-            Container.Bind<Entity>().FromComponentsInHierarchy().AsCached();
         }
         
         private void BindServiceLocator()

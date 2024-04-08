@@ -18,7 +18,7 @@ namespace EcsEngine.Systems
 
         private readonly EcsWorldInject _eventsWorld = EcsWorldsAPI.EventsWorld;
         private readonly EcsPoolInject<ShootRequest> _shootRequestPoolInject = EcsWorldsAPI.EventsWorld;
-        private readonly EcsPoolInject<DealDamageRequest> _dealDamageRequestPoolInject = EcsWorldsAPI.EventsWorld;
+        private readonly EcsPoolInject<HitRequest> _hitRequestPoolInject = EcsWorldsAPI.EventsWorld;
         private readonly EcsPoolInject<Source> _sourcePoolInject = EcsWorldsAPI.EventsWorld;
         private readonly EcsPoolInject<Target> _targetPoolInject = EcsWorldsAPI.EventsWorld;
 
@@ -40,9 +40,6 @@ namespace EcsEngine.Systems
                 EcsPackedEntity weaponEntity = _weaponPool.Get(entityId).Value;
                 EcsPackedEntity targetEntity = _targetPool.Get(entityId).Value;
                 EcsPackedEntity sourceEntity = _gameObjectsWorld.Value.PackEntity(entityId);
-
-                if (!targetEntity.Unpack(_gameObjectsWorld.Value, out int targetEntityId))
-                    throw new Exception("Target entity is unable to unpack");
                 
                 if (!weaponEntity.Unpack(_gameObjectsWorld.Value, out int weaponEntityId)) 
                     throw new Exception("Weapon entity is unable to unpack");
@@ -51,11 +48,11 @@ namespace EcsEngine.Systems
                 
                 int eventId = _eventsWorld.Value.NewEntity();
                 
-                _sourcePoolInject.Value.Add(eventId) = new Source {Value = sourceEntity};
-                _targetPoolInject.Value.Add(eventId) = new Target {Value = targetEntity};
+                _sourcePoolInject.Value.Add(eventId) = new Source { Value = sourceEntity };
+                _targetPoolInject.Value.Add(eventId) = new Target { Value = targetEntity };
 
                 if (weaponType == Weapon.SteelArms)
-                    _dealDamageRequestPoolInject.Value.Add(eventId) = new DealDamageRequest();
+                    _hitRequestPoolInject.Value.Add(eventId) = new HitRequest();
                 
                 else if (weaponType == Weapon.FireArms)
                     _shootRequestPoolInject.Value.Add(eventId) = new ShootRequest();

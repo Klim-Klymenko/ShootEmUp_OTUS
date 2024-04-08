@@ -1,4 +1,5 @@
 using Common;
+using EcsEngine.Components;
 using EcsEngine.Components.Events;
 using EcsEngine.Components.Tags;
 using EcsEngine.Extensions;
@@ -50,8 +51,9 @@ namespace EcsEngine
         private void AddSystems()
         {
             _systems
+                .Add(new CollisionRequestSystem())
+                
                 .Add(new ActiveTargetTrackSystem())
-
                 .Add(new ClosestTargetSearchSystem())
                 .Add(new AttackTrackSystem())
                 .Add(new CooldownAttackControlSystem())
@@ -62,17 +64,25 @@ namespace EcsEngine
                 .Add(new RotationSystem())
 
                 .Add(new AttackEventSystem())
+                .Add(new HitRequestSystem())
                 .Add(new DealDamageRequestSystem())
+                .Add(new ShootRequestSystem())
+                .Add(new SpawnRequestSystem())
+                
                 .Add(new DeathTrackSystem())
                 .Add(new DeathRequestSystem())
                 .Add(new DeadDestructionSystem())
 
-                .Add(new TransformSynchronizationSystem())
-
+                .Add(new PositionSynchronizationSystem())
+                .Add(new RotationSynchronizationSystem())
+                
                 .Add(new MovementAnimationSystem())
                 .Add(new AttackAnimationSystem())
                 .Add(new AttackSoundSystem())
                 .Add(new AttackParticleSystem())
+                .Add(new TakeDamageAnimationSystem())
+                .Add(new TakeDamageSoundSystem())
+                .Add(new TakeDamageParticleSystem())
 
                 .Add(new EcsWorldDebugSystem())
                 .Add(new EcsWorldDebugSystem(EcsWorldsAPI.EventsWorld))

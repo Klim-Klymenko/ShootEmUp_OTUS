@@ -3,6 +3,7 @@ using EcsEngine.Components.Requests;
 using EcsEngine.Components.Tags;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
+using UnityEngine;
 
 namespace EcsEngine.Systems
 {
@@ -29,6 +30,8 @@ namespace EcsEngine.Systems
             foreach (int entityId in _filer.Value)
             {
                 EcsPackedEntity targetEntity = _targetPool.Get(entityId).Value;
+                
+                if (_findTargetRequestPool.Has(entityId)) continue;
                 
                 if (!targetEntity.Unpack(_world.Value, out int targetEntityId) || _inactivePool.Has(targetEntityId))
                     _findTargetRequestPool.Add(entityId) = new FindTargetRequest();

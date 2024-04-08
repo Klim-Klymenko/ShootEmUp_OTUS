@@ -6,6 +6,7 @@ using Common;
 using JetBrains.Annotations;
 using Leopotam.EcsLite;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace EcsEngine.Extensions
 {
@@ -13,21 +14,18 @@ namespace EcsEngine.Extensions
     public sealed class EntityManager
     {
         private EcsWorld _world;
-        
-        private readonly Dictionary<Type, Pool> _pools = new();
-        private readonly Dictionary<int, Entity> _entities = new();
-        private readonly Entity[] _sceneEntities;
+        private Entity[] _sceneEntities;
 
-        public EntityManager(Pool[] pools, Entity[] sceneEntities)
+        private readonly Dictionary<string, Pool> _pools = new();
+        private readonly Dictionary<int, Entity> _entities = new();
+
+        public EntityManager(Pool[] pools)
         {
-            _sceneEntities = sceneEntities;
-            
             for (int i = 0; i < pools.Length; i++)
             {
                 Pool pool = pools[i];
-                Type prefabType = pool.PrefabType;
-                
-                if (!_pools.TryAdd(prefabType, pool))
+              
+                if (!_pools.TryAdd(pool.PrefabName, pool))
                     throw new ArgumentException("Pool with the same prefab type already exists");
             }
         }
@@ -35,7 +33,8 @@ namespace EcsEngine.Extensions
         public void Initialize(EcsWorld world)
         {
             _world = world;
-            
+            _sceneEntities = Object.FindObjectsOfType<Entity>();
+           
             for (int i = 0; i < _sceneEntities.Length; i++)
             {
                 Entity entity = _sceneEntities[i];
@@ -51,9 +50,8 @@ namespace EcsEngine.Extensions
         public Entity CreateEntity(Entity prefab, Vector3 position, Quaternion rotation, Transform parent = null)
         {
             Pool pool = GetPool(prefab);
-            MonoBehaviour obj = pool.Get();
-
-            Entity entity = obj.GetComponent<Entity>();
+            Entity entity = pool.Get();
+            
             Transform entityTransform = entity.transform;
             
             entityTransform.position = position;
@@ -65,6 +63,27 @@ namespace EcsEngine.Extensions
             entity.Initialize(_world);
             
             if (entity.Unpack(out int entityId))
+                _entities.Add(entityId, entity);
+                
+            return entity;
+        }
+        
+        public Entity CreateEntity(Entity prefab, Vector3 position, Quaternion rotation, out int entityId, Transform parent = null)
+        {
+            Pool pool = GetPool(prefab);
+            Entity entity = pool.Get();
+            
+            Transform entityTransform = entity.transform;
+            
+            entityTransform.position = position;
+            entityTransform.rotation = rotation;
+            
+            if (parent != null)
+                entityTransform.parent = parent;
+            
+            entity.Initialize(_world);
+            
+            if (entity.Unpack(out entityId))
                 _entities.Add(entityId, entity);
                 
             return entity;
@@ -88,44 +107,12 @@ namespace EcsEngine.Extensions
             throw new InvalidDataException("Entity is not found");
         }
 
-        private Pool GetPool(Component prefab)
+        private Pool GetPool(Entity prefab)
         {
-            Type prefabType = null;
-            Type[] prefabsTypes = _pools.Keys.ToArray();
-
-            for (int i = 0; i < prefabsTypes.Length; i++)
-            {
-                Type currentPrefabType = prefabsTypes[i];
-
-                if (ContainsType(currentPrefabType, prefab))
-                {
-                    prefabType = currentPrefabType;
-                    break;
-                }
-            }
-
-            if (prefabType == null)
-                throw new NullReferenceException("Pool of prefab you want to spawn is not found");
-            
-            if (!_pools.TryGetValue(prefabType, out Pool pool))
+            if (!_pools.TryGetValue(prefab.Name, out Pool pool))
                 throw new ArgumentException("Pool with the specified type does not exist");
 
             return pool;
-        }
-        
-        private bool ContainsType(Type desiredType, Component entity)
-        {
-            MonoBehaviour[] entityComponents = entity.GetComponents<MonoBehaviour>();
-
-            for (int i = 0; i < entityComponents.Length; i++)
-            {
-                Type componentType = entityComponents[i].GetType();
-
-                if (desiredType == componentType)
-                    return true;
-            }
-            
-            return false;
         }
     }
 }

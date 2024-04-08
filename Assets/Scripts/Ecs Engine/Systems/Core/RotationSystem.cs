@@ -30,7 +30,7 @@ namespace EcsEngine.Systems
                 Vector3 direction = _movementDirectionPool.Get(entityId).Value;
                 float speed = _rotationSpeedPool.Get(entityId).Value;
                 ref Quaternion rotation = ref _rotationPool.Get(entityId).Value;
-
+            
                 if (direction == Vector3.zero) continue;
                 
                 Quaternion lookDirection = Quaternion.LookRotation(direction);

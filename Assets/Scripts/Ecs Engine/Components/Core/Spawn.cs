@@ -1,5 +1,6 @@
 ﻿using System;
 using EcsEngine.Extensions;
+using Leopotam.EcsLite;
 using UnityEngine;
 
 namespace EcsEngine.Components
@@ -11,9 +12,6 @@ namespace EcsEngine.Components
         public Entity Prefab { get; private set; }
         
         [field: SerializeField]
-        public Transform FirePoint { get; private set; }
-        
-        [field: SerializeField]
-        public Transform Parent { get; private set; }
+        public Transform SpawnPoint { get; private set; }
     }
 }

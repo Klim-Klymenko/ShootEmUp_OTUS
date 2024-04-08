@@ -11,7 +11,7 @@ namespace EcsEngine.Systems
     public sealed class ClosestTargetSearchSystem : IEcsPreInitSystem, IEcsRunSystem
     {
         private readonly EcsFilterInject<Inc<FindTargetRequest, Target, TeamAffiliation, Position>, Exc<Inactive>> _requesterFilter;
-        private readonly EcsFilterInject<Inc<TeamAffiliation, Attackable, UnityTransform, Position>, Exc<Inactive>> _targetFilter;
+        private readonly EcsFilterInject<Inc<TeamAffiliation, Attackable, Position>, Exc<Inactive>> _targetFilter;
         private readonly EcsWorldInject _world;
         
         private EcsPool<FindTargetRequest> _findTargetRequestPool;
@@ -34,7 +34,7 @@ namespace EcsEngine.Systems
                 Team requesterTeam = _teamAffiliationPool.Get(requesterId).Value;
                 Vector3 requesterPosition = _positionPool.Get(requesterId).Value;
                 ref EcsPackedEntity targetEntity = ref _targetPool.Get(requesterId).Value;
-
+                
                 int targetEntityId = -1;
                 float closestSqrDistance = float.MaxValue;
                 
@@ -53,7 +53,7 @@ namespace EcsEngine.Systems
                         closestSqrDistance = sqrDistance;
                         targetEntityId = targetId;
                 }
-
+                
                 targetEntity = _world.Value.PackEntity(targetEntityId);
                 
                 _findTargetRequestPool.Del(requesterId);

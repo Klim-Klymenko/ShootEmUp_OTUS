@@ -34,9 +34,9 @@ namespace EcsEngine.Physics
             if (!TryGetCollisionInfo(other, out EcsPackedEntity targetEntity)) return;
 
             _entityBuilder.CreateEntity()
-                .Add(new SourceEntity { Value = _entity.PackedEntity })
-                .Add(new TargetEntity { Value = targetEntity })
-                .Add(new ColliderRequest());
+                .Add(new Source { Value = _entity.PackedEntity })
+                .Add(new Target { Value = targetEntity })
+                .Add(new CollisionRequest());
         }
         
         private bool TryGetCollisionInfo(Component other, out EcsPackedEntity targetEntity)

@@ -1,6 +1,6 @@
 ﻿namespace EcsEngine.Data
 {
-    public enum Team
+    public enum Team : byte
     {
         None,
         Red,

@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using Leopotam.EcsLite;
 using UnityEngine;
 
@@ -7,13 +8,22 @@ namespace EcsEngine.Extensions
     public sealed class Entity : MonoBehaviour
     {
         [SerializeField]
+        private string _name;
+        
+        [SerializeField]
         private EntityInstaller[] _entityInstallers;
         
         private EcsWorld _world;
         private EcsPackedEntity _packedEntity;
         
         public EcsPackedEntity PackedEntity => _packedEntity;
+        public string Name => _name;
         
+        private void Reset()
+        {
+            _name = name;
+        }
+
         public void Initialize(EcsWorld world)
         {
             _world = world;

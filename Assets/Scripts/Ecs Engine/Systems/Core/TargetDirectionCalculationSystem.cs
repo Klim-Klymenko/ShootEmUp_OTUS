@@ -31,11 +31,10 @@ namespace EcsEngine.Systems
                 Vector3 position = _positionPool.Get(entityId).Value;
                 ref Vector3 direction = ref _movementDirectionPool.Get(entityId).Value;
                 
-                if (!targetEntity.Unpack(_world.Value, out int targetEntityId)) 
-                    throw new Exception("Target entity is unable to unpack"); 
+                if (!targetEntity.Unpack(_world.Value, out int targetEntityId)) continue;
                 
                 Vector3 targetPosition = _positionPool.Get(targetEntityId).Value;
-                    
+                
                 direction = (targetPosition - position).normalized;
             }
         }
