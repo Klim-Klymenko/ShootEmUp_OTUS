@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Objects.Swordsman
 {
-    public sealed class UnitWeaponInstaller : EntityInstaller
+    internal sealed class UnitWeaponInstaller : EntityInstaller
     {
         [SerializeField] 
         private Entity _weaponEntity;

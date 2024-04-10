@@ -11,13 +11,13 @@ namespace EcsEngine.Systems
 {
     public sealed class SpawnRequestSystem : IEcsPreInitSystem, IEcsRunSystem
     {
-        private readonly EcsFilterInject<Inc<SpawnRequest, Spawn>> _filter = EcsWorldsAPI.EventsWorld;
+        private readonly EcsFilterInject<Inc<SpawnRequest, Spawn>> _filterInject = EcsWorldsAPI.EventsWorld;
         private readonly EcsPoolInject<SpawnFactoryRequest> _spawnFactoryRequestPoolInject = EcsWorldsAPI.EventsWorld;
-        private readonly EcsWorldInject _eventsWorld = EcsWorldsAPI.EventsWorld;
+        private readonly EcsWorldInject _eventsWorldInject = EcsWorldsAPI.EventsWorld;
 
         private readonly EcsPoolInject<SpawnAdjustable> _adjustablePoolInject;
         
-        private readonly EcsCustomInject<ServiceLocator> _serviceLocator;
+        private readonly EcsCustomInject<ServiceLocator> _serviceLocatorInject;
         
         private EcsPool<SpawnRequest> _spawnRequestPool;
         private EcsPool<Spawn> _spawnPool;
@@ -26,15 +26,15 @@ namespace EcsEngine.Systems
         
         void IEcsPreInitSystem.PreInit(IEcsSystems systems)
         {
-            _spawnRequestPool = _filter.Pools.Inc1;
-            _spawnPool = _filter.Pools.Inc2;
+            _spawnRequestPool = _filterInject.Pools.Inc1;
+            _spawnPool = _filterInject.Pools.Inc2;
             
-            _entityManager = _serviceLocator.Value.Resolve<EntityManager>();
+            _entityManager = _serviceLocatorInject.Value.Resolve<EntityManager>();
         }
 
         void IEcsRunSystem.Run(IEcsSystems systems)
         {
-            foreach (int eventId in _filter.Value)
+            foreach (int eventId in _filterInject.Value)
             {
                 Spawn spawn = _spawnPool.Get(eventId);
 
@@ -46,16 +46,16 @@ namespace EcsEngine.Systems
 
                 if (_adjustablePoolInject.Value.Has(spawnedEntityId))
                 {
-                    int factoryRequestId = _eventsWorld.Value.NewEntity();
+                    int factoryRequestId = _eventsWorldInject.Value.NewEntity();
                 
                     _spawnRequestPool.Del(eventId);
                     _spawnPool.Del(eventId);
                 
-                    _eventsWorld.Value.CopyEntity(eventId, factoryRequestId);
+                    _eventsWorldInject.Value.CopyEntity(eventId, factoryRequestId);
                     _spawnFactoryRequestPoolInject.Value.Add(factoryRequestId) = new SpawnFactoryRequest { SpawnedEntity = spawnedEntity.PackedEntity};
                 }
                 
-                _eventsWorld.Value.DelEntity(eventId);
+                _eventsWorldInject.Value.DelEntity(eventId);
             }
         }
     }

@@ -1,9 +1,8 @@
 ﻿using Common;
-using GameCycle;
-using UnityEngine;
+using EcsEngine.Extensions;
 using Zenject;
 
-namespace EcsEngine.Extensions
+namespace EcsEngine.DI
 {
     internal sealed class EcsEngineInstaller : MonoInstaller
     {

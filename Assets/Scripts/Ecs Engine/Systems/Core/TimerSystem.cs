@@ -8,22 +8,22 @@ namespace EcsEngine.Systems
 {
     public sealed class TimerSystem : IEcsPreInitSystem, IEcsRunSystem
     {
-        private readonly EcsFilterInject<Inc<Timer, Tickable>> _filter;
+        private readonly EcsFilterInject<Inc<Timer, Tickable>> _filterInject;
         
         private EcsPool<Timer> _timerPool;
         private EcsPool<Tickable> _tickablePool;
         
         void IEcsPreInitSystem.PreInit(IEcsSystems systems)
         {
-            _timerPool = _filter.Pools.Inc1;
-            _tickablePool = _filter.Pools.Inc2;
+            _timerPool = _filterInject.Pools.Inc1;
+            _tickablePool = _filterInject.Pools.Inc2;
         }
 
         void IEcsRunSystem.Run(IEcsSystems systems)
         {
             float deltaTime = Time.deltaTime;
             
-            foreach (int entityId in _filter.Value)
+            foreach (int entityId in _filterInject.Value)
             {
                 ref Timer timer = ref _timerPool.Get(entityId);
                 

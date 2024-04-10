@@ -11,41 +11,35 @@ namespace EcsEngine.Systems
 {
     public sealed class DeathTrackSystem : IEcsPreInitSystem, IEcsRunSystem
     {
-        private readonly EcsFilterInject<Inc<DealDamageEvent, Target>> _filter = EcsWorldsAPI.EventsWorld;
+        private readonly EcsFilterInject<Inc<DealDamageEvent, Target>> _filterInject = EcsWorldsAPI.EventsWorld;
         private readonly EcsPoolInject<Health> _healthPoolInject;
         private readonly EcsPoolInject<Inactive> _inactivePoolInject;
         private readonly EcsPoolInject<DeathRequest> _deathRequestPoolInject;
-        private readonly EcsWorldInject _world;
+        private readonly EcsWorldInject _worldInject;
         
         private EcsPool<Target> _targetPool;
-        private EcsPool<Health> _healthPool;
-        private EcsPool<Inactive> _inactivePool;
-        private EcsPool<DeathRequest> _deathRequestPool;
         
         void IEcsPreInitSystem.PreInit(IEcsSystems systems)
         {
-            _targetPool = _filter.Pools.Inc2;
-            _healthPool = _healthPoolInject.Value;
-            _inactivePool = _inactivePoolInject.Value;
-            _deathRequestPool = _deathRequestPoolInject.Value;
+            _targetPool = _filterInject.Pools.Inc2;
         }
 
         void IEcsRunSystem.Run(IEcsSystems systems)
         {
-            foreach (int eventId in _filter.Value)
+            foreach (int eventId in _filterInject.Value)
             {
                 EcsPackedEntity targetEntity = _targetPool.Get(eventId).Value;
                 
-                if (!targetEntity.Unpack(_world.Value, out int targetEntityId)) 
+                if (!targetEntity.Unpack(_worldInject.Value, out int targetEntityId)) 
                     throw new Exception("Target entity is unable to unpack");
                 
-                if (_inactivePool.Has(targetEntityId)) continue;
-                if (_deathRequestPool.Has(targetEntityId)) continue;
+                if (_inactivePoolInject.Value.Has(targetEntityId)) continue;
+                if (_deathRequestPoolInject.Value.Has(targetEntityId)) continue;
                 
-                Health health = _healthPool.Get(targetEntityId);
+                Health health = _healthPoolInject.Value.Get(targetEntityId);
                 
                 if (health.HitPoints <= health.MinHitPoints) 
-                    _deathRequestPool.Add(targetEntityId) = new DeathRequest();
+                    _deathRequestPoolInject.Value.Add(targetEntityId) = new DeathRequest();
             }
         }
     }

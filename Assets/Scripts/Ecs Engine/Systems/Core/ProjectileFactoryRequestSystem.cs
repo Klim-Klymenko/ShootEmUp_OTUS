@@ -10,12 +10,12 @@ namespace EcsEngine.Systems
 {
     public sealed class ProjectileFactoryRequestSystem : IEcsPreInitSystem, IEcsRunSystem
     {
-        private readonly EcsFilterInject<Inc<SpawnFactoryRequest>> _filter = EcsWorldsAPI.EventsWorld;
+        private readonly EcsFilterInject<Inc<SpawnFactoryRequest>> _filterInject = EcsWorldsAPI.EventsWorld;
         private readonly EcsPoolInject<Target> _targetRequestPoolInject = EcsWorldsAPI.EventsWorld;
         private readonly EcsPoolInject<Damage> _damageRequestPoolInject = EcsWorldsAPI.EventsWorld;
-        private readonly EcsWorldInject _eventsWorld = EcsWorldsAPI.EventsWorld;
+        private readonly EcsWorldInject _eventsWorldInject = EcsWorldsAPI.EventsWorld;
 
-        private readonly EcsWorldInject _gameObjectsWorld;
+        private readonly EcsWorldInject _gameObjectsWorldInject;
         private readonly EcsPoolInject<ProjectileTag> _projectileTagPoolInject;
         private readonly EcsPoolInject<Target> _targetPoolInject;
         private readonly EcsPoolInject<Damage> _damagePoolInject;
@@ -24,27 +24,27 @@ namespace EcsEngine.Systems
         
         void IEcsPreInitSystem.PreInit(IEcsSystems systems)
         {
-            _spawnedEntityRequestPool = _filter.Pools.Inc1;
+            _spawnedEntityRequestPool = _filterInject.Pools.Inc1;
         }
 
         void IEcsRunSystem.Run(IEcsSystems systems)
         {
-            foreach (int requestId in _filter.Value)
+            foreach (int eventId in _filterInject.Value)
             {
-                EcsPackedEntity spawnedEntity = _spawnedEntityRequestPool.Get(requestId).SpawnedEntity;
+                EcsPackedEntity spawnedEntity = _spawnedEntityRequestPool.Get(eventId).SpawnedEntity;
                 
-                if (!spawnedEntity.Unpack(_gameObjectsWorld.Value, out int spawnedEntityId)) 
+                if (!spawnedEntity.Unpack(_gameObjectsWorldInject.Value, out int spawnedEntityId)) 
                     throw new Exception("Spawned entity is unable to unpack");
                 
                 if (!_projectileTagPoolInject.Value.Has(spawnedEntityId)) continue;
                 
-                if (_targetRequestPoolInject.Value.Has(requestId))
-                    _targetPoolInject.Value.Add(spawnedEntityId) = _targetRequestPoolInject.Value.Get(requestId);
+                if (_targetRequestPoolInject.Value.Has(eventId))
+                    _targetPoolInject.Value.Add(spawnedEntityId) = _targetRequestPoolInject.Value.Get(eventId);
                 
-                if (_damageRequestPoolInject.Value.Has(requestId))
-                    _damagePoolInject.Value.Add(spawnedEntityId) = _damageRequestPoolInject.Value.Get(requestId);
+                if (_damageRequestPoolInject.Value.Has(eventId))
+                    _damagePoolInject.Value.Add(spawnedEntityId) = _damageRequestPoolInject.Value.Get(eventId);
                 
-                _eventsWorld.Value.DelEntity(requestId);
+                _eventsWorldInject.Value.DelEntity(eventId);
             }
         }
     }

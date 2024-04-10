@@ -1,5 +1,4 @@
 ﻿using EcsEngine.Components;
-using EcsEngine.Components.Events;
 using EcsEngine.Components.Tags;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
@@ -9,7 +8,7 @@ namespace EcsEngine.Systems
 {
     public sealed class MovementSystem : IEcsPreInitSystem, IEcsRunSystem
     {
-        private readonly EcsFilterInject<Inc<MovementDirection, MovementSpeed, Position>, Exc<Inactive, AttackEnabled>> _filter;
+        private readonly EcsFilterInject<Inc<MovementDirection, MovementSpeed, Position>, Exc<Inactive, AttackEnabled>> _filterInject;
 
         private EcsPool<MovementDirection> _movementDirectionPool;
         private EcsPool<MovementSpeed> _movementSpeedPool;
@@ -17,16 +16,16 @@ namespace EcsEngine.Systems
         
         void IEcsPreInitSystem.PreInit(IEcsSystems systems)
         {
-            _movementDirectionPool = _filter.Pools.Inc1;
-            _movementSpeedPool = _filter.Pools.Inc2;
-            _positionPool = _filter.Pools.Inc3;
+            _movementDirectionPool = _filterInject.Pools.Inc1;
+            _movementSpeedPool = _filterInject.Pools.Inc2;
+            _positionPool = _filterInject.Pools.Inc3;
         }
 
         void IEcsRunSystem.Run(IEcsSystems systems)
         {
             float deltaTime = Time.deltaTime;
             
-            foreach (int entityId in _filter.Value)
+            foreach (int entityId in _filterInject.Value)
             {
                 Vector3 direction = _movementDirectionPool.Get(entityId).Value;
                 float speed = _movementSpeedPool.Get(entityId).Value;

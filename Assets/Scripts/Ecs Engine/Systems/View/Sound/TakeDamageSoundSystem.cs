@@ -11,26 +11,26 @@ namespace EcsEngine.Systems.Sound
 {
     public sealed class TakeDamageSoundSystem : IEcsPreInitSystem, IEcsRunSystem
     {
-        private readonly EcsFilterInject<Inc<DealDamageEvent, Target>> _filter = EcsWorldsAPI.EventsWorld;
-        private readonly EcsWorldInject _world;
+        private readonly EcsFilterInject<Inc<DealDamageEvent, Target>> _filterInject = EcsWorldsAPI.EventsWorld;
         private readonly EcsPoolInject<UnityAudioSource> _audioSourcePoolInject;
         private readonly EcsPoolInject<TakeDamageClip> _damageClipPoolInject;
         private readonly EcsPoolInject<Inactive> _inactivePoolInject;
-        
+        private readonly EcsWorldInject _worldInject;
+
         private EcsPool<Target> _targetPool;
         
         void IEcsPreInitSystem.PreInit(IEcsSystems systems)
         {
-            _targetPool = _filter.Pools.Inc2;
+            _targetPool = _filterInject.Pools.Inc2;
         }
 
         void IEcsRunSystem.Run(IEcsSystems systems)
         {
-            foreach (int eventId in _filter.Value)
+            foreach (int eventId in _filterInject.Value)
             {
                 EcsPackedEntity targetEntity = _targetPool.Get(eventId).Value;
                 
-                if (!targetEntity.Unpack(_world.Value, out int targetEntityId)) continue;
+                if (!targetEntity.Unpack(_worldInject.Value, out int targetEntityId)) continue;
                 
                 if (_inactivePoolInject.Value.Has(targetEntityId)) continue;
 

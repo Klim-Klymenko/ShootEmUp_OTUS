@@ -8,27 +8,23 @@ namespace EcsEngine.Systems
 {
     public sealed class DeathRequestSystem : IEcsPreInitSystem, IEcsRunSystem
     {
-        private readonly EcsFilterInject<Inc<DeathRequest>, Exc<Inactive>> _filter;
+        private readonly EcsFilterInject<Inc<DeathRequest>, Exc<Inactive>> _filterInject;
         private readonly EcsPoolInject<DeathEvent> _deathEventPoolInject;
         private readonly EcsPoolInject<Inactive> _inactivePoolInject;
         
         private EcsPool<DeathRequest> _deathRequestPool;
-        private EcsPool<DeathEvent> _deathEventPool;
-        private EcsPool<Inactive> _inactivePool;
         
         void IEcsPreInitSystem.PreInit(IEcsSystems systems)
         {
-            _deathRequestPool = _filter.Pools.Inc1;
-            _deathEventPool = _deathEventPoolInject.Value;
-            _inactivePool = _inactivePoolInject.Value;
+            _deathRequestPool = _filterInject.Pools.Inc1;
         }
 
         void IEcsRunSystem.Run(IEcsSystems systems)
         {
-            foreach (int entityId in _filter.Value)
+            foreach (int entityId in _filterInject.Value)
             {
-                _inactivePool.Add(entityId) = new Inactive();
-                _deathEventPool.Add(entityId) = new DeathEvent();
+                _inactivePoolInject.Value.Add(entityId) = new Inactive();
+                _deathEventPoolInject.Value.Add(entityId) = new DeathEvent();
                 
                 _deathRequestPool.Del(entityId);
             }

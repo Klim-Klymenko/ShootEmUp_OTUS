@@ -1,5 +1,4 @@
 ﻿using EcsEngine.Components;
-using EcsEngine.Components.Requests;
 using EcsEngine.Components.Tags;
 using EcsEngine.Extensions;
 using Leopotam.EcsLite;
@@ -7,7 +6,7 @@ using UnityEngine;
 
 namespace Objects.Projectile
 {
-    public sealed class ProjectileInstaller : EntityInstaller
+    internal sealed class ProjectileInstaller : EntityInstaller
     {
         [SerializeField]
         private Transform _transform;
@@ -37,6 +36,7 @@ namespace Objects.Projectile
                 .AddComponent(_rotationSpeed)
                 .AddComponent(_unityTransform)
                 .AddComponent(new ProjectileTag())
+                .AddComponent(new TargetSearchDisabled())
                 .AddComponent(new SpawnAdjustable());
         }
     }

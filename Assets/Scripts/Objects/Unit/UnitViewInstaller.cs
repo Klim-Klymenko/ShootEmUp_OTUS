@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Objects.Swordsman
 {
-    public sealed class UnitViewInstaller : EntityInstaller
+    internal sealed class UnitViewInstaller : EntityInstaller
     {
         [SerializeField]
         private UnityTransform _transform;

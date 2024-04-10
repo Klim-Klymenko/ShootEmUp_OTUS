@@ -11,30 +11,29 @@ namespace EcsEngine.Systems
 {
     public sealed class TakeDamageAnimationSystem : IEcsPreInitSystem, IEcsRunSystem
     {
-        private readonly EcsFilterInject<Inc<DealDamageEvent, Target>> _filter = EcsWorldsAPI.EventsWorld;
-        private readonly EcsWorldInject _world;
+        private readonly EcsFilterInject<Inc<DealDamageEvent, Target>> _filterInject = EcsWorldsAPI.EventsWorld;
         private readonly EcsPoolInject<Movable> _movablePoolInject;
         private readonly EcsPoolInject<UnityAnimator> _animatorPoolInject;
         private readonly EcsPoolInject<TakeDamageAnimation> _damageAnimationPoolInject;
         private readonly EcsPoolInject<Inactive> _inactivePoolInject;
-        
+        private readonly EcsWorldInject _worldInject;
+
         private EcsPool<Target> _targetPool;
         
         void IEcsPreInitSystem.PreInit(IEcsSystems systems)
         {
-            _targetPool = _filter.Pools.Inc2;
+            _targetPool = _filterInject.Pools.Inc2;
         }
 
         void IEcsRunSystem.Run(IEcsSystems systems)
         {
-            foreach (int eventId in _filter.Value)
+            foreach (int eventId in _filterInject.Value)
             {
                 EcsPackedEntity targetEntity = _targetPool.Get(eventId).Value;
                 
-                if (!targetEntity.Unpack(_world.Value, out int targetEntityId)) continue;
+                if (!targetEntity.Unpack(_worldInject.Value, out int targetEntityId)) continue;
                 
                 if (!_movablePoolInject.Value.Has(targetEntityId)) continue;
-                
                 if (_inactivePoolInject.Value.Has(targetEntityId)) continue;
                 
                 Animator animator = _animatorPoolInject.Value.Get(targetEntityId).Value;

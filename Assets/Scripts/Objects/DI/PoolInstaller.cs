@@ -6,7 +6,7 @@ using Zenject;
 
 namespace Objects.DIInstallers
 {
-    public sealed class PoolInstaller : MonoInstaller, IInitializeGameListener
+    internal sealed class PoolInstaller : MonoInstaller, IInitializeGameListener
     {
         [SerializeField] 
         private int _poolSize;

@@ -9,24 +9,24 @@ namespace EcsEngine.Systems
 {
     public sealed class FinishGameRequestSystem : IEcsPreInitSystem, IEcsRunSystem
     {
-        private readonly EcsFilterInject<Inc<FinishGameRequest>> _filter = EcsWorldsAPI.EventsWorld;
-        private readonly EcsWorldInject _world = EcsWorldsAPI.EventsWorld;
+        private readonly EcsFilterInject<Inc<FinishGameRequest>> _filterInject = EcsWorldsAPI.EventsWorld;
+        private readonly EcsWorldInject _worldInject = EcsWorldsAPI.EventsWorld;
         
-        private readonly EcsCustomInject<ServiceLocator> _serviceLocator;
+        private readonly EcsCustomInject<ServiceLocator> _serviceLocatorInject;
         private GameCycleManager _gameCycleManager;
 
         void IEcsPreInitSystem.PreInit(IEcsSystems systems)
         {
-            _gameCycleManager = _serviceLocator.Value.Resolve<GameCycleManager>();
+            _gameCycleManager = _serviceLocatorInject.Value.Resolve<GameCycleManager>();
         }
 
         void IEcsRunSystem.Run(IEcsSystems systems)
         {
-            foreach (int eventId in _filter.Value)
+            foreach (int eventId in _filterInject.Value)
             {
                 _gameCycleManager.OnDestroy();
                 
-                _world.Value.DelEntity(eventId);
+                _worldInject.Value.DelEntity(eventId);
             }
         }
     }

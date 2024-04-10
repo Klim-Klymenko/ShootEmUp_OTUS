@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Objects.Swordsman
 {
-    public sealed class WeaponInstaller : EntityInstaller
+    internal sealed class WeaponInstaller : EntityInstaller
     {
         [SerializeField] 
         private Timer _timer;

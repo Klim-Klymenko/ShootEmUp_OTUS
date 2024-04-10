@@ -8,7 +8,7 @@ namespace EcsEngine.Systems
 {
     public sealed class RotationSystem : IEcsPreInitSystem, IEcsRunSystem
     {
-        private readonly EcsFilterInject<Inc<Rotation, RotationSpeed, MovementDirection>, Exc<Inactive>> _filter;
+        private readonly EcsFilterInject<Inc<Rotation, RotationSpeed, MovementDirection>, Exc<Inactive>> _filterInject;
 
         private EcsPool<Rotation> _rotationPool;
         private EcsPool<RotationSpeed> _rotationSpeedPool;
@@ -16,16 +16,16 @@ namespace EcsEngine.Systems
         
         void IEcsPreInitSystem.PreInit(IEcsSystems systems)
         {
-            _rotationPool = _filter.Pools.Inc1;
-            _rotationSpeedPool = _filter.Pools.Inc2;
-            _movementDirectionPool = _filter.Pools.Inc3;
+            _rotationPool = _filterInject.Pools.Inc1;
+            _rotationSpeedPool = _filterInject.Pools.Inc2;
+            _movementDirectionPool = _filterInject.Pools.Inc3;
         }
 
         void IEcsRunSystem.Run(IEcsSystems systems)
         {
             float deltaTime = Time.deltaTime;
             
-            foreach (int entityId in _filter.Value)
+            foreach (int entityId in _filterInject.Value)
             {
                 Vector3 direction = _movementDirectionPool.Get(entityId).Value;
                 float speed = _rotationSpeedPool.Get(entityId).Value;

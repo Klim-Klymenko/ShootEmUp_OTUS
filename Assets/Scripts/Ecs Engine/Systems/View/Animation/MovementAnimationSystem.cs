@@ -2,12 +2,13 @@
 using EcsEngine.Components.Tags;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
+using UnityEngine;
 
 namespace EcsEngine.Systems
 {
     public sealed class MovementAnimationSystem : IEcsPreInitSystem, IEcsRunSystem
     {
-        private readonly EcsFilterInject<Inc<UnityAnimator, MoveAnimation, MoveState>, Exc<Inactive>> _filter;
+        private readonly EcsFilterInject<Inc<UnityAnimator, MoveAnimation, MoveState>, Exc<Inactive>> _filterInject;
 
         private EcsPool<UnityAnimator> _animatorPool;
         private EcsPool<MoveAnimation> _moveAnimationPool;
@@ -15,20 +16,20 @@ namespace EcsEngine.Systems
         
         void IEcsPreInitSystem.PreInit(IEcsSystems systems)
         {
-            _animatorPool = _filter.Pools.Inc1;
-            _moveAnimationPool = _filter.Pools.Inc2;
-            _moveStatePool = _filter.Pools.Inc3;
+            _animatorPool = _filterInject.Pools.Inc1;
+            _moveAnimationPool = _filterInject.Pools.Inc2;
+            _moveStatePool = _filterInject.Pools.Inc3;
         }
 
         void IEcsRunSystem.Run(IEcsSystems systems)
         {
-            foreach (int entityId in _filter.Value)
+            foreach (int entityId in _filterInject.Value)
             {
-                UnityAnimator animator = _animatorPool.Get(entityId);
-                MoveAnimation moveAnimation = _moveAnimationPool.Get(entityId);
-                MoveState moveState = _moveStatePool.Get(entityId);
+                Animator animator = _animatorPool.Get(entityId).Value;
+                int moveAnimation = _moveAnimationPool.Get(entityId).Value;
+                int movementAnimationHash = _moveStatePool.Get(entityId).Hash;
                 
-                animator.Value.SetInteger(moveAnimation.Value, moveState.Hash);
+                animator.SetInteger(moveAnimation, movementAnimationHash);
             }
         }
     }

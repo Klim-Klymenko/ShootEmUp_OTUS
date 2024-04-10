@@ -12,11 +12,11 @@ namespace EcsEngine.Systems
 {
     public sealed class AttackEventSystem : IEcsPreInitSystem, IEcsRunSystem
     {
-        private readonly EcsFilterInject<Inc<AttackEvent, CurrentWeapon, Target>, Exc<Inactive>> _filter;
+        private readonly EcsFilterInject<Inc<AttackEvent, CurrentWeapon, Target, AttackEnabled>, Exc<Inactive>> _filterInject;
         private readonly EcsPoolInject<WeaponType> _weaponTypePoolInject;
-        private readonly EcsWorldInject _gameObjectsWorld;
+        private readonly EcsWorldInject _gameObjectsWorldInject;
 
-        private readonly EcsWorldInject _eventsWorld = EcsWorldsAPI.EventsWorld;
+        private readonly EcsWorldInject _eventsWorldInject = EcsWorldsAPI.EventsWorld;
         private readonly EcsPoolInject<ShootRequest> _shootRequestPoolInject = EcsWorldsAPI.EventsWorld;
         private readonly EcsPoolInject<HitRequest> _hitRequestPoolInject = EcsWorldsAPI.EventsWorld;
         private readonly EcsPoolInject<Source> _sourcePoolInject = EcsWorldsAPI.EventsWorld;
@@ -24,29 +24,27 @@ namespace EcsEngine.Systems
 
         private EcsPool<CurrentWeapon> _weaponPool;
         private EcsPool<Target> _targetPool;
-        private EcsPool<WeaponType> _weaponTypePool;
         
         void IEcsPreInitSystem.PreInit(IEcsSystems systems)
         {
-            _weaponPool = _filter.Pools.Inc2;
-            _targetPool = _filter.Pools.Inc3;
-            _weaponTypePool = _weaponTypePoolInject.Value;
+            _weaponPool = _filterInject.Pools.Inc2;
+            _targetPool = _filterInject.Pools.Inc3;
         }
 
         void IEcsRunSystem.Run(IEcsSystems systems)
         {
-            foreach (int entityId in _filter.Value)
+            foreach (int entityId in _filterInject.Value)
             {
-                EcsPackedEntity weaponEntity = _weaponPool.Get(entityId).Value;
+                EcsPackedEntity sourceEntity = _gameObjectsWorldInject.Value.PackEntity(entityId);
                 EcsPackedEntity targetEntity = _targetPool.Get(entityId).Value;
-                EcsPackedEntity sourceEntity = _gameObjectsWorld.Value.PackEntity(entityId);
-                
-                if (!weaponEntity.Unpack(_gameObjectsWorld.Value, out int weaponEntityId)) 
+                EcsPackedEntity weaponEntity = _weaponPool.Get(entityId).Value;
+
+                if (!weaponEntity.Unpack(_gameObjectsWorldInject.Value, out int weaponEntityId)) 
                     throw new Exception("Weapon entity is unable to unpack");
 
-                Weapon weaponType = _weaponTypePool.Get(weaponEntityId).Value;
+                Weapon weaponType = _weaponTypePoolInject.Value.Get(weaponEntityId).Value;
                 
-                int eventId = _eventsWorld.Value.NewEntity();
+                int eventId = _eventsWorldInject.Value.NewEntity();
                 
                 _sourcePoolInject.Value.Add(eventId) = new Source { Value = sourceEntity };
                 _targetPoolInject.Value.Add(eventId) = new Target { Value = targetEntity };

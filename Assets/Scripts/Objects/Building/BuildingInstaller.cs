@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Objects.DIInstallers.Building
 {
-    public sealed class BuildingInstaller : EntityInstaller
+    internal sealed class BuildingInstaller : EntityInstaller
     {
         [SerializeField]
         private Transform _transform;

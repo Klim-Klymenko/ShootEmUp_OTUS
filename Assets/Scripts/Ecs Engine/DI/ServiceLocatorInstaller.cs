@@ -1,13 +1,14 @@
 ﻿using Common;
+using EcsEngine.Extensions;
 using GameCycle;
 using JetBrains.Annotations;
 
-namespace EcsEngine.Extensions
+namespace EcsEngine.DI
 {
     [UsedImplicitly]
-    public sealed class ServiceLocatorInstaller
+    internal sealed class ServiceLocatorInstaller
     {
-        public ServiceLocatorInstaller(ServiceLocator serviceLocator, EntityManager entityManager, GameCycleManager gameCycleManager)
+        internal ServiceLocatorInstaller(ServiceLocator serviceLocator, EntityManager entityManager, GameCycleManager gameCycleManager)
         {
             serviceLocator.Bind(entityManager);
             serviceLocator.Bind(gameCycleManager);

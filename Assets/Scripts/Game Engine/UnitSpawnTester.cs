@@ -38,18 +38,5 @@ namespace Common.GameEngine
                 .Add(new SpawnRequest())
                 .Add(new Spawn { Prefab = randomPrefab, SpawnPoint = randomSpawnPoint });
         }
-        
-        /*[Button]
-        internal void SpawnUnit()
-        {
-            if (_gameCycleManager.GameState == GameState.Finished) return;
-            
-            Entity randomPrefab = _prefabs[1];
-            Transform randomSpawnPoint = _spawnPoints[Random.Range(0, _spawnPoints.Length)];
-            
-            _entityBuilder.CreateEntity()
-                .Add(new SpawnRequest())
-                .Add(new Spawn { Prefab = randomPrefab, SpawnPoint = randomSpawnPoint });
-        }*/
     }
 }

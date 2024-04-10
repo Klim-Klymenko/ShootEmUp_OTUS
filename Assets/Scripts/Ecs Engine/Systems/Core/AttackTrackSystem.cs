@@ -9,9 +9,9 @@ namespace EcsEngine.Systems
 {
     public sealed class AttackTrackSystem : IEcsPreInitSystem, IEcsRunSystem
     {
-        private readonly EcsFilterInject<Inc<AttackRange, Position, Target>, Exc<Inactive>> _filter;
+        private readonly EcsFilterInject<Inc<AttackRange, Position, Target>, Exc<Inactive>> _filterInject;
         private readonly EcsPoolInject<AttackEnabled> _attackEnabledPoolInject;
-        private readonly EcsWorldInject _gameObjectsWorld;
+        private readonly EcsWorldInject _gameObjectsWorldInject;
 
         private EcsPool<AttackRange> _attackRangePool;
         private EcsPool<Position> _positionPool;
@@ -20,21 +20,21 @@ namespace EcsEngine.Systems
 
         void IEcsPreInitSystem.PreInit(IEcsSystems systems)
         {
-            _attackRangePool = _filter.Pools.Inc1;
-            _positionPool = _filter.Pools.Inc2;
-            _targetPool = _filter.Pools.Inc3;
+            _attackRangePool = _filterInject.Pools.Inc1;
+            _positionPool = _filterInject.Pools.Inc2;
+            _targetPool = _filterInject.Pools.Inc3;
             _attackEnabledPool = _attackEnabledPoolInject.Value;
         }
 
         void IEcsRunSystem.Run(IEcsSystems systems)
         { 
-            foreach (int entityId in _filter.Value)
+            foreach (int entityId in _filterInject.Value)
             {
                 float attackRange = _attackRangePool.Get(entityId).Value;
                 Vector3 position = _positionPool.Get(entityId).Value;
                 EcsPackedEntity targetEntity = _targetPool.Get(entityId).Value; 
                     
-                if (!targetEntity.Unpack(_gameObjectsWorld.Value, out int targetEntityId)) 
+                if (!targetEntity.Unpack(_gameObjectsWorldInject.Value, out int targetEntityId)) 
                     throw new Exception("Target entity is unable to unpack"); ;
                 
                 Vector3 targetPosition = _positionPool.Get(targetEntityId).Value;

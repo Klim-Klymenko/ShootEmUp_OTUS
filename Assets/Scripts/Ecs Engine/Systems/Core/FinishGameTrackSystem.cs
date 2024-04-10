@@ -4,36 +4,34 @@ using EcsEngine.Components.Tags;
 using EcsEngine.Extensions;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
-using UnityEngine;
 
 namespace EcsEngine.Systems
 {
     public sealed class FinishGameTrackSystem : IEcsPreInitSystem, IEcsRunSystem
     {
-        private readonly EcsFilterInject<Inc<BaseTag, BaseInsufficientAmount, TeamAffiliation>, Exc<Inactive>> _filter;
+        private readonly EcsFilterInject<Inc<BaseTag, BaseInsufficientAmount, TeamAffiliation>, Exc<Inactive>> _filterInject;
         
-        private EcsPool<BaseInsufficientAmount> _insufficientAmountPool;
-        
-        private readonly EcsWorldInject _world = EcsWorldsAPI.EventsWorld;
+        private readonly EcsWorldInject _worldInject = EcsWorldsAPI.EventsWorld;
         private readonly EcsPoolInject<FinishGameRequest> _finishRequestPoolInject = EcsWorldsAPI.EventsWorld;
 
+        private EcsPool<BaseInsufficientAmount> _insufficientAmountPool;
 
         void IEcsPreInitSystem.PreInit(IEcsSystems systems)
         {
-            _insufficientAmountPool = _filter.Pools.Inc2;
+            _insufficientAmountPool = _filterInject.Pools.Inc2;
         }
 
         void IEcsRunSystem.Run(IEcsSystems systems)
         {
-            int entitiesCount = _filter.Value.GetEntitiesCount();
+            int entitiesCount = _filterInject.Value.GetEntitiesCount();
             
-            foreach (int entityId in _filter.Value)
+            foreach (int entityId in _filterInject.Value)
             {
                 int baseInsufficientAmount = _insufficientAmountPool.Get(entityId).Value;
                 
                 if (entitiesCount > baseInsufficientAmount) continue;
                  
-                int finishRequestId = _world.Value.NewEntity();
+                int finishRequestId = _worldInject.Value.NewEntity();
                 _finishRequestPoolInject.Value.Add(finishRequestId) = new FinishGameRequest();
                 
                 return;

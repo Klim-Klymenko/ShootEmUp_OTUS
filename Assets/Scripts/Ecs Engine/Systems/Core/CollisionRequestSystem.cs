@@ -9,11 +9,11 @@ namespace EcsEngine.Systems
 {
     public sealed class CollisionRequestSystem : IEcsPreInitSystem, IEcsRunSystem
     {
-        private readonly EcsFilterInject<Inc<CollisionRequest, Source, Target>, Exc<Inactive>> _filter = EcsWorldsAPI.EventsWorld;
+        private readonly EcsFilterInject<Inc<CollisionRequest, Source, Target>, Exc<Inactive>> _filterInject = EcsWorldsAPI.EventsWorld;
         private readonly EcsPoolInject<DealDamageRequest> _dealDamageRequestPoolInject = EcsWorldsAPI.EventsWorld;
-        private readonly EcsWorldInject _eventsWorld = EcsWorldsAPI.EventsWorld;
+        private readonly EcsWorldInject _eventsWorldInject = EcsWorldsAPI.EventsWorld;
 
-        private readonly EcsWorldInject _gameObjectsWorld;
+        private readonly EcsWorldInject _gameObjectsWorldInject;
         private readonly EcsPoolInject<Inactive> _inactivePoolInject;
         private readonly EcsPoolInject<Attackable> _attackablePoolInject;
         private readonly EcsPoolInject<ProjectileTag> _projectileTagPoolInject;
@@ -24,19 +24,19 @@ namespace EcsEngine.Systems
         
         void IEcsPreInitSystem.PreInit(IEcsSystems systems)
         {
-            _sourcePool = _filter.Pools.Inc2;
-            _targetPool = _filter.Pools.Inc3;
+            _sourcePool = _filterInject.Pools.Inc2;
+            _targetPool = _filterInject.Pools.Inc3;
         }
 
         void IEcsRunSystem.Run(IEcsSystems systems)
         {
-            foreach (int eventId in _filter.Value)
+            foreach (int eventId in _filterInject.Value)
             {
                 Source source = _sourcePool.Get(eventId);
                 Target target = _targetPool.Get(eventId);
                 
-                if (!source.Value.Unpack(_gameObjectsWorld.Value, out int sourceEntityId)) continue;
-                if (!target.Value.Unpack(_gameObjectsWorld.Value, out int targetEntityId)) continue;
+                if (!source.Value.Unpack(_gameObjectsWorldInject.Value, out int sourceEntityId)) continue;
+                if (!target.Value.Unpack(_gameObjectsWorldInject.Value, out int targetEntityId)) continue;
                 
                 if (_inactivePoolInject.Value.Has(sourceEntityId) || _inactivePoolInject.Value.Has(targetEntityId)) continue;
                 
@@ -45,13 +45,13 @@ namespace EcsEngine.Systems
                 
                 if (!_attackablePoolInject.Value.Has(targetEntityId)) continue;
                 
-                int dealDamageRequestId = _eventsWorld.Value.NewEntity();
+                int dealDamageRequestId = _eventsWorldInject.Value.NewEntity();
 
                 _sourcePool.Add(dealDamageRequestId) = source;
                 _targetPool.Add(dealDamageRequestId) = target;
                 _dealDamageRequestPoolInject.Value.Add(dealDamageRequestId) = new DealDamageRequest();
 
-                _eventsWorld.Value.DelEntity(eventId);
+                _eventsWorldInject.Value.DelEntity(eventId);
             }
         }
     }

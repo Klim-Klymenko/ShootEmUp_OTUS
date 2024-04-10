@@ -1,7 +1,6 @@
 using Common;
 using EcsEngine.Components;
 using EcsEngine.Components.Events;
-using EcsEngine.Components.Tags;
 using EcsEngine.Extensions;
 using EcsEngine.Systems;
 using EcsEngine.Systems.Sound;
@@ -13,7 +12,6 @@ using Leopotam.EcsLite.UnityEditor;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using Leopotam.EcsLite.ExtendedSystems;
-using UnityEngine;
 
 namespace EcsEngine
 { 
@@ -54,17 +52,17 @@ namespace EcsEngine
             _systems
                 .Add(new CollisionRequestSystem())
                 
-                .Add(new ActiveTargetTrackSystem())
                 .Add(new FinishGameTrackSystem())
                 .Add(new FinishGameRequestSystem())
+                .Add(new ActiveTargetTrackSystem())
                 .Add(new ClosestTargetSearchRequestSystem())
-                .Add(new AttackTrackSystem())
-                .Add(new CooldownAttackControlSystem())
-                .Add(new TimerSystem())
                 .Add(new TargetDirectionCalculationSystem())
-                .Add(new MoveStateControlSystem())
                 .Add(new MovementSystem())
                 .Add(new RotationSystem())
+                .Add(new AttackTrackSystem())
+                .Add(new MoveStateControlSystem())
+                .Add(new CooldownAttackControlSystem())
+                .Add(new TimerSystem())
 
                 .Add(new AttackEventSystem())
                 .Add(new HitRequestSystem())
@@ -77,8 +75,7 @@ namespace EcsEngine
                 .Add(new DeathRequestSystem())
                 .Add(new DeadDestructionSystem())
 
-                .Add(new PositionSynchronizationSystem())
-                .Add(new RotationSynchronizationSystem())
+                .Add(new TransformSynchronizationSystem())
                 
                 .Add(new MovementAnimationSystem())
                 .Add(new AttackAnimationSystem())
@@ -119,7 +116,6 @@ namespace EcsEngine
 
         void IFinishGameListener.OnFinish()
         {
-            Debug.Log("Finish");
             if (_eventsWorld != null) 
             {
                 _eventsWorld.Destroy();

@@ -3,11 +3,10 @@ using EcsEngine.Components.Tags;
 using EcsEngine.Extensions;
 using Leopotam.EcsLite;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Objects.Swordsman
 {
-    public sealed class UnitCoreInstaller : EntityInstaller
+    internal sealed class UnitCoreInstaller : EntityInstaller
     {
         [SerializeField] 
         private Transform _transform;
