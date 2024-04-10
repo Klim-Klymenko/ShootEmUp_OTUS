@@ -1,6 +1,7 @@
 ﻿using EcsEngine.Components;
 using EcsEngine.Components.Tags;
 using EcsEngine.Extensions;
+using Leopotam.EcsLite;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -35,7 +36,7 @@ namespace Objects.Swordsman
         [SerializeField]
         private CurrentWeapon _weapon;
         
-        public override void Install(Entity entity)
+        public override void Install(Entity entity, EcsWorld world)
         {
             entity
                 .AddComponent(_health)

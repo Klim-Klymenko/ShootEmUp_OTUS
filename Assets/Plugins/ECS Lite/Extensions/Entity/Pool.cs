@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
 using EcsEngine.Extensions;
 using JetBrains.Annotations;
-using Plugins.ECSLite.Extensions.Entity;
 using UnityEngine;
 using Zenject;
-using Object = UnityEngine.Object;
 
 namespace Common
 {
@@ -36,7 +34,6 @@ namespace Common
         {
             for (int i = 0; i < _poolSize; i++)
             {
-                
                 Entity obj = _diContainer.InstantiatePrefab(_prefab, _parent).GetComponent<Entity>();
             
                 _objects.Add(obj);

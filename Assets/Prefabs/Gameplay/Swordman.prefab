@@ -206,6 +206,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: <Sword>
+  <InstallOnAwake>k__BackingField: 0
   _entityInstallers:
   - {fileID: 8338430246829718880}
 --- !u!114 &8338430246829718880
@@ -230,8 +231,7 @@ MonoBehaviour:
     <Value>k__BackingField: 0
   _spawn:
     <Prefab>k__BackingField: {fileID: 0}
-    <FirePoint>k__BackingField: {fileID: 0}
-    <Parent>k__BackingField: {fileID: 0}
+    <SpawnPoint>k__BackingField: {fileID: 0}
   _audioSource:
     <Value>k__BackingField: {fileID: 6069033681498753261}
   _attackClip:
@@ -251,6 +251,7 @@ GameObject:
   - component: {fileID: 3181071847398574758}
   - component: {fileID: 2751691781053188257}
   - component: {fileID: 454001655637695776}
+  - component: {fileID: 7775437612300068175}
   - component: {fileID: 4365896013292188636}
   m_Layer: 0
   m_Name: Swordman
@@ -291,9 +292,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: Swordman
+  <InstallOnAwake>k__BackingField: 1
   _entityInstallers:
   - {fileID: 2751691781053188257}
   - {fileID: 454001655637695776}
+  - {fileID: 7775437612300068175}
 --- !u!114 &2751691781053188257
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -356,6 +359,19 @@ MonoBehaviour:
       type: 3}
   _takeDamageParticle:
     <Value>k__BackingField: {fileID: 7906830424652367558}
+--- !u!114 &7775437612300068175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8692576747330127513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aebbe981a720451ab5397507372d3e45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _weaponEntity: {fileID: 2715162079952794295}
 --- !u!136 &4365896013292188636
 CapsuleCollider:
   m_ObjectHideFlags: 0

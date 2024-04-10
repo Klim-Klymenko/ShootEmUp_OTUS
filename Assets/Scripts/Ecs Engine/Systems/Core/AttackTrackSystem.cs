@@ -27,7 +27,7 @@ namespace EcsEngine.Systems
         }
 
         void IEcsRunSystem.Run(IEcsSystems systems)
-        {
+        { 
             foreach (int entityId in _filter.Value)
             {
                 float attackRange = _attackRangePool.Get(entityId).Value;

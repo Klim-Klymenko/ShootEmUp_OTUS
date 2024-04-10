@@ -38,6 +38,9 @@ namespace EcsEngine.Extensions
             for (int i = 0; i < _sceneEntities.Length; i++)
             {
                 Entity entity = _sceneEntities[i];
+                
+                if (!entity.InstallOnAwake) continue;
+                
                 entity.Initialize(world);
                 
                 if (!entity.Unpack(out int entityId))

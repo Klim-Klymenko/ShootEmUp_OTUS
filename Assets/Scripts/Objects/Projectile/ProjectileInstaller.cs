@@ -2,6 +2,7 @@
 using EcsEngine.Components.Requests;
 using EcsEngine.Components.Tags;
 using EcsEngine.Extensions;
+using Leopotam.EcsLite;
 using UnityEngine;
 
 namespace Objects.Projectile
@@ -26,7 +27,7 @@ namespace Objects.Projectile
         [SerializeField]
         private TeamAffiliation _teamAffiliation;
         
-        public override void Install(Entity entity)
+        public override void Install(Entity entity, EcsWorld world)
         {
             entity
                 .AddComponent(new Position { Value = _transform.position })
@@ -35,7 +36,8 @@ namespace Objects.Projectile
                 .AddComponent(_movementSpeed)
                 .AddComponent(_rotationSpeed)
                 .AddComponent(_unityTransform)
-                .AddComponent(new ProjectileTag());
+                .AddComponent(new ProjectileTag())
+                .AddComponent(new SpawnAdjustable());
         }
     }
 }

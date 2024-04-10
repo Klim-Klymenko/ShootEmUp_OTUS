@@ -40,7 +40,7 @@ namespace EcsEngine.Systems
                 
                 if (_inactivePoolInject.Value.Has(sourceEntityId) || _inactivePoolInject.Value.Has(targetEntityId)) continue;
                 
-                if (_projectileTagPoolInject.Value.Has(sourceEntityId))
+                if (_projectileTagPoolInject.Value.Has(sourceEntityId) && !_deathRequestPoolInject.Value.Has(sourceEntityId))
                     _deathRequestPoolInject.Value.Add(sourceEntityId) = new DeathRequest();
                 
                 if (!_attackablePoolInject.Value.Has(targetEntityId)) continue;

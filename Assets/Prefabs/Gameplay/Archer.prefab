@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1641580430782320922}
   - component: {fileID: 830574576853215701}
   - component: {fileID: 7920404922809512633}
+  - component: {fileID: 6516440248696820307}
   - component: {fileID: 204180750398671638}
   m_Layer: 0
   m_Name: Archer
@@ -52,9 +53,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: Archer
+  <InstallOnAwake>k__BackingField: 1
   _entityInstallers:
   - {fileID: 830574576853215701}
   - {fileID: 7920404922809512633}
+  - {fileID: 6516440248696820307}
 --- !u!114 &830574576853215701
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -117,6 +120,19 @@ MonoBehaviour:
       type: 3}
   _takeDamageParticle:
     <Value>k__BackingField: {fileID: 7289718092175283894}
+--- !u!114 &6516440248696820307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1870072543877420731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aebbe981a720451ab5397507372d3e45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _weaponEntity: {fileID: 6549747024234659967}
 --- !u!136 &204180750398671638
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -177,6 +193,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: <Bow>
+  <InstallOnAwake>k__BackingField: 0
   _entityInstallers:
   - {fileID: 8353758619229418457}
 --- !u!114 &8353758619229418457

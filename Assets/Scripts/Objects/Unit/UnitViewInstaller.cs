@@ -1,6 +1,7 @@
 ﻿using EcsEngine.Components;
 using EcsEngine.Components.View;
 using EcsEngine.Extensions;
+using Leopotam.EcsLite;
 using UnityEngine;
 
 namespace Objects.Swordsman
@@ -31,7 +32,7 @@ namespace Objects.Swordsman
         [SerializeField]
         private TakeDamageParticle _takeDamageParticle;
         
-        public override void Install(Entity entity)
+        public override void Install(Entity entity, EcsWorld world)
         {
             entity
                 .AddComponent(_transform)

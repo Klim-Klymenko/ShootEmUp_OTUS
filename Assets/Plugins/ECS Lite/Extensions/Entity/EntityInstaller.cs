@@ -1,10 +1,11 @@
-﻿using UnityEngine;
+﻿using Leopotam.EcsLite;
+using UnityEngine;
 
 namespace EcsEngine.Extensions
 {
     public abstract class EntityInstaller : MonoBehaviour
     {
-        public abstract void Install(Entity entity);
-        public virtual void Uninstall(Entity entity) { }
+        public abstract void Install(Entity entity, EcsWorld world);
+        public virtual void Uninstall(Entity entity, EcsWorld world) { }
     }
 }

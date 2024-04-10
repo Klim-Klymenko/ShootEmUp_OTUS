@@ -1,7 +1,7 @@
-﻿using System;
-using Common;
+﻿using Common;
 using EcsEngine.Components;
 using EcsEngine.Components.Requests;
+using EcsEngine.Components.Tags;
 using EcsEngine.Extensions;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
@@ -12,21 +12,23 @@ namespace EcsEngine.Systems
     public sealed class SpawnRequestSystem : IEcsPreInitSystem, IEcsRunSystem
     {
         private readonly EcsFilterInject<Inc<SpawnRequest, Spawn>> _filter = EcsWorldsAPI.EventsWorld;
-        private readonly EcsPoolInject<Target> _targetRequestPoolInject = EcsWorldsAPI.EventsWorld;
-        private readonly EcsPoolInject<CurrentWeapon> _weaponRequestPoolInject = EcsWorldsAPI.EventsWorld;
+        private readonly EcsPoolInject<SpawnFactoryRequest> _spawnFactoryRequestPoolInject = EcsWorldsAPI.EventsWorld;
         private readonly EcsWorldInject _eventsWorld = EcsWorldsAPI.EventsWorld;
-        
-        private readonly EcsPoolInject<Target> _targetPoolInject;
-        private readonly EcsPoolInject<CurrentWeapon> _weaponPoolInject;
+
+        private readonly EcsPoolInject<SpawnAdjustable> _adjustablePoolInject;
         
         private readonly EcsCustomInject<ServiceLocator> _serviceLocator;
         
+        private EcsPool<SpawnRequest> _spawnRequestPool;
         private EcsPool<Spawn> _spawnPool;
+        
         private EntityManager _entityManager;
         
         void IEcsPreInitSystem.PreInit(IEcsSystems systems)
         {
+            _spawnRequestPool = _filter.Pools.Inc1;
             _spawnPool = _filter.Pools.Inc2;
+            
             _entityManager = _serviceLocator.Value.Resolve<EntityManager>();
         }
 
@@ -40,13 +42,18 @@ namespace EcsEngine.Systems
                 Vector3 position = spawn.SpawnPoint.position;
                 Quaternion rotation = spawn.SpawnPoint.localRotation;
 
-                _entityManager.CreateEntity(prefab, position, rotation, out int spawnedEntityId);
+                Entity spawnedEntity = _entityManager.CreateEntity(prefab, position, rotation, out int spawnedEntityId);
+
+                if (_adjustablePoolInject.Value.Has(spawnedEntityId))
+                {
+                    int factoryRequestId = _eventsWorld.Value.NewEntity();
                 
-                if (_targetRequestPoolInject.Value.Has(eventId))
-                    _targetPoolInject.Value.Add(spawnedEntityId) = _targetRequestPoolInject.Value.Get(eventId);
+                    _spawnRequestPool.Del(eventId);
+                    _spawnPool.Del(eventId);
                 
-                if (_weaponRequestPoolInject.Value.Has(eventId))
-                    _weaponPoolInject.Value.Add(spawnedEntityId) = _weaponRequestPoolInject.Value.Get(eventId);
+                    _eventsWorld.Value.CopyEntity(eventId, factoryRequestId);
+                    _spawnFactoryRequestPoolInject.Value.Add(factoryRequestId) = new SpawnFactoryRequest { SpawnedEntity = spawnedEntity.PackedEntity};
+                }
                 
                 _eventsWorld.Value.DelEntity(eventId);
             }

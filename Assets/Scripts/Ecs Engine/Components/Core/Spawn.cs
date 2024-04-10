@@ -8,10 +8,7 @@ namespace EcsEngine.Components
     [Serializable]
     public struct Spawn
     {
-        [field: SerializeField]
-        public Entity Prefab { get; private set; }
-        
-        [field: SerializeField]
-        public Transform SpawnPoint { get; private set; }
+        public Entity Prefab;
+        public Transform SpawnPoint;
     }
 }

@@ -2,17 +2,18 @@
 using EcsEngine.Components.Requests;
 using EcsEngine.Components.Tags;
 using EcsEngine.Data;
+using EcsEngine.Extensions;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using UnityEngine;
 
 namespace EcsEngine.Systems
 {
-    public sealed class ClosestTargetSearchSystem : IEcsPreInitSystem, IEcsRunSystem
+    public sealed class ClosestTargetSearchRequestSystem : IEcsPreInitSystem, IEcsRunSystem
     {
-        private readonly EcsFilterInject<Inc<FindTargetRequest, Target, TeamAffiliation, Position>, Exc<Inactive>> _requesterFilter;
+        private readonly EcsFilterInject<Inc<FindTargetRequest, Target, TeamAffiliation, Position>, Exc<Inactive, ProjectileTag>> _requesterFilter;
         private readonly EcsFilterInject<Inc<TeamAffiliation, Attackable, Position>, Exc<Inactive>> _targetFilter;
-        private readonly EcsWorldInject _world;
+        private readonly EcsWorldInject _gameObjectsWorld;
         
         private EcsPool<FindTargetRequest> _findTargetRequestPool;
         private EcsPool<Target> _targetPool;
@@ -54,7 +55,7 @@ namespace EcsEngine.Systems
                         targetEntityId = targetId;
                 }
                 
-                targetEntity = _world.Value.PackEntity(targetEntityId);
+                targetEntity = _gameObjectsWorld.Value.PackEntity(targetEntityId);
                 
                 _findTargetRequestPool.Del(requesterId);
             }

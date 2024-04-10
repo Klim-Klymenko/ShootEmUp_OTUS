@@ -13,6 +13,7 @@ using Leopotam.EcsLite.UnityEditor;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using Leopotam.EcsLite.ExtendedSystems;
+using UnityEngine;
 
 namespace EcsEngine
 { 
@@ -54,7 +55,9 @@ namespace EcsEngine
                 .Add(new CollisionRequestSystem())
                 
                 .Add(new ActiveTargetTrackSystem())
-                .Add(new ClosestTargetSearchSystem())
+                .Add(new FinishGameTrackSystem())
+                .Add(new FinishGameRequestSystem())
+                .Add(new ClosestTargetSearchRequestSystem())
                 .Add(new AttackTrackSystem())
                 .Add(new CooldownAttackControlSystem())
                 .Add(new TimerSystem())
@@ -68,6 +71,7 @@ namespace EcsEngine
                 .Add(new DealDamageRequestSystem())
                 .Add(new ShootRequestSystem())
                 .Add(new SpawnRequestSystem())
+                .Add(new ProjectileFactoryRequestSystem())
                 
                 .Add(new DeathTrackSystem())
                 .Add(new DeathRequestSystem())
@@ -89,7 +93,8 @@ namespace EcsEngine
 
                 .DelHere<AttackEvent>()
                 .DelHere<DeathEvent>()
-                .OneFrame<DealDamageEvent>(EcsWorldsAPI.EventsWorld);
+                .OneFrame<DealDamageEvent>(EcsWorldsAPI.EventsWorld)
+                .OneFrame<CollisionRequest>(EcsWorldsAPI.EventsWorld);
         }
 
         private void AddExtraWorlds()
@@ -114,12 +119,7 @@ namespace EcsEngine
 
         void IFinishGameListener.OnFinish()
         {
-            if (_systems != null) 
-            {
-                _systems.Destroy();
-                _systems = null;
-            }
-            
+            Debug.Log("Finish");
             if (_eventsWorld != null) 
             {
                 _eventsWorld.Destroy();
@@ -131,6 +131,9 @@ namespace EcsEngine
                 _gameObjectsWorld.Destroy();
                 _gameObjectsWorld = null;
             }
+
+            if (_systems != null)
+                _systems = null;
         }
     }
 }

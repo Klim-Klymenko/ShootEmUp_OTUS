@@ -4,6 +4,7 @@ using EcsEngine.Components.Tags;
 using EcsEngine.Extensions;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
+using UnityEngine;
 
 namespace EcsEngine.Systems
 {
@@ -15,6 +16,8 @@ namespace EcsEngine.Systems
         
         private readonly EcsWorldInject _gameObjectsWorld;
         private readonly EcsPoolInject<Inactive> _inactivePoolInject;
+        private readonly EcsPoolInject<AttackRange> _attackRangePoolInject;
+        private readonly EcsPoolInject<Position> _positionPoolInject;
                 
         private EcsPool<Source> _sourcePool;
         private EcsPool<Target> _targetPool;
@@ -36,6 +39,17 @@ namespace EcsEngine.Systems
                 if (!target.Value.Unpack(_gameObjectsWorld.Value, out int targetEntityId)) continue;
                 
                 if (_inactivePoolInject.Value.Has(sourceEntityId) || _inactivePoolInject.Value.Has(targetEntityId)) continue;
+                
+                Vector3 sourcePosition = _positionPoolInject.Value.Get(sourceEntityId).Value;
+                Vector3 targetPosition = _positionPoolInject.Value.Get(targetEntityId).Value;
+                
+                float attackRange = _attackRangePoolInject.Value.Get(sourceEntityId).Value;
+                float sqrAttackRange = attackRange * attackRange;
+                
+                Vector3 distanceVector = sourcePosition - targetPosition;
+                float sqrDistance = distanceVector.sqrMagnitude;
+                
+                if (sqrDistance > sqrAttackRange) continue;
                 
                 int dealDamageRequestId = _eventsWorld.Value.NewEntity();
                 

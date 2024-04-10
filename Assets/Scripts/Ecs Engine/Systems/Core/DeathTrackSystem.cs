@@ -40,6 +40,7 @@ namespace EcsEngine.Systems
                     throw new Exception("Target entity is unable to unpack");
                 
                 if (_inactivePool.Has(targetEntityId)) continue;
+                if (_deathRequestPool.Has(targetEntityId)) continue;
                 
                 Health health = _healthPool.Get(targetEntityId);
                 

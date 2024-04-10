@@ -2094,6 +2094,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8353758619229418457, guid: 2edb3dcb9e85f4750b5bc0c0cac3d77f,
         type: 3}
+      propertyPath: _spawn.Prefab
+      value: 
+      objectReference: {fileID: 5222266406420681905, guid: be13d19a394965848889fed89c0568be,
+        type: 3}
+    - target: {fileID: 8353758619229418457, guid: 2edb3dcb9e85f4750b5bc0c0cac3d77f,
+        type: 3}
+      propertyPath: _spawn.SpawnPoint
+      value: 
+      objectReference: {fileID: 4294596851086864614}
+    - target: {fileID: 8353758619229418457, guid: 2edb3dcb9e85f4750b5bc0c0cac3d77f,
+        type: 3}
       propertyPath: _spawn.<Prefab>k__BackingField
       value: 
       objectReference: {fileID: 5222266406420681905, guid: be13d19a394965848889fed89c0568be,

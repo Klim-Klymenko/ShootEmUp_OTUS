@@ -36,19 +36,26 @@ namespace EcsEngine.Systems
             {
                 EcsPackedEntity sourceEntity = _sourcePool.Get(eventId).Value;
                 EcsPackedEntity targetEntity = _targetPool.Get(eventId).Value;
+
+                int damage;
                 
                 if (!sourceEntity.Unpack(_gameObjectsWorld.Value, out int sourceEntityId)) 
                     throw new Exception("Source entity is unable to unpack");
                 
-                if (!targetEntity.Unpack(_gameObjectsWorld.Value, out int targetEntityId)) 
-                    throw new Exception("Target entity is unable to unpack");
+                if (_damagePoolInject.Value.Has(sourceEntityId))
+                    damage = _damagePoolInject.Value.Get(sourceEntityId).Value;
+                else
+                {
+                    EcsPackedEntity weaponEntity = _weaponPoolInject.Value.Get(sourceEntityId).Value;
+
+                    if (!weaponEntity.Unpack(_gameObjectsWorld.Value, out int weaponEntityId))
+                        throw new Exception("Weapon entity is unable to unpack");
+                    
+                    damage = _damagePoolInject.Value.Get(weaponEntityId).Value;
+                }
                 
-                EcsPackedEntity weaponEntity = _weaponPoolInject.Value.Get(sourceEntityId).Value;
+                if (!targetEntity.Unpack(_gameObjectsWorld.Value, out int targetEntityId)) continue;
                 
-                if (!weaponEntity.Unpack(_gameObjectsWorld.Value, out int weaponEntityId)) 
-                    throw new Exception("Weapon entity is unable to unpack");
-                
-                int damage = _damagePoolInject.Value.Get(weaponEntityId).Value;
                 ref Health health = ref _healthPoolInject.Value.Get(targetEntityId);
                 
                 health.HitPoints = Mathf.Max(health.MinHitPoints, health.HitPoints - damage);

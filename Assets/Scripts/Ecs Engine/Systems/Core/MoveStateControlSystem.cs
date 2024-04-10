@@ -3,6 +3,7 @@ using EcsEngine.Components.Tags;
 using EcsEngine.Data;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
+using UnityEngine;
 
 namespace EcsEngine.Systems
 {

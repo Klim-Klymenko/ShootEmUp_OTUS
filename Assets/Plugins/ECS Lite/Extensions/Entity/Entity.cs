@@ -9,7 +9,10 @@ namespace EcsEngine.Extensions
     {
         [SerializeField]
         private string _name;
-        
+
+        [field: SerializeField] 
+        public bool InstallOnAwake { get; private set; } = true;
+            
         [SerializeField]
         private EntityInstaller[] _entityInstallers;
         
@@ -32,13 +35,13 @@ namespace EcsEngine.Extensions
             _packedEntity = world.PackEntity(entityId);
             
             for (int i = 0; i < _entityInstallers.Length; i++)
-                _entityInstallers[i].Install(this);
+                _entityInstallers[i].Install(this, world);
         }
         
         public void Dispose()
         {
             for (int i = 0; i < _entityInstallers.Length; i++)
-                _entityInstallers[i].Uninstall(this);
+                _entityInstallers[i].Uninstall(this, _world);
             
             if (Unpack(out int entityId))
                 _world.DelEntity(entityId);
@@ -68,7 +71,7 @@ namespace EcsEngine.Extensions
         public Entity AddComponent<T>(T component) where T : struct
         {
             if (!Unpack(out int entityId))
-                throw new InvalidDataException("Failed to unpack entity");
+                return null;
             
             EcsPool<T> pool = _world.GetPool<T>();
             pool.Add(entityId) = component;
