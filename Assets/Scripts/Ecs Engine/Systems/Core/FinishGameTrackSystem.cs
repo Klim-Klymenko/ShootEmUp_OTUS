@@ -12,7 +12,7 @@ namespace EcsEngine.Systems
         private readonly EcsFilterInject<Inc<BaseTag, BaseInsufficientAmount, TeamAffiliation>, Exc<Inactive>> _filterInject;
         
         private readonly EcsWorldInject _worldInject = EcsWorldsAPI.EventsWorld;
-        private readonly EcsPoolInject<FinishGameEvent> _finishEventPoolInject = EcsWorldsAPI.EventsWorld;
+        private readonly EcsPoolInject<FinishGameRequest> _finishRequestPoolInject = EcsWorldsAPI.EventsWorld;
 
         private EcsPool<BaseInsufficientAmount> _insufficientAmountPool;
 
@@ -31,8 +31,8 @@ namespace EcsEngine.Systems
                 
                 if (entitiesCount > baseInsufficientAmount) continue;
                  
-                int finishEventId = _worldInject.Value.NewEntity();
-                _finishEventPoolInject.Value.Add(finishEventId) = new FinishGameEvent();
+                int finishRequestId = _worldInject.Value.NewEntity();
+                _finishRequestPoolInject.Value.Add(finishRequestId) = new FinishGameRequest();
                 
                 return;
             }

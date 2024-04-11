@@ -52,8 +52,9 @@ namespace EcsEngine
         {
             _systems
                 .Add(new CollisionRequestSystem())
-
+                
                 .Add(new FinishGameTrackSystem())
+                .Add(new FinishGameRequestSystem())
                 .Add(new AnimatorDisableSystem())
                 .Add(new FinishGameSystem())
                 
