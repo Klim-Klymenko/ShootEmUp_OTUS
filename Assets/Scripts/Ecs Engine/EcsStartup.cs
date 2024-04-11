@@ -1,6 +1,7 @@
 using Common;
 using EcsEngine.Components;
 using EcsEngine.Components.Events;
+using EcsEngine.Components.Requests;
 using EcsEngine.Extensions;
 using EcsEngine.Systems;
 using EcsEngine.Systems.Sound;
@@ -51,9 +52,11 @@ namespace EcsEngine
         {
             _systems
                 .Add(new CollisionRequestSystem())
-                
+
                 .Add(new FinishGameTrackSystem())
-                .Add(new FinishGameRequestSystem())
+                .Add(new AnimatorDisableSystem())
+                .Add(new FinishGameSystem())
+                
                 .Add(new ActiveTargetTrackSystem())
                 .Add(new ClosestTargetSearchRequestSystem())
                 .Add(new TargetDirectionCalculationSystem())
@@ -70,13 +73,13 @@ namespace EcsEngine
                 .Add(new ShootRequestSystem())
                 .Add(new SpawnRequestSystem())
                 .Add(new ProjectileFactoryRequestSystem())
-                
+
                 .Add(new DeathTrackSystem())
                 .Add(new DeathRequestSystem())
                 .Add(new DeadDestructionSystem())
 
                 .Add(new TransformSynchronizationSystem())
-                
+
                 .Add(new MovementAnimationSystem())
                 .Add(new AttackAnimationSystem())
                 .Add(new AttackSoundSystem())
@@ -90,8 +93,10 @@ namespace EcsEngine
 
                 .DelHere<AttackEvent>()
                 .DelHere<DeathEvent>()
+                
+                .OneFrame<CollisionRequest>(EcsWorldsAPI.EventsWorld)
                 .OneFrame<DealDamageEvent>(EcsWorldsAPI.EventsWorld)
-                .OneFrame<CollisionRequest>(EcsWorldsAPI.EventsWorld);
+                .OneFrame<FinishGameEvent>(EcsWorldsAPI.EventsWorld);
         }
 
         private void AddExtraWorlds()

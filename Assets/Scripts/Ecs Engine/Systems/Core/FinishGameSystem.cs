@@ -7,10 +7,9 @@ using Leopotam.EcsLite.Di;
 
 namespace EcsEngine.Systems
 {
-    public sealed class FinishGameRequestSystem : IEcsPreInitSystem, IEcsRunSystem
+    public sealed class FinishGameSystem : IEcsPreInitSystem, IEcsRunSystem
     {
-        private readonly EcsFilterInject<Inc<FinishGameRequest>> _filterInject = EcsWorldsAPI.EventsWorld;
-        private readonly EcsWorldInject _worldInject = EcsWorldsAPI.EventsWorld;
+        private readonly EcsFilterInject<Inc<FinishGameEvent>> _filterInject = EcsWorldsAPI.EventsWorld;
         
         private readonly EcsCustomInject<ServiceLocator> _serviceLocatorInject;
         private GameCycleManager _gameCycleManager;
@@ -25,8 +24,6 @@ namespace EcsEngine.Systems
             foreach (int eventId in _filterInject.Value)
             {
                 _gameCycleManager.OnDestroy();
-                
-                _worldInject.Value.DelEntity(eventId);
             }
         }
     }
