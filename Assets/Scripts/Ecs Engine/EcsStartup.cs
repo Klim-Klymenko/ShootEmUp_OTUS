@@ -1,4 +1,3 @@
-using Common;
 using EcsEngine.Components;
 using EcsEngine.Components.Events;
 using EcsEngine.Components.Requests;
@@ -13,6 +12,7 @@ using Leopotam.EcsLite.UnityEditor;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using Leopotam.EcsLite.ExtendedSystems;
+using Zenject;
 
 namespace EcsEngine
 { 
@@ -24,13 +24,13 @@ namespace EcsEngine
         private IEcsSystems _systems;
 
         private readonly EntityManager _entityManager;
-        private readonly ServiceLocator _serviceLocator;
+        private readonly DiContainer _diContainer;
         private readonly EcsEntityBuilder _entityBuilder;
 
-        internal EcsStartup(EntityManager entityManager, ServiceLocator serviceLocator, EcsEntityBuilder entityBuilder)
+        internal EcsStartup(EntityManager entityManager, DiContainer diContainer, EcsEntityBuilder entityBuilder)
         {
             _entityManager = entityManager;
-            _serviceLocator = serviceLocator;
+            _diContainer = diContainer;
             _entityBuilder = entityBuilder;
         }
         
@@ -38,7 +38,7 @@ namespace EcsEngine
         {
             _gameObjectsWorld = new EcsWorld();
             _eventsWorld = new EcsWorld();
-            _systems = new EcsSystems(_gameObjectsWorld);
+            _systems = new EcsSystems(_gameObjectsWorld, _diContainer);
 
             AddExtraWorlds();
             AddSystems();
@@ -53,7 +53,6 @@ namespace EcsEngine
             _systems
                 .Add(new CollisionRequestSystem())
                 
-                .Add(new FinishGameTrackSystem())
                 .Add(new FinishGameRequestSystem())
                 .Add(new AnimatorDisableSystem())
                 .Add(new FinishGameSystem())
@@ -77,8 +76,9 @@ namespace EcsEngine
 
                 .Add(new DeathTrackSystem())
                 .Add(new DeathRequestSystem())
+                .Add(new BaseDestructionFinishGameSystem())
                 .Add(new DeadDestructionSystem())
-
+                
                 .Add(new TransformSynchronizationSystem())
 
                 .Add(new MovementAnimationSystem())
@@ -107,7 +107,7 @@ namespace EcsEngine
 
         private void AddInjections()
         {
-            _systems.Inject(_serviceLocator);
+            _systems.Inject(_diContainer);
         }
         
         void IStartGameListener.OnStart()

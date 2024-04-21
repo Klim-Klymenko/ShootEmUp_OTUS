@@ -10,6 +10,7 @@ namespace EcsEngine.Systems
     {
         private readonly EcsFilterInject<Inc<MoveState>, Exc<Inactive>> _filterInject;
         private readonly EcsPoolInject<AttackEnabled> _attackEnabledPoolInject;
+        private readonly EcsPoolInject<MoveEnabled> _moveEnabledPoolInject;
 
         private EcsPool<MoveState> _moveStatePool;
 
@@ -27,10 +28,15 @@ namespace EcsEngine.Systems
                 if (_attackEnabledPoolInject.Value.Has(entityId))
                 {
                     moveState = State.Idle;
+                    _moveEnabledPoolInject.Value.Del(entityId);
+                    
                     continue;
                 }
                 
                 moveState = State.Move;
+
+                if (!_moveEnabledPoolInject.Value.Has(entityId))
+                    _moveEnabledPoolInject.Value.Add(entityId) = new MoveEnabled();
             }
         }
     }

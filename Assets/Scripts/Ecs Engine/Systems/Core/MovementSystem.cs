@@ -8,7 +8,7 @@ namespace EcsEngine.Systems
 {
     public sealed class MovementSystem : IEcsPreInitSystem, IEcsRunSystem
     {
-        private readonly EcsFilterInject<Inc<MovementDirection, MovementSpeed, Position>, Exc<Inactive, AttackEnabled>> _filterInject;
+        private readonly EcsFilterInject<Inc<MovementDirection, MovementSpeed, Position, MoveEnabled>, Exc<Inactive>> _filterInject;
 
         private EcsPool<MovementDirection> _movementDirectionPool;
         private EcsPool<MovementSpeed> _movementSpeedPool;

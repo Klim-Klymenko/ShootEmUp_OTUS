@@ -37,6 +37,7 @@ namespace Objects.Projectile
                 .AddComponent(_unityTransform)
                 .AddComponent(new ProjectileTag())
                 .AddComponent(new TargetSearchDisabled())
+                .AddComponent(new MoveEnabled())
                 .AddComponent(new SpawnAdjustable());
         }
     }

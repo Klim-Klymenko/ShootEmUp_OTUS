@@ -20,9 +20,6 @@ namespace Objects.DIInstallers.Building
         
         [SerializeField]
         private TeamAffiliation _teamAffiliation;
-
-        [SerializeField] 
-        private BaseInsufficientAmount _baseInsufficientAmount;
         
         [SerializeField]
         private UnityAudioSource _audioSource;
@@ -38,7 +35,6 @@ namespace Objects.DIInstallers.Building
             entity
                 .AddComponent(_health)
                 .AddComponent(_teamAffiliation)
-                .AddComponent(_baseInsufficientAmount)
                 .AddComponent(new Position { Value = _transform.position + _positionOffset })
                 .AddComponent(new Attackable())
                 .AddComponent(_audioSource)

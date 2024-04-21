@@ -1,5 +1,4 @@
-﻿using Common;
-using EcsEngine.Components;
+﻿using EcsEngine.Components;
 using EcsEngine.Components.Requests;
 using EcsEngine.Components.Tags;
 using EcsEngine.Extensions;
@@ -17,19 +16,15 @@ namespace EcsEngine.Systems
 
         private readonly EcsPoolInject<SpawnAdjustable> _adjustablePoolInject;
         
-        private readonly EcsCustomInject<ServiceLocator> _serviceLocatorInject;
+        private readonly EcsZenject<EntityManager> _entityManagerInject;
         
         private EcsPool<SpawnRequest> _spawnRequestPool;
         private EcsPool<Spawn> _spawnPool;
-        
-        private EntityManager _entityManager;
         
         void IEcsPreInitSystem.PreInit(IEcsSystems systems)
         {
             _spawnRequestPool = _filterInject.Pools.Inc1;
             _spawnPool = _filterInject.Pools.Inc2;
-            
-            _entityManager = _serviceLocatorInject.Value.Resolve<EntityManager>();
         }
 
         void IEcsRunSystem.Run(IEcsSystems systems)
@@ -42,7 +37,7 @@ namespace EcsEngine.Systems
                 Vector3 position = spawn.SpawnPoint.position;
                 Quaternion rotation = spawn.SpawnPoint.localRotation;
 
-                Entity spawnedEntity = _entityManager.CreateEntity(prefab, position, rotation, out int spawnedEntityId);
+                Entity spawnedEntity = _entityManagerInject.Value.CreateEntity(prefab, position, rotation, out int spawnedEntityId);
 
                 if (_adjustablePoolInject.Value.Has(spawnedEntityId))
                 {
