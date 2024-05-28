@@ -3,30 +3,27 @@ using UnityEngine;
 
 namespace Sample
 {
-    [CreateAssetMenu(
-        fileName = "UpgradeCatalog",
-        menuName = "Sample/New UpgradeCatalog"
-    )]
+    [CreateAssetMenu(fileName = "UpgradeCatalog", menuName = "Configs/Upgrades/UpgradeCatalog")]
     public sealed class UpgradeCatalog : ScriptableObject
     {
         [SerializeField]
-        private UpgradeConfig[] configs;
+        private UpgradeConfig[] _configs;
         
         public UpgradeConfig[] GetAllUpgrades()
         {
-            return this.configs;
+            return _configs;
         }
 
         public UpgradeConfig FindUpgrade(string id)
         {
-            var length = this.configs.Length;
-            for (var i = 0; i < length; i++)
+            int length = _configs.Length;
+            
+            for (int i = 0; i < length; i++)
             {
-                var config = this.configs[i];
-                if (config.id == id)
-                {
+                UpgradeConfig config = _configs[i];
+                
+                if (config.Id == id)
                     return config;
-                }
             }
 
             throw new Exception($"Config with {id} is not found!");

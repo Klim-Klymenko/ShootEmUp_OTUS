@@ -12,73 +12,70 @@ namespace Sample
         public event Action<Upgrade> OnLevelUp;
         
         [ReadOnly, ShowInInspector]
-        private Dictionary<string, Upgrade> upgrades = new();
+        private Dictionary<string, Upgrade> _upgrades = new();
 
-        private MoneyStorage moneyStorage;
+        private MoneyStorage _moneyStorage;
 
         public void Construct(MoneyStorage moneyStorage)
         {
-            this.moneyStorage = moneyStorage;
+            _moneyStorage = moneyStorage;
         }
 
         public void Setup(Upgrade[] upgrades)
         {
-            this.upgrades = new Dictionary<string, Upgrade>();
+            _upgrades = new Dictionary<string, Upgrade>();
+            
             for (int i = 0, count = upgrades.Length; i < count; i++)
             {
-                var upgrade = upgrades[i];
-                this.upgrades[upgrade.Id] = upgrade;
+                Upgrade upgrade = upgrades[i];
+                _upgrades[upgrade.Id] = upgrade;
             }
         }
 
         public Upgrade GetUpgrade(string id)
         {
-            return this.upgrades[id];
+            return _upgrades[id];
         }
 
         public Upgrade[] GetAllUpgrades()
         {
-            return this.upgrades.Values.ToArray<Upgrade>();
+            return _upgrades.Values.ToArray();
         }
 
         public bool CanLevelUp(Upgrade upgrade)
         {
             if (upgrade.IsMaxLevel)
-            {
                 return false;
-            }
 
-            var price = upgrade.NextPrice;
-            return this.moneyStorage.CanSpendMoney(price);
+            int price = upgrade.NextPrice;
+            return _moneyStorage.CanSpendMoney(price);
         }
 
         public void LevelUp(Upgrade upgrade)
         {
-            if (!this.CanLevelUp(upgrade))
-            {
+            if (!CanLevelUp(upgrade))
                 throw new Exception($"Can not level up {upgrade.Id}");
-            }
 
-            var price = upgrade.NextPrice;
-            this.moneyStorage.SpendMoney(price);
+            int price = upgrade.NextPrice;
+            _moneyStorage.SpendMoney(price);
 
             upgrade.LevelUp();
-            this.OnLevelUp?.Invoke(upgrade);
+            OnLevelUp?.Invoke(upgrade);
         }
 
         [Title("Methods")]
         [Button]
         public bool CanLevelUp(string id)
         {
-            var upgrade = this.upgrades[id];
-            return this.CanLevelUp(upgrade);
+            Upgrade upgrade = _upgrades[id];
+            return CanLevelUp(upgrade);
         }
 
         [Button]
         public void LevelUp(string id)
         {
-            var upgrade = this.upgrades[id];
-            this.LevelUp(upgrade);
+            Upgrade upgrade = _upgrades[id];
+            LevelUp(upgrade);
         }
     }
 }

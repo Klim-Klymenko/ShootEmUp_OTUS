@@ -1,6 +1,5 @@
 using System;
 using Sirenix.OdinInspector;
-// ReSharper disable ConvertToAutoPropertyWithPrivateSetter
 
 namespace Sample
 {
@@ -9,48 +8,45 @@ namespace Sample
         public event Action<int> OnLevelUp;
 
         [ShowInInspector, ReadOnly]
-        public string Id => this.config.id;
+        public string Id => _config.Id;
 
         [ShowInInspector, ReadOnly]
-        public int Level => this.currentLevel;
+        public int Level => _currentLevel;
 
         [ShowInInspector, ReadOnly]
-        public int MaxLevel => this.config.maxLevel;
+        public int MaxLevel => _config.MaxLevel;
 
-        public bool IsMaxLevel => this.currentLevel == this.config.maxLevel;
-
-        [ShowInInspector, ReadOnly]
-        public float Progress => (float) this.currentLevel / this.config.maxLevel;
+        public bool IsMaxLevel => _currentLevel == _config.MaxLevel;
 
         [ShowInInspector, ReadOnly]
-        public int NextPrice => this.config.GetPrice(this.Level + 1);
+        public float Progress => (float) _currentLevel / _config.MaxLevel;
 
-        private readonly UpgradeConfig config;
+        [ShowInInspector, ReadOnly]
+        public int NextPrice => _config.GetPrice(Level + 1);
+        
+        private int _currentLevel;
 
-        private int currentLevel;
-
+        private readonly UpgradeConfig _config;
+        
         protected Upgrade(UpgradeConfig config)
         {
-            this.config = config;
-            this.currentLevel = 1;
+            _config = config;
+            _currentLevel = 1;
         }
 
         public void SetupLevel(int level)
         {
-            this.currentLevel = level;
+            _currentLevel = level;
         }
 
         public void LevelUp()
         {
-            if (this.Level >= this.MaxLevel)
-            {
-                throw new Exception($"Can not increment level for upgrade {this.config.id}!");
-            }
-
-            var nextLevel = this.Level + 1;
-            this.currentLevel = nextLevel;
-            this.LevelUp(nextLevel);
-            this.OnLevelUp?.Invoke(nextLevel);
+            if (Level >= MaxLevel)
+                throw new Exception($"Can not increment level for upgrade {_config.Id}!");
+            
+            _currentLevel = Level + 1;
+            LevelUp(_currentLevel);
+            OnLevelUp?.Invoke(_currentLevel);
         }
 
         protected abstract void LevelUp(int level);
