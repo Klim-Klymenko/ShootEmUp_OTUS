@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
-using Game.Gameplay.Player;
+using GameEngine;
 using JetBrains.Annotations;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using Upgrades.UpgradingLogic;
 using Zenject;
 
-namespace Sample
+namespace Upgrades.Test
 {
     internal sealed class UpgradesTester : MonoBehaviour
     {

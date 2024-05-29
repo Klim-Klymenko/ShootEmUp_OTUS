@@ -2,7 +2,7 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace Sample
+namespace Upgrades.Tables
 {
     [Serializable]
     internal sealed class PriceTable

@@ -1,9 +1,7 @@
-﻿using Game.Gameplay.Player;
-using Sample;
-using UnityEngine;
+﻿using UnityEngine;
 using Zenject;
 
-namespace Game_Engine.DI
+namespace GameEngine.DI
 {
     internal sealed class GameEngineInstaller : MonoInstaller
     {

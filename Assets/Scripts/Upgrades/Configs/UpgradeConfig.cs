@@ -1,7 +1,9 @@
 using System;
 using UnityEngine;
+using Upgrades.Tables;
+using Upgrades.UpgradingLogic;
 
-namespace Sample
+namespace Upgrades.Configs
 {
     public abstract class UpgradeConfig : ScriptableObject
     {

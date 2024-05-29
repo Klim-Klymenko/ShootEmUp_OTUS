@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
 
-namespace Sample
+namespace GameEngine
 {
     [UsedImplicitly]
     public sealed class PlayerStats

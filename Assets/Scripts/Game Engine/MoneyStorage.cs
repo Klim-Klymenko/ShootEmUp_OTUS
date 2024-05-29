@@ -2,7 +2,7 @@ using System;
 using JetBrains.Annotations;
 using Sirenix.OdinInspector;
 
-namespace Game.Gameplay.Player
+namespace GameEngine
 {
     [UsedImplicitly]
     public sealed class MoneyStorage

@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fe2d3b2f2484d6ea532ae8957845d6e, type: 3}
+  m_Name: DamageUpgradeConfig
+  m_EditorClassIdentifier: 
+  <Id>k__BackingField: Damage Upgrade
+  MaxLevel: 10
+  _priceTable:
+    _basePrice: 10
+    _levels: 00000000140000001e00000028000000320000003c00000046000000500000005a00000064000000
+  _damageUpgradeTable:
+    _startStatValue: 30
+    _endStatValue: 50
+    _statValueStep: 2
+    _statValues: 20000000220000002400000026000000280000002a0000002c0000002e0000003000000032000000

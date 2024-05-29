@@ -1,6 +1,7 @@
-﻿using Sample;
-using UnityEngine;
+﻿using UnityEngine;
+using Upgrades.Configs;
 using Upgrades.Installation;
+using Upgrades.UpgradingLogic;
 using Zenject;
 
 namespace Upgrades.DI
@@ -13,8 +14,8 @@ namespace Upgrades.DI
         public override void InstallBindings()
         {
             BindConfigs();
-            BindUpgradesFactory();
-            BindUpgradesInstaller();
+            BindUpgradesFactories();
+            BindInstallers();
             BindUpgradesManager();
         }
 
@@ -23,14 +24,16 @@ namespace Upgrades.DI
             Container.Bind<UpgradeCatalog>().FromInstance(_upgradeCatalog).AsSingle();
         }
 
-        private void BindUpgradesFactory()
+        private void BindUpgradesFactories()
         {
             Container.Bind<Common.IFactory<Upgrade[]>>().To<UpgradesFactory>().AsSingle();
+            Container.Bind<IConditionsFactory>().To<ConditionsFactory>().AsSingle();
         }
         
-        private void BindUpgradesInstaller()
+        private void BindInstallers()
         {
             Container.BindInterfacesTo<UpgradesInstaller>().AsCached();
+            Container.Bind<ConditionsInstaller>().AsSingle();
         }
         
         private void BindUpgradesManager()

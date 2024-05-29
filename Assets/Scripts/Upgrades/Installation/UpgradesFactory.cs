@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using JetBrains.Annotations;
-using Sample;
+using Upgrades.Configs;
+using Upgrades.UpgradingLogic;
 using Zenject;
 
 namespace Upgrades.Installation
@@ -19,7 +20,7 @@ namespace Upgrades.Installation
 
         Upgrade[] Common.IFactory<Upgrade[]>.Create()
         {
-            IReadOnlyList<UpgradeConfig> upgradeConfigs = _upgradeCatalog.GetAllUpgrades();
+            IReadOnlyList<UpgradeConfig> upgradeConfigs = _upgradeCatalog.GetAllUpgradeConfigs();
 
             Upgrade[] upgrades = new Upgrade[upgradeConfigs.Count];
             
@@ -27,7 +28,7 @@ namespace Upgrades.Installation
             { 
                 Upgrade upgrade = upgradeConfigs[i].InstantiateUpgrade();
                 _diContainer.Inject(upgrade);
-
+                
                 upgrades[i] = upgrade;
             }
 

@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Sample
+namespace Upgrades.Configs
 {
     [CreateAssetMenu(fileName = "UpgradeCatalog", menuName = "Configs/Upgrades/UpgradeCatalog")]
     internal sealed class UpgradeCatalog : ScriptableObject
@@ -9,12 +9,12 @@ namespace Sample
         [SerializeField]
         private UpgradeConfig[] _configs;
         
-        internal UpgradeConfig[] GetAllUpgrades()
+        internal UpgradeConfig[] GetAllUpgradeConfigs()
         {
             return _configs;
         }
 
-        internal UpgradeConfig FindUpgrade(string id)
+        internal UpgradeConfig FindUpgradeConfig(string id)
         {
             int length = _configs.Length;
             

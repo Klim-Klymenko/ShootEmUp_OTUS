@@ -1,9 +1,10 @@
-﻿using Sample.ConcreteUpgrades;
-using UnityEngine;
+﻿using UnityEngine;
+using Upgrades.Tables;
+using Upgrades.UpgradingLogic;
 
-namespace Sample
+namespace Upgrades.Configs
 {
-    [CreateAssetMenu(fileName = "ArmorUpgradeConfig", menuName = "Configs/Upgrades/Armor Upgrade")]
+    [CreateAssetMenu(fileName = "ArmorUpgradeConfig", menuName = "Configs/Upgrades/ArmorUpgradeConfig")]
     public sealed class ArmorUpgradeConfig : UpgradeConfig
     {
         [SerializeField]

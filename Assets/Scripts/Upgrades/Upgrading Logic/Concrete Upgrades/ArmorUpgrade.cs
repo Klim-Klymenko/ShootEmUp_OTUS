@@ -1,7 +1,9 @@
-﻿using JetBrains.Annotations;
+﻿using GameEngine;
+using JetBrains.Annotations;
+using Upgrades.Configs;
 using Zenject;
 
-namespace Sample.ConcreteUpgrades
+namespace Upgrades.UpgradingLogic
 {
     [UsedImplicitly]
     internal sealed class ArmorUpgrade : Upgrade

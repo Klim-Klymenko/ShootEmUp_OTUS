@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Game.Gameplay.Player;
+using GameEngine;
 using Sirenix.OdinInspector;
 
-namespace Sample
+namespace Upgrades.UpgradingLogic
 {
     internal sealed class UpgradesManager
     {
@@ -43,7 +43,7 @@ namespace Sample
 
         public bool CanLevelUp(Upgrade upgrade)
         {
-            if (upgrade.IsMaxLevel)
+            if (!upgrade.CanLevelUp())
                 return false;
 
             int price = upgrade.NextPrice;
