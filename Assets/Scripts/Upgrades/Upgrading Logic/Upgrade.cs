@@ -70,6 +70,6 @@ namespace Upgrades.UpgradingLogic
             return true;
         }
         
-        private protected abstract void LevelUp(int level);
+        private protected abstract void LevelUp(int upgradedLevel);
     }
 }

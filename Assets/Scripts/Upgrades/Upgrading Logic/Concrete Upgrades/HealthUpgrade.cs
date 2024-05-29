@@ -22,9 +22,9 @@ namespace Upgrades.UpgradingLogic
             _playerStats = playerStats;
         }
         
-        private protected override void LevelUp(int level)
+        private protected override void LevelUp(int upgradedLevel)
         {
-            int upgradedHealth = _config.GetHealth(level);
+            int upgradedHealth = _config.GetHealth(upgradedLevel);
             _playerStats.ChangeStat(Id, upgradedHealth);
         }
     }

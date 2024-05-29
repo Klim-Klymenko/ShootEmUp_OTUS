@@ -22,9 +22,9 @@ namespace Upgrades.UpgradingLogic
             _playerStats = playerStats;
         }
 
-        private protected override void LevelUp(int level)
+        private protected override void LevelUp(int upgradedLevel)
         {
-            int upgradedArmorValue = _config.GetArmor(level);
+            int upgradedArmorValue = _config.GetArmor(upgradedLevel);
             _playerStats.ChangeStat(Id, upgradedArmorValue);
         }
     }

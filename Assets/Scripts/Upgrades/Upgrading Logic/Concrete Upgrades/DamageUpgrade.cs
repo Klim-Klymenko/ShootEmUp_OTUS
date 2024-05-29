@@ -20,9 +20,9 @@ namespace Upgrades.UpgradingLogic
             _playerStats = playerStats;
         }
         
-        private protected override void LevelUp(int level)
+        private protected override void LevelUp(int upgradedLevel)
         {
-            int upgradedDamage = _config.GetDamage(level);
+            int upgradedDamage = _config.GetDamage(upgradedLevel);
             _playerStats.ChangeStat(Id, upgradedDamage);
         }
     }

@@ -41,9 +41,9 @@ namespace Upgrades.UpgradingLogic
             Conditions = conditions;
         }
 
-        private protected override void LevelUp(int level)
+        private protected override void LevelUp(int upgradedLevel)
         {
-            int upgradedSpeed = _config.GetSpeed(level);
+            int upgradedSpeed = _config.GetSpeed(upgradedLevel);
             _playerStats.ChangeStat(Id, upgradedSpeed);
         }
     }
